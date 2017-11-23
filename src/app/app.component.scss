@@ -1,0 +1,30 @@
+.main-div {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+
+    .main-header {
+        width: 100%;
+        background-color: aqua;
+    }
+
+    .main-content {
+        width: 100%;
+        background-color: gray;
+        height: 100%;
+    }
+}
+
+.main-sidenav-fab-container {
+    //position: absolute;
+    height: 100%;
+    mat-sidenav {
+        //position: relative;
+        height: 100%;
+        width: 250px;
+        background-color: burlywood;
+    }
+}
+
+
+

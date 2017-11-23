@@ -1,0 +1,23 @@
+<div class="main-div">
+    <div class="main-header">
+        <mat-toolbar>
+            <span>CRUD APP</span>
+        </mat-toolbar>
+    </div>
+    <div class="main-content">
+        <mat-sidenav-container class="main-sidenav-fab-container">
+            <mat-sidenav #sidenav mode="side" opened="true" class="main-sidenav">
+                <p-panelMenu [model]="menu"></p-panelMenu>
+            </mat-sidenav>
+            
+            <div class="example-scrolling-content">
+              Conteudo
+              <router-outlet></router-outlet>
+              
+        
+            </div>
+        </mat-sidenav-container>
+    </div>
+</div>
+
+
