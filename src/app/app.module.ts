@@ -15,10 +15,10 @@ import {PanelMenuModule} from 'primeng/primeng';
 import {BreadcrumbModule} from 'primeng/primeng';
 
 import { AppComponent } from './app.component';
-import { UsuarioModule } from './usuario/usuario.module';
 
 const routes: Routes = [
   { path: 'home', component: AppComponent },  
+  { path: 'l', loadChildren: 'app/user/user.module#UserModule' }  
 ];
 
 @NgModule({
@@ -29,7 +29,7 @@ const routes: Routes = [
     BrowserModule, BrowserAnimationsModule, 
     ButtonModule, CalendarModule, 
     MatSidenavModule, MatIconModule, MatToolbarModule, TieredMenuModule, PanelMenuModule, BreadcrumbModule,
-    UsuarioModule, RouterModule.forRoot(routes)
+    RouterModule.forRoot(routes)
   ],
   providers: [],
   bootstrap: [AppComponent]
