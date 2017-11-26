@@ -1,13 +1,88 @@
 <div class="main-div">
     <div class="main-header">
-        <mat-toolbar>
-            <span>CRUD APP</span>
+        <mat-toolbar color="primary">
+
+            <div class="side-title">
+                <span class="margin-med-l margin-med-r">CRUD APP</span>
+                    
+                
+            </div>
+            
+            <div class="space-med"></div>
+            <button mat-icon-button matTooltip="Abrir/Fechar Menu" (click)="sidenav.toggle()">
+                <mat-icon>menu</mat-icon>
+    </button>
+            
+
+            <span class="fill-space"></span>
+
+            <div class="align-right full-height">
+                    <div class="flex-h flex-center hover-dark full-height"  [matMenuTriggerFor]="appMenu">
+                            <button mat-mini-fab class="margin-med mat-micro-fab">
+                                <mat-icon>person</mat-icon>
+                            </button>
+                            <!--<mat-icon class="margin-med">person</mat-icon>-->
+                            <span class="font-def margin-med-r">Ronaldo Flores</span>
+                            <mat-icon class="margin-med-r">arrow_drop_down</mat-icon>                        
+                    </div>
+            </div>
+
+            <mat-menu #appMenu="matMenu" class="login-menu">
+                <button mat-menu-item> Sair &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button>
+            </mat-menu>
+
         </mat-toolbar>
     </div>
     <div class="main-content">
-        <mat-sidenav-container class="main-sidenav-fab-container">
-            <mat-sidenav #sidenav mode="side" opened="true" class="main-sidenav">
-                <p-panelMenu [model]="menu"></p-panelMenu>
+        <mat-sidenav-container class="main-sidenav-fab-container" >
+
+
+            <mat-sidenav #sidenav mode="side" opened="true" class="main-sidenav"  color="primary">
+                
+            
+                <span class="server-infs hide">
+                    <button mat-fab >
+                            <mat-icon>settings</mat-icon>
+                    </button>
+                    <span >
+                        <span>Base de dados: <b>Teste</b></span>
+                        <div class="space-med"></div>
+                        <span>Empresa: <b>Unilever</b></span>
+                    </span>
+                </span>
+
+                <div class="server-infs2">
+                    <div class=""><div class="point-green margin-med-rv"></div>Base de dados: Teste</div>
+                    <div class=""><div class="point-green margin-med-rv"></div>Empresa: Unilever</div>
+                </div>
+
+                <div class="server-infs2 hide">
+                    <div class=""><mat-icon class="icon-small icon-black margin-med-rv">settings</mat-icon>Base de dados: Teste</div>
+                    <div class=""><mat-icon class="icon-small icon-black margin-med-rv">settings</mat-icon>Empresa: Unilever</div>
+                </div>
+
+                <!--<p-panelMenu [model]="menus"></p-panelMenu>
+                <div class="space-med"></div>-->
+
+                <div class="menu-list">
+                    <div>
+                        <div *ngFor="let menu of menus" class="menu">
+                                <div class="menu-bottom"></div>
+
+                                <span class="menu-text">{{ menu.label }}</span>
+
+                            <div class="submenus">
+                                <div *ngFor="let submenu of menu.items" class="submenu">
+                                    <mat-icon >{{ submenu.icon }}</mat-icon>
+                                    {{ submenu.label }}
+                                </div>
+                            </div>
+
+                            
+                        </div>
+                    </div>
+                </div>
+
             </mat-sidenav>
             
             <div class="example-scrolling-content">

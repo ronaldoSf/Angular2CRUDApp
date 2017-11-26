@@ -1,30 +1,134 @@
+@import "../styles.scss";
+
+$sidebar-width: 250px;
+$menu-theme-color: #5c697d;
+$menu-margin: 20px;
+
 .main-div {
     height: 100%;
     width: 100%;
     position: absolute;
-
-    .main-header {
-        width: 100%;
-        background-color: aqua;
-    }
-
-    .main-content {
-        width: 100%;
-        background-color: gray;
-        height: 100%;
-    }
 }
+
+.main-header {
+    width: 100%;
+    background-color: aqua;
+}
+
+.main-content {
+    width: 100%;
+    background-color: gray;
+    height: 100%;
+}
+
+.side-title {
+    width: $sidebar-width;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+    background-color: rgba(#CCCCCC, 0.2);    
+}
+
 
 .main-sidenav-fab-container {
     //position: absolute;
     height: 100%;
+    
     mat-sidenav {
         //position: relative;
         height: 100%;
-        width: 250px;
-        background-color: burlywood;
+        width: $sidebar-width;
+        overflow: hidden;
     }
 }
 
+mat-toolbar {
+    padding: 0px;
+}
 
+.menu-list {
+    line-height: 30px;
+    
+    .menu {
+        cursor: default;
+        overflow: hidden;
+
+        .menu-text {
+            padding: 0px $menu-margin 0px $menu-margin;
+            margin-top: 14px;
+            display: block;          
+            letter-spacing: .035em;
+            font-size: 11px;
+            text-transform: uppercase;
+            color: #8394a9;
+        }
+        .menu-bottom {
+            height: 1px;
+            margin: 6px 0 6px 0;
+            background: #eeeeee;
+        }
+    }
+
+    .submenu {
+        //border-bottom: 1px solid #eeeeee;
+        color: $menu-theme-color;
+        font-size: 13px;
+        text-transform: capitalize;
+        line-height: 43px;
+        font-weight: 500;
+        letter-spacing: .025em;
+        white-space: nowrap;
+        cursor: pointer;
+        padding: 0px $menu-margin 0px $menu-margin;
+
+        @extend .center-row-v;
+    }
+
+    .submenu:hover {
+        color: $menu-theme-color;
+        background-color: #f1f2f3;
+    }
+
+    mat-icon {
+        height: 16px;
+        width: 16px;
+        font-size: 16px;
+        margin-right: 10px;
+        color: $menu-theme-color;      
+    }
+}
+
+.server-infs {
+    @extend .flex-h;
+    //background-color: rgba(#cccccc, 0.2);  
+    //background-color: #1e1e1e;
+    
+    > button {
+        @extend .margin-med;
+    }
+
+    > span {
+        @extend .margin-med-rv;
+        @extend .font-sml;
+        @extend .flex-v;
+        @extend .flex-justify-center;
+        color: $menu-theme-color;
+    }
+}
+
+.server-infs2 {
+    margin: $margin-med $menu-margin 0 $menu-margin;
+    color: #8394a9;
+    @extend .flex-v;
+
+    > div {
+
+
+        @extend .flex-h;
+        @extend .flex-align-center;
+        @extend .font-sml;
+    }
+}
 

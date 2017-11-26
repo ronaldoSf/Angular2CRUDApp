@@ -8,20 +8,45 @@ import {MenuItem} from 'primeng/primeng';
 })
 export class AppComponent {
   title = 'app';
-  menu: MenuItem[] = [
+  menus: MenuItem[] = [
     {
         label: 'Administrador',
+        icon: 'home',
         items: [
-          {label: 'Usuário', icon: 'fa-mail-forward'},
-          {label: 'Perfis de usuário', icon: 'fa-mail-forward'}
+          {label: 'Usuário', icon: 'home'},
+          {label: 'Perfis de usuário', icon: 'home'}
         ]
     },
     {
         label: 'Financeiro',
-        icon: 'fa-edit',
+        icon: 'home',
         items: [
-            {label: 'Contas a pagar', icon: 'fa-mail-forward'},
-            {label: 'Contas a receber', icon: 'fa-mail-reply'}
+            {label: 'Contas a pagar', icon: 'home'},
+            {label: 'Contas a receber', icon: 'home'}
+        ]
+    },
+    {
+        label: 'Financeiro',
+        icon: 'home',
+        items: [
+            {label: 'Contas a pagar', icon: 'home'},
+            {label: 'Contas a receber', icon: 'home'}
+        ]
+    },
+    {
+        label: 'Financeiro',
+        icon: 'home',
+        items: [
+            {label: 'Contas a pagar', icon: 'home'},
+            {label: 'Contas a receber', icon: 'home'}
+        ]
+    },
+    {
+        label: 'Financeiro',
+        icon: 'home',
+        items: [
+            {label: 'Contas a pagar', icon: 'home'},
+            {label: 'Contas a receber', icon: 'home'}
         ]
     }
   ];

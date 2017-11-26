@@ -1,3 +1,5 @@
 
 
-export class CommomComponent    
+export class CommomComponent {
+    
+}   

@@ -6,6 +6,9 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatIconModule} from '@angular/material/icon';
 import {MatToolbarModule} from '@angular/material/toolbar';
+import {MatMenuModule} from '@angular/material/menu';
+import {MatButtonModule} from '@angular/material/button';
+import {MatTooltipModule} from '@angular/material/tooltip';
 
 import {ButtonModule} from 'primeng/primeng';
 import {CalendarModule} from 'primeng/primeng';
@@ -27,8 +30,8 @@ const routes: Routes = [
   ],
   imports: [
     BrowserModule, BrowserAnimationsModule, 
-    ButtonModule, CalendarModule, 
-    MatSidenavModule, MatIconModule, MatToolbarModule, TieredMenuModule, PanelMenuModule, BreadcrumbModule,
+    ButtonModule, CalendarModule,  MatMenuModule, MatIconModule, MatButtonModule, MatTooltipModule,
+    MatSidenavModule, MatToolbarModule, TieredMenuModule, PanelMenuModule, BreadcrumbModule,
     RouterModule.forRoot(routes)
   ],
   providers: [],
