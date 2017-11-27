@@ -1,55 +1,25 @@
-import { Component } from '@angular/core';
-import {MenuItem} from 'primeng/primeng';
+import {Component} from '@angular/core';
+import {MenuItem, Config} from './commom/config';
+import {PERMISSIONS} from './commom/permissions';
+import {UserService} from './user/user.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
+  providers: [ UserService ],  
 })
 export class AppComponent {
-  title = 'app';
-  menus: MenuItem[] = [
-    {
-        label: 'Administrador',
-        icon: 'home',
-        items: [
-          {label: 'Usuário', icon: 'home'},
-          {label: 'Perfis de usuário', icon: 'home'}
-        ]
-    },
-    {
-        label: 'Financeiro',
-        icon: 'home',
-        items: [
-            {label: 'Contas a pagar', icon: 'home'},
-            {label: 'Contas a receber', icon: 'home'}
-        ]
-    },
-    {
-        label: 'Financeiro',
-        icon: 'home',
-        items: [
-            {label: 'Contas a pagar', icon: 'home'},
-            {label: 'Contas a receber', icon: 'home'}
-        ]
-    },
-    {
-        label: 'Financeiro',
-        icon: 'home',
-        items: [
-            {label: 'Contas a pagar', icon: 'home'},
-            {label: 'Contas a receber', icon: 'home'}
-        ]
-    },
-    {
-        label: 'Financeiro',
-        icon: 'home',
-        items: [
-            {label: 'Contas a pagar', icon: 'home'},
-            {label: 'Contas a receber', icon: 'home'}
-        ]
-    }
-  ];
 
+  constructor(private userService: UserService) {}
+  
+  menus: MenuItem[] = Config.allMenus
+
+  ngOnInit() {
+    this.userService.login({ login: "", password: ""}).subscribe(
+      result => {},
+      error => { alert(error) }
+    )
+  }
 
 }
