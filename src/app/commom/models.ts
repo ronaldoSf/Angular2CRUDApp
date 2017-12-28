@@ -7,6 +7,9 @@ export class Usuario {
 
     perfilCod: Number
     empresaCod: Number
+
+    empresaNome:String
+    perfilNome:String
 }
 
 export class Perfil {

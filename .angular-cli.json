@@ -23,6 +23,8 @@
         "../node_modules/primeng/resources/themes/bootstrap/theme.css",
         "../node_modules/primeng/resources/primeng.min.css",
         "../node_modules/normalize.css/normalize.css",
+        "../src/libs/todc-bootstrap-3.3.7-3.3.13-dist/css/bootstrap.min.css",
+        "../src/libs/todc-bootstrap-3.3.7-3.3.13-dist/css/todc-bootstrap.min.css",
         "styles.scss"
       ],
       "scripts": [],

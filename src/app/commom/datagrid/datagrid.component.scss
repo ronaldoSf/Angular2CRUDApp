@@ -1,0 +1,119 @@
+@import "../../../styles.scss";
+
+$datagrid-theme-primary: $app-theme-primary;
+$datagrid-theme-accent:  $app-theme-accent;
+$datagrid-theme-palette:  $app-theme-palette;
+
+.blue-theme {
+
+    width: 100%;
+
+    th {
+        background-color: map-get($datagrid-theme-palette, 400);
+        color: white;
+        font-weight: normal;
+    }
+
+
+    tfoot {
+        background-color: map-get($datagrid-theme-palette, 700);
+        font-size: 13px;
+
+        tr {
+            height: 24px;
+        }
+
+        .space {
+            width: 10px;
+        }
+        
+        .bt {
+            background-color: map-get($datagrid-theme-palette, 500);
+            margin: 1px;
+            padding: 2px 5px;
+            color: #fff;
+            cursor: pointer;
+        }
+    }
+}
+
+table {
+    border-spacing: 0px;
+
+    .check-cell {
+        width: 40px;
+        text-align: center;
+    }
+    
+    .action-cell {
+
+        mat-icon {
+            color: gray;
+            background: #eaeaea;
+            font-size: 18px;
+            line-height: 24px;
+            width: 24px;
+            text-align: center;
+            cursor: pointer;
+        }
+        
+        .action-separator {
+            width: 10px;
+        }
+
+        span {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+        }
+    }
+
+
+    thead {
+
+        th {
+            border-bottom: solid 1px rgb(221, 221, 221);
+        }
+
+        th > div {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 15px;
+            padding: 2px 4px 2px 4px;
+            cursor: pointer;
+        }
+    }
+
+    tbody {
+        td {
+            border-color: rgb(221, 221, 221);
+            border-style: solid;
+            border-width: 0px 0px 1px 1px;  
+
+            background-color: #f9f9f9;
+            font-size: 14px;
+            padding: 4px;
+        }
+    
+        td:last-child  {
+            border-color: rgb(221, 221, 221);
+            border-style: solid;
+            border-width: 0px 1px 1px 1px;     
+        }
+    }
+
+    tfoot {
+        color: white;
+        font-size: 14px;
+        
+        td > div {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+        }
+
+    }
+    
+}

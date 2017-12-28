@@ -18,8 +18,23 @@ export class AppComponent {
   ngOnInit() {
     this.userService.login({ login: "", password: ""}).subscribe(
       result => {},
-      error => { alert(error) }
+      error => { 
+        //alert(error) 
+      }
     )
   }
 
+  sidenavOpened = true
+
+  onSidenavClosed() {
+    this.sidenavOpened = false
+    //alert("clo")
+  }
+
+
+  onSidenavOpened() {
+    this.sidenavOpened = true
+    //alert("clo")   
+  }
+            
 }

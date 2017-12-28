@@ -10,4 +10,22 @@ export class Util {
 
       return itens;
     }
+
+    public static get(fn, or) {
+      try {
+          return fn();
+      } catch (e) {
+          return or;
+      }
+  }
+}
+
+export class CallbackEvent {
+  static createFunction(esse: any, func: Function): Function {
+    let f = function() {
+      return func.call(esse, arguments)
+    }
+
+    return f;
+  }
 }

@@ -1,0 +1,9 @@
+{"status": "OK", "totalItens": 40, "result":[
+    {"codigo": 1, "nome": "1", "login": "as", "senha": "", "empresaCod": 1, "perfilCod": 1, "empresaNome": "asdf", "perfilNome": ""},
+    {"codigo": 1, "nome": "1", "login": "s", "senha": "", "empresaCod": 1, "perfilCod": 1, "empresaNome": "76", "perfilNome": "sdfgs"},
+    {"codigo": 1, "nome": "1", "login": "asdf", "senha": "", "empresaCod": 1, "perfilCod": 1, "empresaNome": "lo", "perfilNome": "sdfsdg"},
+    {"codigo": 1, "nome": "1", "login": "as", "senha": "", "empresaCod": 1, "perfilCod": 1, "empresaNome": "uyik76", "perfilNome": ""},
+    {"codigo": 1, "nome": "1", "login": "fht", "senha": "", "empresaCod": 1, "perfilCod": 1, "empresaNome": "jhj", "perfilNome": ""},
+    {"codigo": 1, "nome": "1", "login": "iu", "senha": "", "empresaCod": 1, "perfilCod": 1, "empresaNome": "", "perfilNome": "utys"},
+    {"codigo": 1, "nome": "1", "login": "vbv", "senha": "", "empresaCod": 1, "perfilCod": 1, "empresaNome": "", "perfilNome": "sdfw"}
+]}

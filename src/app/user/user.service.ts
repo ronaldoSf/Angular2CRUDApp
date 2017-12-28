@@ -3,6 +3,7 @@ import {HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HttpClient} from '
 import { Observable }    from 'rxjs/Observable';
 import { Usuario }    from '../commom/models';
 import { Config }    from '../commom/config';
+import { DatagridResponse } from '../commom/datagrid/datagrid.component';
 
 @Injectable()
 export class UserService {
@@ -16,5 +17,23 @@ export class UserService {
     public login(parameters: {login:String, password: String}): Observable<Usuario> {
         return this.http.post<Usuario>(this.getApiUrl('usuario/login.json'), parameters);
     }
+    
+    public findByFilter(request: FindByFilterRequest): Observable<FindByFilterResponse> {
+        return this.http.post<FindByFilterResponse>(this.getApiUrl('usuario/login.json'), request);
+    }
 
+}
+
+export class FindByFilterRequest {
+    offset: number
+    limit:number
+
+    nome: string
+    empresa: number
+}
+
+export class FindByFilterResponse extends DatagridResponse {
+    total: number
+    status:string
+    result: Usuario[]
 }

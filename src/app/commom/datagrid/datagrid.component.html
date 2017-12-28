@@ -1,0 +1,76 @@
+<table class="blue-theme">
+    <thead>
+        <tr>
+            <th *ngIf="showSelections" class="check-cell">
+                    <input type="checkbox" (change)="toggleAllSelects()"/>
+            </th>
+                        
+            <th *ngFor="let column of columns">
+                <div>
+                        <span>{{column.title}}</span>
+                        <i class="material-icons" [hidden]="!column.sortable">arrow_drop_down</i>
+                </div>
+            </th>
+
+            <th *ngIf="actions.length > 0">
+                    Ações
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        
+        <tr *ngFor="let item of dataSource; let modelIndex = index">
+            
+            <td *ngIf="showSelections" class="check-cell">
+                    <input type="checkbox" [(ngModel)]="item.selected"/>
+            </td>
+
+            <td *ngFor="let column of columns">
+                {{makeDescriptionForModel(item, column)}}
+            </td>
+
+            <td *ngIf="actions.length > 0" class="action-cell" [style.width]="(actions.length * 34) + 'px'">
+                <span>
+                    <span *ngFor="let action of actions; let actionIndex = index">
+                        <mat-icon class="material-icons" [matTooltip]="action.title" (click)="callAction(actionIndex, modelIndex)">
+                                    {{action.icon}}
+                        </mat-icon>
+                        <span class="action-separator" *ngIf="actionIndex < (actions.length - 1)"></span>
+                    </span>
+                </span>
+            </td>
+        </tr>
+
+        <tr *ngIf="dataSource.length == 0"><td colspan="1000" style="text-align:center">{{noItemMessage}}</td></tr>
+    </tbody>
+
+    <tfoot>
+        <tr>
+            <td colspan="1000">
+                <div>
+                    <div class="space"></div>
+                    Página: 
+                    <div class="space"></div>
+
+                    <div class="bt"><</div>
+                    <div class="bt">1</div>
+                    <div class="bt">></div>
+
+                    <div class="space"></div>
+                    <div class="space"></div>
+                    
+                    Itens por página:
+                    <div class="space"></div>
+
+                    <select ([value])="currentPageSize" >
+                        <option *ngFor="let size of pageSizes" [value]="size">
+                            {{size == 0 ? 'Todos' : size}}
+                        </option>
+                    </select>
+                </div>
+            </td>
+        </tr>
+    </tfoot>
+    
+    
+  </table>

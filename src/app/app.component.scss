@@ -46,9 +46,11 @@ mat-sidenav-container {
     }
  
     mat-sidenav-content {
-        margin-left: 0px !important;    
+        position: absolute;
+        //margin-left: 0px !important;
+        //width: calc(100% - #{$sidebar-width})
     }
-
+    
 }
 
 
@@ -140,3 +142,6 @@ mat-toolbar {
     }
 }
 
+router-outlet {
+    width: 100%;
+}

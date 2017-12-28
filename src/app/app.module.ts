@@ -10,6 +10,7 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatButtonModule} from '@angular/material/button';
 import {MatTooltipModule} from '@angular/material/tooltip';
+import { FormsModule } from '@angular/forms';
 
 import {ButtonModule} from 'primeng/primeng';
 import {CalendarModule} from 'primeng/primeng';
@@ -19,18 +20,20 @@ import {PanelMenuModule} from 'primeng/primeng';
 import {BreadcrumbModule} from 'primeng/primeng';
 
 import { AppComponent } from './app.component';
+import { DatagridComponent } from './commom/datagrid/datagrid.component';
 
 const routes: Routes = [
-  { path: 'home', component: AppComponent },  
-  { path: 'l', loadChildren: 'app/user/user.module#UserModule' }  
+  { path: '', loadChildren: 'app/home/home.module#HomeModule' },  
+  { path: 'home', loadChildren: 'app/home/home.module#HomeModule' },  
+  { path: 'usuario', loadChildren: 'app/user/user.module#UserModule' }  
 ];
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent//, DatagridComponent
   ],
   imports: [
-    BrowserModule, BrowserAnimationsModule, HttpClientModule, 
+    BrowserModule, BrowserAnimationsModule, HttpClientModule, FormsModule,
     ButtonModule, CalendarModule,  MatMenuModule, MatIconModule, MatButtonModule, MatTooltipModule,
     MatSidenavModule, MatToolbarModule, TieredMenuModule, PanelMenuModule, BreadcrumbModule,
     RouterModule.forRoot(routes)

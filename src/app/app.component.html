@@ -38,7 +38,7 @@
         <mat-sidenav-container class="main-sidenav-fab-container" >
 
 
-            <mat-sidenav #sidenav mode="side" opened="true" class="main-sidenav"  color="primary">
+            <mat-sidenav #sidenav mode="side" opened="true" class="main-sidenav" color="primary" (close)="onSidenavClosed()" (open)="onSidenavOpened()">
                 
             
                 <span class="server-infs hide">
@@ -73,7 +73,7 @@
                                 <span class="menu-text">{{ menu.label }}</span>
 
                             <div class="submenus">
-                                <div *ngFor="let submenu of menu.items" class="submenu">
+                                <div *ngFor="let submenu of menu.items" class="submenu"  [routerLink]="[submenu.url]">
                                     <mat-icon >{{ submenu.icon }}</mat-icon>
                                     {{ submenu.label }}
                                 </div>
@@ -86,11 +86,13 @@
 
             </mat-sidenav>
             
-            <mat-sidenav-content class="sidenav-content">
-              Conteudo
-              <router-outlet></router-outlet>
-              
-        
+            <mat-sidenav-content class="sidenav-content" [style.width]="sidenavOpened ? 'calc(100% - 250px)' : '100%'">
+
+                    <div style="width:100%">
+                            <router-outlet></router-outlet>
+                    </div>
+                    
+                    
             </mat-sidenav-content>
         </mat-sidenav-container>
     </div>
