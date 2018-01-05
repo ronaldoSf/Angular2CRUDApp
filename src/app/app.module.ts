@@ -1,3 +1,4 @@
+import { InputFormComponent } from './commom/input.form/input.form.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
@@ -10,7 +11,7 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatButtonModule} from '@angular/material/button';
 import {MatTooltipModule} from '@angular/material/tooltip';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import {ButtonModule} from 'primeng/primeng';
 import {CalendarModule} from 'primeng/primeng';
@@ -21,6 +22,7 @@ import {BreadcrumbModule} from 'primeng/primeng';
 
 import { AppComponent } from './app.component';
 import { DatagridComponent } from './commom/datagrid/datagrid.component';
+import { MyFormComponent } from './commom/forms/my.form.component';
 
 const routes: Routes = [
   { path: '', loadChildren: 'app/home/home.module#HomeModule' },  
@@ -30,15 +32,16 @@ const routes: Routes = [
 
 @NgModule({
   declarations: [
-    AppComponent//, DatagridComponent
+    AppComponent
   ],
   imports: [
-    BrowserModule, BrowserAnimationsModule, HttpClientModule, FormsModule,
+    BrowserModule, BrowserAnimationsModule, HttpClientModule,
     ButtonModule, CalendarModule,  MatMenuModule, MatIconModule, MatButtonModule, MatTooltipModule,
-    MatSidenavModule, MatToolbarModule, TieredMenuModule, PanelMenuModule, BreadcrumbModule,
+    MatSidenavModule, MatToolbarModule, TieredMenuModule, PanelMenuModule, BreadcrumbModule, ReactiveFormsModule,
     RouterModule.forRoot(routes)
   ],
   providers: [],
+  entryComponents: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

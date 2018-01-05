@@ -1,0 +1,28 @@
+<div>
+    <form>
+    
+        <div *ngFor="let formRow of formConfigs">
+            <div *ngFor="let formConfig of formRow.formConfigs" class="form-group">
+                
+                <dynamic-form-holder [formConfig]="formConfig" [modelObject]="modelObject"></dynamic-form-holder>
+            
+                <div *ngIf="initiated">
+                    <div *ngIf="!formConfig.formControl.valid">
+                        <span *ngFor="let error of formConfig.formControl.errors">
+                            {{error}}
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+       
+    
+        <div class="form-row">
+            <button type="submit" class="btn bn-primary" >Salvar</button>
+            <button type="submit" class="btn" >Cancelar</button>
+        </div>
+    </form>
+  </div>
+  
+  

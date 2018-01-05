@@ -19,13 +19,13 @@ export class DataBase {
 export class Config {
 
     static currentUser: Usuario;
-    static currentBase: DataBase = { name: "Produção", baseUrl: "http://localhost:80/" };
+    static currentBase: DataBase = { name: "Produção", baseUrl: "http://localhost:80/Angular2CRUDApp/src/mocks/" };
 
     static readonly allPermissions: GROUP_PERMISSION[] = Util.getItensFromObject(PERMISSION)
     static readonly allDataBases: DataBase[] = [
-        { name: "Produção", baseUrl: "http://localhost:80/" },
-        { name: "Teste", baseUrl: "http://localhost:80/" },
-        { name: "Local", baseUrl: "http://localhost:80/" },
+        { name: "Produção", baseUrl: "http://localhost:80/Angular2CRUDApp/src/mocks/" },
+        { name: "Teste", baseUrl: "http://localhost:80/Angular2CRUDApp/src/mocks/" },
+        { name: "Local", baseUrl: "http://localhost:80/Angular2CRUDApp/src/mocks/" },
     ]
     static readonly allMenus: MenuItem[] = [
         {

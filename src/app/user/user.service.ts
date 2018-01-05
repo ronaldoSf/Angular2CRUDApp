@@ -19,7 +19,7 @@ export class UserService {
     }
     
     public findByFilter(request: FindByFilterRequest): Observable<FindByFilterResponse> {
-        return this.http.post<FindByFilterResponse>(this.getApiUrl('usuario/login.json'), request);
+        return this.http.post<FindByFilterResponse>(this.getApiUrl('usuarios.json'), request);
     }
 
 }

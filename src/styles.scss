@@ -1,82 +1,8 @@
-$app-blue-primary: #4d90fe;
-$app-blue-accent: #4d90fe;
-$app-blue-palette: (
-    50 : #e4effb,
-    100 : #bbd7f5,
-    200 : #8ebcef,
-    300 : #60a1e8,
-    400 : #3e8ce3,
-    500 : #1c78de,
-    600 : #1970da,
-    700 : #1465d5,
-    800 : #115bd1,
-    900 : #0948c8,
-    A100 : #f3f6ff,
-    A200 : #c0d2ff,
-    A400 : #8dadff,
-    A700 : #749aff,
-    contrast: (
-        50 : #000000,
-        100 : #000000,
-        200 : #000000,
-        300 : #000000,
-        400 : #ffffff,
-        500 : #ffffff,
-        600 : #ffffff,
-        700 : #ffffff,
-        800 : #ffffff,
-        900 : #ffffff,
-        A100 : #000000,
-        A200 : #000000,
-        A400 : #000000,
-        A700 : #000000,
-    )
-);
-
-$app-ligt-primary: #4d90fe;
-$app-ligt-accent: #4d90fe;
-$app-ligt-palette: (
-    50 : #fbfbfb,
-    100 : #f6f6f6,
-    200 : #f0f0f0,
-    300 : #e9e9e9,
-    400 : #e5e5e5,
-    500 : #e0e0e0,
-    600 : #dcdcdc,
-    700 : #d8d8d8,
-    800 : #d3d3d3,
-    900 : #cbcbcb,
-    A100 : #ffffff,
-    A200 : #ffffff,
-    A400 : #ffffff,
-    A700 : #ffffff,
-    contrast: (
-        50 : #000000,
-        100 : #000000,
-        200 : #000000,
-        300 : #000000,
-        400 : #000000,
-        500 : #000000,
-        600 : #000000,
-        700 : #000000,
-        800 : #000000,
-        900 : #000000,
-        A100 : #000000,
-        A200 : #000000,
-        A400 : #000000,
-        A700 : #000000,
-    )
-);
+@import 'config.scss';
 
 @import '~@angular/material/theming';
 @include mat-core();
 $config-font: mat-typography-config();
-
-//Define theme
-$app-theme-primary: $app-blue-primary;
-$app-theme-accent:  $app-blue-accent;
-$app-theme-palette:  $app-blue-palette;
-//END Define theme
 
 $theme-app-primary: mat-palette($app-theme-palette);
 $theme-app-accent:  mat-palette($mat-deep-orange, A200, A100, A400);
@@ -86,7 +12,7 @@ $theme-app-theme:   mat-light-theme($theme-app-primary, $theme-app-accent);
 
 //@import '~@angular/material/prebuilt-themes/purple-green.css';
 
-
+//-------------- OVERRIDES ---------------------------
 
 body {
     padding: 0px;
@@ -101,6 +27,34 @@ mat-icon {
 .login-menu {
     margin-top: 70px;
 }
+
+.mat-dialog-container {
+    padding: 0px !important;
+}
+
+.panel-default {
+    height: 100%;
+    overflow: hidden;
+    margin-bottom: 0px;
+
+    > .panel-heading {
+        background: #e8e8e8;
+        border-bottom: 1px solid #d3d3d3;
+
+        > .panel-title {
+            font-size: 15px;
+            font-weight: normal;
+        }
+    }
+
+    > .panel-body {
+        height: 100%;
+    }
+}
+
+
+
+//-------------- UTILS ---------------------------
 
 $margin-sml: 6px;
 $margin-med: 10px;
