@@ -1,7 +1,7 @@
 import { FormValidator } from './../validators/required-validator.directive';
 import { Util } from './../util';
 import { Component, OnInit, Input } from '@angular/core';
-import { FormConfig, FormComponent } from '../forms/my.form.component';
+import { FormConfig, FormComponent, Property } from '../forms/my.form.component';
 import { FormControl, Validator, Validators, ValidatorFn } from '@angular/forms';
 
 @Component({
@@ -28,7 +28,7 @@ export class InputFormComponent implements FormComponent, OnInit {
     constructor() { }
 
     ngOnInit() {
-        this.formControl = this.formConfig.formControl;
+        this.formControl = this.formConfig.createFormControl();
         this.currentValue = Util.getDeepValue(this.modelObject, this.formConfig.modelProperty.name)
     }
 
@@ -37,19 +37,9 @@ export class InputFormComponent implements FormComponent, OnInit {
 export class InputFormConfig<TModel> extends FormConfig<TModel> {
     componentType: any = InputFormComponent
 
-    constructor(public modelProperty: Property<TModel>, public validators: FormValidator[]) {
+    constructor(public modelProperty: Property<TModel>, public validators: FormValidator[], public isPassword: Boolean = false) {
       super(validators)
     }
     
 }
 
-
-
-export class Property<T> {
-  
-    public name: string;
-  
-    constructor(name: keyof T) {
-      this.name = name;
-    }
-}

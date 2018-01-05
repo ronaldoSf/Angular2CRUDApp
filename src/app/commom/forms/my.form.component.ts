@@ -1,5 +1,4 @@
 import { FormValidator } from './../validators/required-validator.directive';
-import { Property } from './../input.form/input.form.component';
 import { Component, OnInit, Input, Inject, ComponentFactoryResolver, ViewContainerRef } from '@angular/core';
 import { Validator, FormGroup, ValidatorFn, FormControl } from '@angular/forms';
 
@@ -37,15 +36,28 @@ export class FormConfigRow<TModel> {
   formConfigs: FormConfig<TModel>[]
 }
 
-export abstract class FormConfig<TModel> {
+export abstract class FormConfig<TModel> extends FormConfigRow<TModel> {
     abstract componentType: any
     abstract modelProperty: Property<TModel>
     abstract validators: FormValidator[];
     public formControl: FormControl
+    public isDisabled:Boolean = false
 
+    public formConfigs: FormConfig<TModel>[] = [this]
+
+    
     constructor(validators: FormValidator[]) {
-        let validatorsFn = validators.map((validatorItem) => { return validatorItem.validator });
-        this.formControl = new FormControl(this.modelProperty, validatorsFn)
+        super()
+        //this.createFormControl(validators)
+    }
+
+    public createFormControl(validators: FormValidator[] = this.validators): FormControl {
+        if (this.formControl == null) {
+            let validatorsFn = validators.map((validatorItem) => { return validatorItem.validator });
+            this.formControl = new FormControl(null, validatorsFn)
+        }
+
+        return this.formControl;
     }
 
     /*public getFormControl(): FormControl {
@@ -78,14 +90,19 @@ export class DynamicFormHolderComponent implements OnInit {
     }
 
     addDynamicComponent(objectType: any) {
-        const factory = this.factoryResolver.resolveComponentFactory(objectType)
-        const component = factory.create(this.rootViewContainer.parentInjector)
-
-        component.instance.formConfig = this.formConfig
-        component.instance.modelObject = this.modelObject
-
-        this.createdComponent = component;
-        this.rootViewContainer.insert(component.hostView)
+        try {
+            const factory = this.factoryResolver.resolveComponentFactory(objectType)
+            const component = factory.create(this.rootViewContainer.parentInjector)
+    
+            component.instance.formConfig = this.formConfig
+            component.instance.modelObject = this.modelObject
+    
+            this.createdComponent = component;
+            this.rootViewContainer.insert(component.hostView)
+        } catch (error) {
+            alert("Um item não pode ser carregado: " + objectType.name)
+        }
+        
     }
 
     ngOnInit() {
@@ -105,3 +122,14 @@ export interface FormComponent {
     formControl: FormControl;
     modelObject: Object;
 }
+
+
+
+export class Property<T> {
+    
+      public name: string;
+    
+      constructor(name: keyof T) {
+        this.name = name;
+      }
+  }

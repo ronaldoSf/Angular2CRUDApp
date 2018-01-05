@@ -7,8 +7,8 @@
                 <dynamic-form-holder [formConfig]="formConfig" [modelObject]="modelObject"></dynamic-form-holder>
             
                 <div *ngIf="initiated">
-                    <div *ngIf="!formConfig.formControl.valid">
-                        <span *ngFor="let error of formConfig.formControl.errors">
+                    <div *ngIf="formConfig.formControl != null">
+                        <span *ngFor="let error of formConfig.formControl.errors | toArray">
                             {{error}}
                         </span>
                     </div>

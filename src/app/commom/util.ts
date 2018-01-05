@@ -62,6 +62,17 @@ export class Util {
         }
     }
 
+    public static objToArray(obj: any): any[] {
+        if (Array.isArray(obj)) {
+            return obj
+        } else {
+            return Object.keys(obj).map(function(index) {
+                var item = obj[index];
+                return item;
+            });
+        }
+    }
+    
 
     public static readonly propertyOf = <TObj>(name: keyof TObj) => name;
 
@@ -76,3 +87,11 @@ export class CallbackEvent {
     return f;
   }
 }
+/*
+Object["toArray"] = function() {
+    return Util.objToArray(this);
+};
+
+Object["toArray"] = function() {
+    return Util.objToArray(this);
+};*/

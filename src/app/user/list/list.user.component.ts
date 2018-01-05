@@ -1,4 +1,4 @@
-import { Property, InputFormConfig } from './../../commom/input.form/input.form.component';
+import { InputFormConfig } from './../../commom/input.form/input.form.component';
 import { FormConfigRow } from './../../commom/forms/my.form.component';
 import { DialogService } from './../../commom/dialog/dialog.service';
 import { UserEditComponent } from './../edit/edit.user.component';
@@ -44,7 +44,7 @@ export class UserListComponent {
 
     
 
-    //-----------------CALLBACKS -----------------------------------------------
+    //----------------- CALLBACKS -----------------------------------------------
     
     public deleteItemEvent = CallbackEvent.createFunction(this, this.deleteItem);
     public editItemEvent = CallbackEvent.createFunction(this, this.editItem);

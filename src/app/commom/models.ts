@@ -10,6 +10,8 @@ export class Usuario {
 
     empresaNome:String
     perfilNome:String
+
+    testeData?:Date = new Date()
 }
 
 export class Perfil {
