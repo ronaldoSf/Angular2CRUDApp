@@ -12,6 +12,8 @@ export class Usuario {
     perfilNome:String
 
     testeData?:Date = new Date()
+    testeCpf?: string = ""
+    testeEmpresa?: Empresa
 }
 
 export class Perfil {
@@ -29,6 +31,12 @@ export class Permissao {
 
 
 export class Empresa {
+
+    constructor(codigo: Number, nome: String) {
+        this.codigo = codigo
+        this.nome = nome
+    }
+
     codigo: Number
     nome: String
     cpj: String

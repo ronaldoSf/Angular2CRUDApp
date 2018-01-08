@@ -1,0 +1,10 @@
+<input 
+type="{{ formConfig.isPassword ? 'password' : 'text' }}" 
+[(ngModel)]="currentValue" 
+(ngModelChange)="currentValueChanged($event)" 
+[formControl]="formControl"
+ng-disabled="formConfig.isDisabled"
+
+[mask]="formConfig.mask"
+
+/>

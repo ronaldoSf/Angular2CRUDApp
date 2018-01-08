@@ -72,6 +72,10 @@ export class Util {
             });
         }
     }
+
+    static readonly Masks = class {
+        public static readonly cpf: string = "000.000.000-00";
+    }
     
 
     public static readonly propertyOf = <TObj>(name: keyof TObj) => name;

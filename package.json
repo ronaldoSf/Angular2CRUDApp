@@ -25,6 +25,7 @@
     "@angular/router": "^5.0.2",
     "core-js": "^2.4.1",
     "font-awesome": "^4.7.0",
+    "ng2-input-mask": "0.0.7",
     "normalize.css": "^7.0.0",
     "primeng": "^5.0.0",
     "rxjs": "^5.5.2",

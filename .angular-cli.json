@@ -28,7 +28,10 @@
         "../src/libs/todc-bootstrap-3.3.7-3.3.13-dist/css/todc-bootstrap.min.css",
         "styles.scss"
       ],
-      "scripts": [],
+      "scripts": [
+        "../node_modules/jquery/dist/jquery.min.js",
+        "../node_modules/jquery-mask-plugin/dist/jquery.mask.min.js"
+      ],
       "environmentSource": "environments/environment.ts",
       "environments": {
         "dev": "environments/environment.ts",
