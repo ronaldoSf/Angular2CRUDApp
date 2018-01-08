@@ -5,7 +5,7 @@ import { FormConfig, FormComponent, Property } from '../forms/my.form.component'
 import { FormControl, Validator, Validators, ValidatorFn } from '@angular/forms';
 
 @Component({
-  selector: 'app-input.form',
+  selector: 'app-input-form',
   templateUrl: './input.form.component.html',
   styleUrls: ['./input.form.component.scss']
 })

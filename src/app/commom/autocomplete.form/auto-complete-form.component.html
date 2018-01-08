@@ -1,0 +1,23 @@
+<!--<span style="position: relative">
+  <input
+  type="text" 
+  [(ngModel)]="currentValue" 
+  (ngModelChange)="currentValueChanged($event)" 
+  [formControl]="formControl"
+  ng-disabled="formConfig.isDisabled"
+  />
+
+  <div style="position: absolute">
+    <app-input-form [modelObject]="modelObject" [formConfig]="formConfig"></app-input-form>
+  </div>
+
+</span>
+-->
+
+<p-autoComplete 
+  [(ngModel)]="currentValueStr" 
+  (ngModelChange)="currentValueStrChanged()" 
+  [suggestions]="itensStr" 
+  (completeMethod)="loadData()"
+  >
+</p-autoComplete>

@@ -14,10 +14,17 @@ export class Usuario {
     testeData?:Date = new Date()
     testeCpf?: string = ""
     testeEmpresa?: Empresa
+    testePerfil?: Perfil
     testeNumber?: number = 80.798
 }
 
 export class Perfil {
+
+    constructor(codigo: Number, nome: String) {
+        this.codigo = codigo
+        this.nome = nome
+    }
+
     codigo: Number
     nome: String
 }

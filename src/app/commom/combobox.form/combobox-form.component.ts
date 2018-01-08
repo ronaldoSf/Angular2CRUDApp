@@ -63,7 +63,6 @@ export class ComboboxFormComponent implements FormComponent, OnInit {
 export class ComboboxFormConfig<TModel, TItemModel> extends FormConfig<TModel> {
   componentType: any = ComboboxFormComponent
 
-  //Quando o item do model for um objeto, deixe o idItemPropery nulo, senão coloque o nome da propreidade do item que é o id
   constructor(
       public modelProperty: Property<TModel>, 
       public validators: FormValidator[], 

@@ -1,3 +1,4 @@
 <select [(ngModel)]="currentValue" (ngModelChange)="currentValueChanged($event)">
   <option *ngFor="let item of formConfig.itens" [ngValue]="item">{{item[formConfig.descItemProperty.name]}}</option>
 </select>
+

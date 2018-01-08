@@ -20,6 +20,9 @@ import { CurrencyInputFormComponent } from '../commom/currency.input.form/curren
 //import { MoneyMaskModule } from '../../libs/money-mask/money-mask.module';
 import { Ng2InputMaskModule } from '../../libs/ng2-masked-input/ng2-input-mask.module';
 import { CurrencyMaskModule } from "ng2-currency-mask";
+import { AutoCompleteFormComponent } from '../commom/autocomplete.form/auto-complete-form.component';
+import { ListFormComponent } from '../commom/list.form/list-form.component';
+import { AutoCompleteModule } from 'primeng/primeng';
 
 const routes: Routes = [
   { path: '', component: UserListComponent },
@@ -27,11 +30,11 @@ const routes: Routes = [
 
 @NgModule({
   imports: [
-    CommonModule, FormsModule, DatagridModule, MatDialogModule, ReactiveFormsModule, CalendarModule, Ng2InputMaskModule, CurrencyMaskModule,
+    CommonModule, FormsModule, DatagridModule, MatDialogModule, ReactiveFormsModule, CalendarModule, Ng2InputMaskModule, CurrencyMaskModule, AutoCompleteModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [UserListComponent, UserEditComponent, MyFormComponent, DynamicFormHolderComponent, InputFormComponent, CalendarFormComponent, MaskedInputFormComponent, ComboboxFormComponent, CurrencyInputFormComponent, ToArrayPipe],
-  entryComponents: [UserEditComponent, InputFormComponent, CalendarFormComponent, MaskedInputFormComponent, ComboboxFormComponent, CurrencyInputFormComponent],
+  declarations: [UserListComponent, UserEditComponent, MyFormComponent, DynamicFormHolderComponent, InputFormComponent, CalendarFormComponent, MaskedInputFormComponent, ComboboxFormComponent, CurrencyInputFormComponent, AutoCompleteFormComponent, ListFormComponent, ToArrayPipe],
+  entryComponents: [UserEditComponent, InputFormComponent, CalendarFormComponent, MaskedInputFormComponent, ComboboxFormComponent, CurrencyInputFormComponent, AutoCompleteFormComponent, ListFormComponent],
   exports: [RouterModule]
 })
 export class UserModule { }
