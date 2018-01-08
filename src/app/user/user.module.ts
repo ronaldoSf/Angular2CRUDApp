@@ -15,8 +15,11 @@ import { CalendarModule } from 'primeng/primeng';
 import { CalendarFormComponent } from '../commom/calendar.form/calendar-form.component';
 import { ToArrayPipe } from '../commom/pipes';
 import { MaskedInputFormComponent } from '../commom/masked.input.form/masked-input-form.component';
-import { Ng2InputMaskModule } from '../commom/libs/ng2-masked-input/ng2-input-mask.module';
 import { ComboboxFormComponent } from '../commom/combobox.form/combobox-form.component';
+import { CurrencyInputFormComponent } from '../commom/currency.input.form/currency-input-form.component';
+//import { MoneyMaskModule } from '../../libs/money-mask/money-mask.module';
+import { Ng2InputMaskModule } from '../../libs/ng2-masked-input/ng2-input-mask.module';
+import { CurrencyMaskModule } from "ng2-currency-mask";
 
 const routes: Routes = [
   { path: '', component: UserListComponent },
@@ -24,11 +27,11 @@ const routes: Routes = [
 
 @NgModule({
   imports: [
-    CommonModule, FormsModule, DatagridModule, MatDialogModule, ReactiveFormsModule, CalendarModule, Ng2InputMaskModule,
+    CommonModule, FormsModule, DatagridModule, MatDialogModule, ReactiveFormsModule, CalendarModule, Ng2InputMaskModule, CurrencyMaskModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [UserListComponent, UserEditComponent, MyFormComponent, DynamicFormHolderComponent, InputFormComponent, CalendarFormComponent, MaskedInputFormComponent, ComboboxFormComponent, ToArrayPipe],
-  entryComponents: [UserEditComponent, InputFormComponent, CalendarFormComponent, MaskedInputFormComponent, ComboboxFormComponent],
+  declarations: [UserListComponent, UserEditComponent, MyFormComponent, DynamicFormHolderComponent, InputFormComponent, CalendarFormComponent, MaskedInputFormComponent, ComboboxFormComponent, CurrencyInputFormComponent, ToArrayPipe],
+  entryComponents: [UserEditComponent, InputFormComponent, CalendarFormComponent, MaskedInputFormComponent, ComboboxFormComponent, CurrencyInputFormComponent],
   exports: [RouterModule]
 })
 export class UserModule { }

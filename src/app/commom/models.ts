@@ -14,6 +14,7 @@ export class Usuario {
     testeData?:Date = new Date()
     testeCpf?: string = ""
     testeEmpresa?: Empresa
+    testeNumber?: number = 80.798
 }
 
 export class Perfil {
