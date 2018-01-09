@@ -26,6 +26,9 @@
     "core-js": "^2.4.1",
     "font-awesome": "^4.7.0",
     "moment": "^2.20.1",
+    "ng2-currency-mask": "^4.4.1",
+    "ng2-input-mask": "0.0.7",
+    "ng2-money-mask": "^1.0.0",
     "normalize.css": "^7.0.0",
     "primeng": "^5.0.0",
     "rxjs": "^5.5.2",
@@ -51,6 +54,6 @@
     "protractor": "~5.1.2",
     "ts-node": "~3.2.0",
     "tslint": "~5.7.0",
-    "typescript": "~2.4.2"
+    "typescript": "2.4.2"
   }
 }

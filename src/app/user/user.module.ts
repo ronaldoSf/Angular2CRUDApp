@@ -11,22 +11,28 @@ import { DatagridModule } from '../commom/datagrid/datagrid.module';
 import { MatDialogModule, MatDialog } from '@angular/material/dialog';
 import { UserEditComponent } from './edit/edit.user.component';
 import { MyFormComponent } from '../commom/forms/my.form.component';
-import { CalendarModule } from 'primeng/primeng';
+import { CalendarModule, InputMaskModule, AutoCompleteModule } from 'primeng/primeng';
 import { CalendarFormComponent } from '../commom/calendar.form/calendar-form.component';
 import { ToArrayPipe } from '../commom/pipes';
-import { InputMaskModule } from 'primeng/primeng';
+import { MaskedInputFormComponent } from '../commom/masked.input.form/masked-input-form.component';
+import { ComboboxFormComponent } from '../commom/combobox.form/combobox-form.component';
+import { CurrencyInputFormComponent } from '../commom/currency.input.form/currency-input-form.component';
+//import { MoneyMaskModule } from '../../libs/money-mask/money-mask.module';
+import { Ng2InputMaskModule } from '../../libs/ng2-masked-input/ng2-input-mask.module';
+import { CurrencyMaskModule } from "ng2-currency-mask";
+import { AutoCompleteFormComponent } from '../commom/autocomplete.form/auto-complete-form.component';
 
 const routes: Routes = [
-  { path: '', component: UserListComponent },  
+  { path: '', component: UserListComponent },
 ];
 
 @NgModule({
   imports: [
-    CommonModule, FormsModule, DatagridModule, MatDialogModule, ReactiveFormsModule, CalendarModule, InputMaskModule,
+    CommonModule, FormsModule, DatagridModule, MatDialogModule, ReactiveFormsModule, CalendarModule, InputMaskModule, Ng2InputMaskModule, CurrencyMaskModule, AutoCompleteModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [UserListComponent, UserEditComponent, MyFormComponent, DynamicFormHolderComponent, InputFormComponent, CalendarFormComponent, ToArrayPipe],
-  entryComponents: [UserEditComponent, InputFormComponent, CalendarFormComponent],
+  declarations: [UserListComponent, UserEditComponent, MyFormComponent, DynamicFormHolderComponent, InputFormComponent, CalendarFormComponent, MaskedInputFormComponent, ComboboxFormComponent, CurrencyInputFormComponent, AutoCompleteFormComponent, ToArrayPipe],
+  entryComponents: [UserEditComponent, InputFormComponent, CalendarFormComponent, MaskedInputFormComponent, ComboboxFormComponent, CurrencyInputFormComponent, AutoCompleteFormComponent],
   exports: [RouterModule]
 })
 export class UserModule { }

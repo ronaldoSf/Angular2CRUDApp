@@ -72,6 +72,14 @@ export class Util {
             });
         }
     }
+
+
+    public static truncate(num, places = 2) {
+        return Math.trunc(num * Math.pow(10, places)) / Math.pow(10, places);
+    }
+    static readonly Masks = class {
+        public static readonly cpf: string = "000.000.000-00";
+    }
     
 
     public static readonly propertyOf = <TObj>(name: keyof TObj) => name;
