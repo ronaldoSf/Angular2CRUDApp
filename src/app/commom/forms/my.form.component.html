@@ -2,7 +2,7 @@
     <form>
     
         <div *ngFor="let formRow of formConfigs">
-            <div *ngFor="let formConfig of formRow.formConfigs" class="form-group">
+            <div *ngFor="let formConfig of formRow.formConfigs" class="form-group" [style.width]="formConfig.width == 0 ? '100%' : formConfig.width" >
                 
                 <dynamic-form-holder [formConfig]="formConfig" [modelObject]="modelObject"></dynamic-form-holder>
             
@@ -18,9 +18,9 @@
 
        
     
-        <div class="form-row">
-            <button type="submit" class="btn bn-primary" >Salvar</button>
-            <button type="submit" class="btn" >Cancelar</button>
+        <div class="form-row" style="overflow: hidden;">
+                <button type="submit" class="btn btn-primary" style="float: right" (click)="save()">Salvar</button>
+                <button type="submit" class="btn" style="float: right" (click)="cancel()">Cancelar</button>
         </div>
     </form>
   </div>

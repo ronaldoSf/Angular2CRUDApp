@@ -33,6 +33,7 @@ export class DialogService {
             minHeight: dialogConfig.height,
             minWidth: dialogConfig.width,
             data: dialogConfig.data,
+            disableClose: !dialogConfig.clickOutsideClosesIt,
         });
 
         dialogRef.componentInstance.matDialogRef = dialogRef;
@@ -53,9 +54,11 @@ export abstract class DialogComponent {
 }
 
 export class DialogConfig {
-    width: string;
-    height: string;
-    data?: any
+
+    public width: string;
+    public height: string;
+    public clickOutsideClosesIt?: boolean = false
+    public data?: any
 }
 
 

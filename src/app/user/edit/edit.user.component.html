@@ -1,19 +1,24 @@
 <div class="panel panel-default">
   <div class="panel-heading">
     <h4 class="panel-title">
-      Locations
+      {{ windowTitle }}
       <button type="button" class="close" (click)="closeModal()" aria-label="Close">
           <span aria-hidden="true">×</span>
       </button>
     </h4>
   </div>
   <div class="panel-body">
-    <app-my-form [teste]="'aa'" [formConfigs]="formConfigs"  [modelObject]="usuario"></app-my-form>
 
-    <br/>
-    <br/>
-    <br/>
-    <br/>
     Model: {{usuario | json}}
+
+    <app-my-form 
+      [teste]="'aa'" 
+      [formConfigs]="formConfigs"  
+      [modelObject]="usuario"
+      (saveEvent)="save()"
+      (cancelEvent)="cancel()"
+    >
+    </app-my-form>
+
   </div>
 </div>

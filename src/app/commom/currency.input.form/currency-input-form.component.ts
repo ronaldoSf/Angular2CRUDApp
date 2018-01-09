@@ -46,10 +46,14 @@ export class CurrencyInputFormComponent implements FormComponent, OnInit {
 }
 
 export class CurrencyInputFormConfig<TModel> extends FormConfig<TModel> {
-  componentType: any = CurrencyInputFormComponent
+    componentType: any = CurrencyInputFormComponent
 
-  constructor(public modelProperty: Property<TModel>, public validators: FormValidator[]) {
-    super(validators)
-  }
+    constructor(
+        public width: number,
+        public modelProperty: Property<TModel>, 
+        public validators: FormValidator[]
+    ) {
+        super(validators)
+    }
   
 }

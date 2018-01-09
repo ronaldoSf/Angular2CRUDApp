@@ -85,6 +85,7 @@ export class CalendarFormConfig<TModel> extends FormConfig<TModel> {
   componentType: any = CalendarFormComponent
 
     constructor(
+        public width: number,
         public modelProperty: Property<TModel>, 
         public validators: FormValidator[],
         public improvedNavigation: Boolean = false

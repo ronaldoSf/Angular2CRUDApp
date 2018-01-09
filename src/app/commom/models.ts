@@ -1,21 +1,29 @@
 
 export class Usuario {
-    codigo: Number
-    nome: String
-    login: String
-    senha: String
+    codigo: Number = null;
+    nome: String = null;
+    login: String = null;
+    senha: String = null;
 
-    perfilCod: Number
-    empresaCod: Number
+    empresaCod: Number = null;
+    empresaNome:String = null;
 
-    empresaNome:String
-    perfilNome:String
+    perfilCod: Number = null;
+    perfilNome:String = null;
 
-    testeData?:Date = new Date()
+    get empresa(): Empresa {
+        return new Empresa(this.empresaCod, this.empresaNome)
+    }
+
+    get perfil(): Perfil {
+        return new Perfil(this.perfilCod, this.perfilNome)
+    }
+
+    /*testeData?:Date = new Date()
     testeCpf?: string = ""
     testeEmpresa?: Empresa
     testePerfil?: Perfil
-    testeNumber?: number = 80.798
+    testeNumber?: number = 80.798*/
 }
 
 export class Perfil {

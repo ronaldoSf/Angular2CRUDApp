@@ -12,50 +12,75 @@ import { FormValidator } from '../validators/required-validator.directive';
 })
 export class ComboboxFormComponent implements FormComponent, OnInit {
 
-  
-  public currentValue: any = null;
-  public formControl: FormControl;
-  
-  @Input()
-  public modelObject: Object;
+    
+    public currentValue: any = null;
+    public formControl: FormControl;
+    
+    @Input()
+    public modelObject: Object;
 
-  @Input()
-  public formConfig: ComboboxFormConfig<any, any>;
-  
+    @Input()
+    public formConfig: ComboboxFormConfig<any, any>;
 
-  private currentValueChanged($event) {
-      let newValue = !this.formConfig.modelPropertyIsId ? this.currentValue : this.currentValue[this.formConfig.idItemProperty.name]
-      Util.setDeepValue(this.modelObject, newValue, this.formConfig.modelProperty.name)
-  }
+    private nullItem: Object = {}
 
-  constructor() { }
+    private currentValueChanged($event) {
 
-  ngOnInit() {
-      this.formControl = this.formConfig.createFormControl();
+        var newValue = null;
+
+        if (this.currentValue == null || this.currentValue == this.nullItem) {
+            newValue = null
+        } else {
+            newValue = !this.formConfig.modelPropertyIsId ? this.currentValue : this.currentValue[this.formConfig.idItemProperty.name]        
+        }
+
+        Util.setDeepValue(this.modelObject, newValue, this.formConfig.modelProperty.name)
+    }
+
+    constructor() { }
+
+    ngOnInit() {
+        this.formControl = this.formConfig.createFormControl();
+
+        /*if (this.formConfig.itens.length == 0 || this.formConfig.itens[0][this.formConfig.idItemProperty.name] != this.nullItem[this.formConfig.idItemProperty.name]) {
+            this.formConfig.itens.unshift(this.nullItem)
+        }*/
+
+        this.nullItem[this.formConfig.idItemProperty.name] = 0;
+        this.nullItem[this.formConfig.descItemProperty.name] = this.formConfig.nullItemDescription;
       
-      var newValue = null;
+        var newValue = null;
 
-      if (!this.formConfig.modelPropertyIsId) {
-          let selectedItem = Util.getDeepValue(this.modelObject, this.formConfig.modelProperty.name)
-          let selectedItemValue = selectedItem[this.formConfig.idItemProperty.name]
+        if (!this.formConfig.modelPropertyIsId) {
+            let selectedItem = Util.getDeepValue(this.modelObject, this.formConfig.modelProperty.name)
 
-          newValue = this.formConfig.itens.find((item) => {
-            let itemId = item[this.formConfig.idItemProperty.name]
-            let result = itemId == selectedItemValue 
-            return result
-          }) 
-      } else {
-          let selectedItemValue = Util.getDeepValue(this.modelObject, this.formConfig.modelProperty.name)
+            if (selectedItem == null) {
+                newValue = this.nullItem
+            } else {
+                let selectedItemValue = selectedItem[this.formConfig.idItemProperty.name]
+            
+                newValue = this.formConfig.itens.find((item) => {
+                    let itemId = item[this.formConfig.idItemProperty.name]
+                    let result = itemId == selectedItemValue 
+                    return result
+                })
+            }
+        } else {
+            let selectedItemValue = Util.getDeepValue(this.modelObject, this.formConfig.modelProperty.name)
 
-          newValue = this.formConfig.itens.find((item) => {
-            let itemId = item[this.formConfig.idItemProperty.name]
-            let result = itemId == selectedItemValue 
-            return result
-          }) 
-      }
+            if (selectedItemValue == null) {
+                newValue = this.nullItem
+            } else {
+                newValue = this.formConfig.itens.find((item) => {
+                    let itemId = item[this.formConfig.idItemProperty.name]
+                    let result = itemId == selectedItemValue 
+                    return result
+                })
+            }
+    }
 
       this.currentValue = newValue
-  }
+    }
 
 }
 
@@ -64,12 +89,14 @@ export class ComboboxFormConfig<TModel, TItemModel> extends FormConfig<TModel> {
   componentType: any = ComboboxFormComponent
 
   constructor(
-      public modelProperty: Property<TModel>, 
+    public width: number,
+    public modelProperty: Property<TModel>, 
       public validators: FormValidator[], 
       public itens: TItemModel[], 
       public idItemProperty: Property<TItemModel>,
       public descItemProperty: Property<TItemModel>,
-      public modelPropertyIsId: Boolean
+      public modelPropertyIsId: Boolean,
+      public nullItemDescription: string = "Selecione..."
     ) {
       super(validators)
   }

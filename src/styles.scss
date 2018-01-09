@@ -58,7 +58,7 @@ mat-icon {
 
 .app-form-control {
     height: 30px !important;
-    width: auto !important;
+    //width: auto !important;
     font-family: $main-font !important;
     -webkit-appearance: none !important;
     padding: 5px 8px !important;
@@ -72,7 +72,7 @@ mat-icon {
     transition: none !important;
 }
 
-.form-control {
+input.form-control {
     @extend .app-form-control;
 }
 
@@ -271,4 +271,6 @@ select {
 
 select.form-control {
     color: #a9a7a7 !important;
+    width: auto !important;
+    //background: url(http://cdn1.iconfinder.com/data/icons/cc_mono_icon_set/blacks/16x16/br_down.png) no-repeat right #ffffff;
 }

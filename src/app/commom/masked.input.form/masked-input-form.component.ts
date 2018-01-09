@@ -37,10 +37,15 @@ export class MaskedInputFormComponent implements FormComponent, OnInit {
 }
 
 export class MaskedInputFormConfig<TModel> extends FormConfig<TModel> {
-  componentType: any = MaskedInputFormComponent
+    componentType: any = MaskedInputFormComponent
 
-  constructor(public modelProperty: Property<TModel>, public validators: FormValidator[], public mask: string) {
-    super(validators)
-  }
+    constructor(
+        public width:number,
+        public modelProperty: Property<TModel>, 
+        public validators: FormValidator[], 
+        public mask: string
+    ) {
+        super(validators)
+    }
   
 }

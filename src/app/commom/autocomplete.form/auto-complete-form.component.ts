@@ -83,6 +83,7 @@ export class AutoCompleteFormConfig<TModel, TItemModel> extends FormConfig<TMode
 
   
   constructor(
+    public width: number,
     public modelProperty: Property<TModel>,
     public validators: FormValidator[], 
     public itens: TItemModel[], 

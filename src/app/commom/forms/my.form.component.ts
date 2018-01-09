@@ -1,5 +1,5 @@
 import { FormValidator } from './../validators/required-validator.directive';
-import { Component, OnInit, Input, Inject, ComponentFactoryResolver, ViewContainerRef } from '@angular/core';
+import { Component, OnInit, Input, Inject, ComponentFactoryResolver, ViewContainerRef, Output, EventEmitter } from '@angular/core';
 import { Validator, FormGroup, ValidatorFn, FormControl } from '@angular/forms';
 
 @Component({
@@ -9,26 +9,41 @@ import { Validator, FormGroup, ValidatorFn, FormControl } from '@angular/forms';
 })
 export class MyFormComponent implements OnInit {
 
-  @Input()
-  public formConfigs: FormConfigRow<any>[]
+    @Input()
+    public formConfigs: FormConfigRow<any>[]
 
-  @Input()
-  public modelObject: Object;
+    @Input()
+    public modelObject: Object;
 
-  @Input()
-  public teste:string
+    @Input()
+    public teste:string
 
-  public formGroup: FormGroup
-  public initiated: boolean = false
+    @Output()
+    public saveEvent: EventEmitter<void> = new EventEmitter()
 
-  ngOnInit() {
-    console.log(this.teste) 
-    this.initiated = true;
-  }
+    @Output()
+    public cancelEvent: EventEmitter<void> = new EventEmitter()
 
-  ngAfterContentInit() {
-    console.log(this.teste)
-  }
+    public save() {
+        this.saveEvent.emit()        
+    }
+
+    public cancel() {
+        this.cancelEvent.emit()
+    }
+
+
+    public formGroup: FormGroup
+    public initiated: boolean = false
+
+    ngOnInit() {
+        console.log(this.teste) 
+        this.initiated = true;
+    }
+
+    ngAfterContentInit() {
+        console.log(this.teste)
+    }
 
 }
 
@@ -41,7 +56,9 @@ export abstract class FormConfig<TModel> extends FormConfigRow<TModel> {
     abstract modelProperty: Property<TModel>
     abstract validators: FormValidator[];
     public formControl: FormControl
-    public isDisabled:Boolean = false
+    public isDisabled: Boolean = false
+    public placeholder: string = ""
+    abstract width: number; //0 é
 
     public formConfigs: FormConfig<TModel>[] = [this]
 
@@ -49,6 +66,16 @@ export abstract class FormConfig<TModel> extends FormConfigRow<TModel> {
     constructor(validators: FormValidator[]) {
         super()
         //this.createFormControl(validators)
+    }
+
+    public setPlaceHolder(placeholder: string): FormConfig<TModel> {
+        this.placeholder = placeholder
+        return this;
+    }
+    
+    public setWidth(width: number): FormConfig<TModel> {
+        this.width = width
+        return this;        
     }
 
     public createFormControl(validators: FormValidator[] = this.validators): FormControl {

@@ -23,10 +23,11 @@
 
 <span style="position: relative">
         
-    <input [mask]="99/99/9999" placeholder=""
+    <p-inputMask mask="99/99/9999" placeholder=""
         [(ngModel)]="currentValueStr" (ngModelChange)="currentInputValueChanged($event)"
         (focus)="inputfocusIn()" (blur)="inputfocusOut()"
-        [style]="{display : 'inline-block'}" class="'form-control'"/>
+        [style]="{display : 'inline-block'}" [styleClass]="'form-control'">
+    </p-inputMask>
     
     <button class="ui-datepicker-trigger ui-calendar-button ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only">
         <span class="ui-button-icon-left ui-clickable fa fa-fw fa-calendar"></span>
