@@ -89,7 +89,8 @@ export class AutoCompleteFormConfig<TModel, TItemModel> extends FormConfig<TMode
     public itens: TItemModel[], 
     public descItemProperty: Property<TItemModel>,
     public searchFunction: Function,
-    public idItemProperty: Property<TItemModel> = null    
+    public idItemProperty: Property<TItemModel> = null,
+    public placeHolder: string = ""    
   ) {
     //super(modelProperty, validators, itens, idItemProperty, descItemProperty, modelPropertyIsId)
     super(validators)

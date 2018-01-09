@@ -34,6 +34,8 @@ export class ComboboxFormComponent implements FormComponent, OnInit {
             newValue = !this.formConfig.modelPropertyIsId ? this.currentValue : this.currentValue[this.formConfig.idItemProperty.name]        
         }
 
+        this.formControl.markAsDirty()
+        this.formControl.setValue(newValue)
         Util.setDeepValue(this.modelObject, newValue, this.formConfig.modelProperty.name)
     }
 
@@ -41,13 +43,16 @@ export class ComboboxFormComponent implements FormComponent, OnInit {
 
     ngOnInit() {
         this.formControl = this.formConfig.createFormControl();
-
+        this.formControl.setValue(Util.getDeepValue(this.modelObject, this.formConfig.modelProperty.name))
+        
         /*if (this.formConfig.itens.length == 0 || this.formConfig.itens[0][this.formConfig.idItemProperty.name] != this.nullItem[this.formConfig.idItemProperty.name]) {
             this.formConfig.itens.unshift(this.nullItem)
         }*/
 
+        
+
         this.nullItem[this.formConfig.idItemProperty.name] = 0;
-        this.nullItem[this.formConfig.descItemProperty.name] = this.formConfig.nullItemDescription;
+        this.nullItem[this.formConfig.descItemProperty.name] = this.formConfig.placeHolder;
       
         var newValue = null;
 
@@ -79,7 +84,7 @@ export class ComboboxFormComponent implements FormComponent, OnInit {
             }
     }
 
-      this.currentValue = newValue
+        this.currentValue = newValue
     }
 
 }
@@ -96,7 +101,7 @@ export class ComboboxFormConfig<TModel, TItemModel> extends FormConfig<TModel> {
       public idItemProperty: Property<TItemModel>,
       public descItemProperty: Property<TItemModel>,
       public modelPropertyIsId: Boolean,
-      public nullItemDescription: string = "Selecione..."
+      public placeHolder: string = "Selecione..."
     ) {
       super(validators)
   }

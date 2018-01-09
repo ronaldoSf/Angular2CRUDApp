@@ -4,7 +4,8 @@ export class Usuario {
     nome: String = null;
     login: String = null;
     senha: String = null;
-
+    novaSenha: String = null;
+    
     empresaCod: Number = null;
     empresaNome:String = null;
 

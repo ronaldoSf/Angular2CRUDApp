@@ -1,5 +1,5 @@
 import { FormValidator } from './../validators/required-validator.directive';
-import { Component, OnInit, Input, Inject, ComponentFactoryResolver, ViewContainerRef, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Inject, ComponentFactoryResolver, ViewContainerRef, Output, EventEmitter, TemplateRef } from '@angular/core';
 import { Validator, FormGroup, ValidatorFn, FormControl } from '@angular/forms';
 
 @Component({
@@ -24,6 +24,9 @@ export class MyFormComponent implements OnInit {
     @Output()
     public cancelEvent: EventEmitter<void> = new EventEmitter()
 
+    @Input() 
+    public bottomTemplateRef: TemplateRef<any>;
+
     public save() {
         this.saveEvent.emit()        
     }
@@ -31,7 +34,6 @@ export class MyFormComponent implements OnInit {
     public cancel() {
         this.cancelEvent.emit()
     }
-
 
     public formGroup: FormGroup
     public initiated: boolean = false
@@ -57,7 +59,8 @@ export abstract class FormConfig<TModel> extends FormConfigRow<TModel> {
     abstract validators: FormValidator[];
     public formControl: FormControl
     public isDisabled: Boolean = false
-    public placeholder: string = ""
+    abstract placeHolder: string = ""
+    public canShowValidation: boolean = false
     abstract width: number; //0 é
 
     public formConfigs: FormConfig<TModel>[] = [this]
@@ -69,7 +72,7 @@ export abstract class FormConfig<TModel> extends FormConfigRow<TModel> {
     }
 
     public setPlaceHolder(placeholder: string): FormConfig<TModel> {
-        this.placeholder = placeholder
+        this.placeHolder = placeholder
         return this;
     }
     

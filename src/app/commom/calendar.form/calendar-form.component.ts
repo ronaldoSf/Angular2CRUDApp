@@ -88,7 +88,8 @@ export class CalendarFormConfig<TModel> extends FormConfig<TModel> {
         public width: number,
         public modelProperty: Property<TModel>, 
         public validators: FormValidator[],
-        public improvedNavigation: Boolean = false
+        public improvedNavigation: Boolean = false,
+        public placeHolder: string = ""
     ) {
         super(validators)
     }

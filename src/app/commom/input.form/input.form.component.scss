@@ -1,10 +1,11 @@
 @import '../../../config.scss';
 
 input.ng-invalid.ng-dirty {
-    outline: $invalidColor auto 5px;
+    outline-offset: -2px;
+    outline: $invalidColor auto 2px;
     outline-color: $invalidColor;
     outline-style: auto;
-    outline-width: 5px;
+    outline-width: 2px;
 }
 
 input.ng-invalid.ng-dirty:focus {
@@ -12,10 +13,11 @@ input.ng-invalid.ng-dirty:focus {
 } 
 
 input.ng-valid.ng-dirty:focus {
-    outline: $validColor auto 5px;
+    outline-offset: -2px;
+    outline: $validColor auto 2px;
     outline-color: $validColor;
     outline-style: auto;
-    outline-width: 5px;
+    outline-width: 2px;
 }
 
 input {

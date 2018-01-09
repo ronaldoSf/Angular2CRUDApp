@@ -16,8 +16,9 @@ export class RequiredValidator implements FormValidator {
         /*if (!formControl.touched) {
             return null;
         }*/
-        
-        if (typeof value !== "string" || value == null || value.trim() == "") {
+        if (value == null) {
+            return {0: this.messages.main}            
+        } else if (typeof value === "string" && value.trim() == "") {
             return {0: this.messages.main}
         } else {
             return null;

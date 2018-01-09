@@ -51,7 +51,8 @@ export class CurrencyInputFormConfig<TModel> extends FormConfig<TModel> {
     constructor(
         public width: number,
         public modelProperty: Property<TModel>, 
-        public validators: FormValidator[]
+        public validators: FormValidator[],
+        public placeHolder: string = ""
     ) {
         super(validators)
     }

@@ -4,13 +4,14 @@ import { MatDialogRef, MatDialog } from "@angular/material/dialog";
 import { ComponentType } from "@angular/cdk/portal";
 import { ComponentRef } from '@angular/core/src/linker/component_factory';
 import { Component } from '@angular/core/src/metadata/directives';
+import { DialogMessageComponent } from '../dialog.message/dialog-message-component.component';
 
 
 
 @Injectable()
 export class DialogService {
 
-    constructor(public dialog: MatDialog) { }
+    constructor(public dialogService: MatDialog) { }
 
 
     teste() {
@@ -29,14 +30,34 @@ export class DialogService {
             throw new Error("Config não implementado pelo component");
         }
         
-        let dialogRef = this.dialog.open(compType, {
-            minHeight: dialogConfig.height,
-            minWidth: dialogConfig.width,
+        let dialogRef = this.dialogService.open(compType, {
+            height: dialogConfig.height,
+            width: dialogConfig.width,
+            minHeight: dialogConfig.minHeight,
+            minWidth: dialogConfig.minWidth,
             data: dialogConfig.data,
             disableClose: !dialogConfig.clickOutsideClosesIt,
         });
 
         dialogRef.componentInstance.matDialogRef = dialogRef;
+        return dialogRef.componentInstance;
+    }
+
+
+    public createDialogMessage(message: string, buttonMessage: string = "Ok", callBack: Function = null) {
+    
+        let dialogRef = this.dialogService.open(DialogMessageComponent, {
+            height: "auto",
+            width: "auto",
+            data: {},
+            disableClose: true,
+        });
+
+        dialogRef.componentInstance.matDialogRef = dialogRef;
+        dialogRef.componentInstance.message = message;
+        dialogRef.componentInstance.buttonMessage = buttonMessage
+        dialogRef.componentInstance.callBack = callBack
+
         return dialogRef.componentInstance;
     }
 
@@ -57,6 +78,8 @@ export class DialogConfig {
 
     public width: string;
     public height: string;
+    public minWidth?: string;
+    public minHeight?: string;
     public clickOutsideClosesIt?: boolean = false
     public data?: any
 }

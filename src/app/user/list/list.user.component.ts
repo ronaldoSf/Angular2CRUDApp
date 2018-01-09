@@ -5,7 +5,7 @@ import { UserEditComponent } from './../edit/edit.user.component';
 import {Component, ViewChild} from '@angular/core';
 import {MenuItem} from 'primeng/primeng';
 
-import {Column, Action, DatagridComponent, DatagridResponse} from '../../commom/datagrid/datagrid.component';
+import {Column, Action, DatagridComponent, GenericDatagridResponse} from '../../commom/datagrid/datagrid.component';
 
 import {Usuario, Empresa} from '../../commom/models';
 import * as Service from '../user.service';
@@ -70,7 +70,7 @@ export class UserListComponent {
         let item = this.datagrid.dataSource[itemIndex]
     }
 
-    public loadData(): Observable<DatagridResponse> {
+    public loadData(): Observable<GenericDatagridResponse<any>> {
         let offset = this.datagrid.currentOffset
         let limit = this.datagrid.currentOffset + this.datagrid.currentPageSize
 

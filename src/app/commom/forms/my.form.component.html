@@ -1,27 +1,42 @@
 <div>
     <form>
     
-        <div *ngFor="let formRow of formConfigs">
-            <div *ngFor="let formConfig of formRow.formConfigs" class="form-group" [style.width]="formConfig.width == 0 ? '100%' : formConfig.width" >
+        <div *ngFor="let formRow of formConfigs; let formRowIndex = index;" style="display: flex; flex-direction: row;">
+            
+
+            <div *ngFor="let formConfig of formRow.formConfigs; let formConfigIndex = index;" class="form-group inline"
+                style="position: relative;" 
+                [style.width]="formConfig.width == 0 ? 'auto' : formConfig.width+'px'" 
+                [style.flex-grow]="formConfig.width == 0 ? '1000' : '0'"
+                [style.padding-right]="formConfigIndex < formRow.formConfigs.length-1 ? '10px' : '0px'" >
                 
                 <dynamic-form-holder [formConfig]="formConfig" [modelObject]="modelObject"></dynamic-form-holder>
             
-                <div *ngIf="initiated">
-                    <!--<div *ngIf="formConfig.formControl != null">
-                        <span *ngFor="let error of formConfig.formControl.errors | toArray">
-                            {{error}}
+                <div *ngIf="initiated" style="position: absolute;">
+                    <div *ngIf="formConfig.formControl != null && !formConfig.formControl.pristine">
+                        <span *ngFor="let error of formConfig.formControl.errors | toArray" class="validation_error">
+                            * {{error}}
                         </span>
-                    </div>-->
+                    </div>
                 </div>
+                
+
             </div>
+
         </div>
 
        
     
-        <div class="form-row" style="overflow: hidden;">
+        <div class="form-row" style="overflow: hidden;"  *ngIf="bottomTemplateRef != null">
+                <ng-template [ngTemplateOutlet]="templateRef"></ng-template>
+        </div>
+
+        <div class="form-row" style="overflow: hidden;" *ngIf="templateRef == null">
                 <button type="submit" class="btn btn-primary" style="float: right" (click)="save()">Salvar</button>
                 <button type="submit" class="btn" style="float: right" (click)="cancel()">Cancelar</button>
         </div>
+
+        
     </form>
   </div>
   

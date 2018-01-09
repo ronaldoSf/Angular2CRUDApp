@@ -3,7 +3,8 @@ import {HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HttpClient} from '
 import { Observable }    from 'rxjs/Observable';
 import { Usuario }    from '../commom/models';
 import { Config }    from '../commom/config';
-import { DatagridResponse } from '../commom/datagrid/datagrid.component';
+import { GenericDatagridResponse, GenericDatagridRequest } from '../commom/datagrid/datagrid.component';
+import { GenericSaveRequest, GenericSaveResponse } from '../commom/util';
 
 @Injectable()
 export class UserService {
@@ -21,19 +22,18 @@ export class UserService {
     public findByFilter(request: FindByFilterRequest): Observable<FindByFilterResponse> {
         return this.http.post<FindByFilterResponse>(this.getApiUrl('usuarios.json'), request);
     }
+    
+    public save(request: GenericSaveRequest<Usuario>): Observable<GenericSaveResponse> {
+        return this.http.post<GenericSaveResponse>(this.getApiUrl('usuarios.json'), request);
+    }
 
 }
 
-export class FindByFilterRequest {
-    offset: number
-    limit:number
-
+export class FindByFilterRequest extends GenericDatagridRequest {
     nome: string
     empresa: number
 }
 
-export class FindByFilterResponse extends DatagridResponse {
-    total: number
-    status:string
-    result: Usuario[]
+export class FindByFilterResponse extends GenericDatagridResponse<Usuario> {
+
 }

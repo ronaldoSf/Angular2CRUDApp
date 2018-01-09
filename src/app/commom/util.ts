@@ -95,6 +95,18 @@ export class CallbackEvent {
     return f;
   }
 }
+
+export class GenericSaveResponse {
+    status: string;
+    id: number;    
+}
+
+
+export class GenericSaveRequest<T> {
+    model: T;
+}
+
+
 /*
 Object["toArray"] = function() {
     return Util.objToArray(this);

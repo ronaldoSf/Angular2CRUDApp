@@ -69,7 +69,7 @@ export class DatagridComponent implements OnInit {
 
     private loadData() {
         if (this.loadCallback) {
-            let observable: Observable<DatagridResponse> = this.loadCallback()
+            let observable: Observable<GenericDatagridResponse<any>> = this.loadCallback()
             observable.subscribe(
                 result => { 
                     if (result.status == "OK") {
@@ -154,8 +154,13 @@ export class Action {
   action?: Function
 }
 
-export abstract class DatagridResponse {
-    abstract total: number
-    abstract status: string
-    abstract result: any[]
+export abstract class GenericDatagridResponse<T> {
+    total: number
+    status: string
+    result: T[]
+}
+
+export abstract class GenericDatagridRequest {
+    offset: number
+    limit:number
 }

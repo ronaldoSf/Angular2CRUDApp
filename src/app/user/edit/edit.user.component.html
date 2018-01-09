@@ -17,7 +17,12 @@
       [modelObject]="usuario"
       (saveEvent)="save()"
       (cancelEvent)="cancel()"
+      [bottomTemplateRef]="bottomTemplateRef"
     >
+      <ng-template  #bottomTemplateRef>
+          <button type="submit" class="btn btn-primary" style="float: right" (click)="save()">Salvar</button>
+          <button type="submit" class="btn" style="float: right" (click)="cancel()">Cancelar</button>
+      </ng-template>
     </app-my-form>
 
   </div>

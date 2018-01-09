@@ -43,7 +43,8 @@ export class MaskedInputFormConfig<TModel> extends FormConfig<TModel> {
         public width:number,
         public modelProperty: Property<TModel>, 
         public validators: FormValidator[], 
-        public mask: string
+        public mask: string,
+        public placeHolder: string = ""
     ) {
         super(validators)
     }
