@@ -14,6 +14,7 @@ import { MyFormComponent } from '../commom/forms/my.form.component';
 import { CalendarModule } from 'primeng/primeng';
 import { CalendarFormComponent } from '../commom/calendar.form/calendar-form.component';
 import { ToArrayPipe } from '../commom/pipes';
+import { InputMaskModule } from 'primeng/primeng';
 
 const routes: Routes = [
   { path: '', component: UserListComponent },  
@@ -21,7 +22,7 @@ const routes: Routes = [
 
 @NgModule({
   imports: [
-    CommonModule, FormsModule, DatagridModule, MatDialogModule, ReactiveFormsModule, CalendarModule,
+    CommonModule, FormsModule, DatagridModule, MatDialogModule, ReactiveFormsModule, CalendarModule, InputMaskModule,
     RouterModule.forChild(routes)
   ],
   declarations: [UserListComponent, UserEditComponent, MyFormComponent, DynamicFormHolderComponent, InputFormComponent, CalendarFormComponent, ToArrayPipe],

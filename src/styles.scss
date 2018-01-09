@@ -32,6 +32,10 @@ mat-icon {
     padding: 0px !important;
 }
 
+.ui-inputtext {
+    border: 1px solid pink;
+}
+
 .panel-default {
     height: 100%;
     overflow: hidden;
@@ -51,6 +55,27 @@ mat-icon {
         height: 100%;
     }
 }
+
+.app-form-control {
+    height: 30px !important;
+    width: auto !important;
+    font-family: $main-font !important;
+    -webkit-appearance: none !important;
+    padding: 5px 8px !important;
+    font-size: 13px !important;
+    line-height: 1.4 !important;
+    background-color: #fff !important;
+    border: 1px solid #d9d9d9 !important;
+    border-top-color: silver !important;
+    border-radius: 2px !important;
+    box-shadow: none !important;
+    transition: none !important;
+}
+
+.form-control {
+    @extend .app-form-control;
+}
+
 
 
 

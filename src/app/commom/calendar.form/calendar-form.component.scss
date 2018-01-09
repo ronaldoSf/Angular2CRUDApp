@@ -1,0 +1,14 @@
+.ui-calendar-button {
+    position: absolute !important;
+    border-top-left-radius: 0 !important;
+    border-bottom-left-radius: 0 !important;
+    width: 2em !important;
+    border-left: 0 none !important;
+}
+
+.calendar-holder {
+    z-index: 1001; 
+    left: 0px; 
+    opacity: 1; 
+    position: absolute;
+}

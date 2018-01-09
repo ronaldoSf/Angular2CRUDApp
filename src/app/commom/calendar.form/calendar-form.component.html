@@ -1,6 +1,56 @@
-<p-calendar 
-    [(ngModel)]="currentValue" 
-    (ngModelChange)="currentValueChanged($event)"
-    [formControl]="formControl"
-    >
-</p-calendar>
+
+        <!--
+        <p-calendar 
+        [(ngModel)]="currentValue" 
+        (ngModelChange)="currentValueChanged($event)"
+        [formControl]="formControl"
+        [inputStyleClass]="'app-form-control'"
+        [showIcon]="true"
+        [monthNavigator]="formConfig.improvedNavigation" 
+        [yearNavigator]="formConfig.improvedNavigation"
+        [locale]="brLocale"
+        [dateFormat]="dd/mm/yy"
+        >
+        
+        </p-calendar>
+        -->
+
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+
+<span style="position: relative">
+        
+    <p-inputMask mask="99/99/9999" placeholder=""
+        [(ngModel)]="currentValueStr" (ngModelChange)="currentInputValueChanged($event)"
+        (onFocus)="inputfocusIn()" (onBlur)="inputfocusOut()"
+        [style]="{display : 'inline-block'}" [styleClass]="'form-control'">
+    </p-inputMask>
+    
+    <button class="ui-datepicker-trigger ui-calendar-button ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only">
+        <span class="ui-button-icon-left ui-clickable fa fa-fw fa-calendar"></span>
+        <span class="ui-button-text ui-clickable">ui-btn</span>
+    </button>
+
+    <div [hidden]="!isCalendarShowing" class="calendar-holder">
+
+        <p-calendar 
+        [(ngModel)]="currentValue" 
+        (ngModelChange)="currentValueChanged($event)"
+        [formControl]="formControl"
+        [inputStyleClass]="'app-form-control'"
+        [showIcon]="true"
+        [monthNavigator]="formConfig.improvedNavigation" 
+        [yearNavigator]="formConfig.improvedNavigation"
+        [locale]="brLocale"
+        [inline]="true"
+        [dateFormat]="dd/mm/yy"
+        >
+        
+        </p-calendar>
+
+    </div>
+
+</span>
