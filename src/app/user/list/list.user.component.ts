@@ -58,7 +58,7 @@ export class UserListComponent {
 
     private addItem() {
 
-        let fakeUser: Usuario = {codigo: 1, nome: "a", login: "s", senha: "d", perfilCod: 1, empresaCod: 2, perfilNome: "", empresaNome: ""}
+        let fakeUser: Usuario = {codigo: 1, nome: "a", login: "s", senha: "d", perfilCod: 1, empresaCod: 2, perfilNome: "", empresaNome: "", empresa: null, perfil: null}
         
         let i = this.dialogService.createDialog(UserEditComponent, {entity: fakeUser});    
     }
@@ -73,18 +73,144 @@ export class UserListComponent {
         let item = this.datagrid.dataSource[itemIndex]
     }
 
-    public loadData(): Observable<GenericDatagridResponse<any>> {
+    public loadData(/*offset: number, limit: number)*/): Observable<GenericDatagridResponse<any>> {
         let offset = this.datagrid.currentOffset
-        let limit = this.datagrid.currentOffset + this.datagrid.currentPageSize
-
-        var request: Service.FindByFilterRequest = {
-        "nome": this.filterName, 
-        "empresa": this.filterEmpresa == null ? null : this.filterEmpresa.codigo.valueOf(),
-        "offset": offset,
-        "limit": limit
-        }
+        let pgSize = this.datagrid.currentPageSize
+        let limitt = offset + pgSize
         
-        return this.userService.findByFilter(request)
+        var request: Service.FindByFilterRequest = {
+            "nome": this.filterName, 
+            "empresa": this.filterEmpresa == null ? null : this.filterEmpresa.codigo.valueOf(),
+            "offset": offset,
+            "limit": limitt
+        }
+
+        let fakeObs = Observable.create(observer => {
+
+            setTimeout(() => {
+                let fakeUsersJson = this.fakeUsersJson
+                fakeUsersJson.totalItens = fakeUsersJson.result.length
+                fakeUsersJson.result = (fakeUsersJson.result as Array<any>).slice(offset, limitt)
+                observer.next(fakeUsersJson)
+                observer.complete()
+            }, 500)
+            
+        })
+        
+        //return this.userService.findByFilter(request)
+        return fakeObs
     }
+
+
+
+    get fakeUsersJson(): any {
+        return {"status": "OK", "total": 102, "result":[
+            {"codigo": 1, "nome": "1", "login": "as", "senha": "", "empresaCod": 1, "perfilCod": 1, "empresaNome": "asdf", "perfilNome": ""},
+            {"codigo": 1, "nome": "1", "login": "s", "senha": "", "empresaCod": 1, "perfilCod": 1, "empresaNome": "76", "perfilNome": "sdfgs"},
+            {"codigo": 1, "nome": "1", "login": "s", "senha": "", "empresaCod": 1, "perfilCod": 1, "empresaNome": "76", "perfilNome": "sdfgs"},
+            {"codigo": 1, "nome": "1", "login": "asdf", "senha": "", "empresaCod": 1, "perfilCod": 1, "empresaNome": "lo", "perfilNome": "sdfsdg"},
+            {"codigo": 1, "nome": "1", "login": "as", "senha": "", "empresaCod": 1, "perfilCod": 1, "empresaNome": "uyik76", "perfilNome": ""},
+            {"codigo": 1, "nome": "1", "login": "vbv", "senha": "", "empresaCod": 1, "perfilCod": 1, "empresaNome": "", "perfilNome": "sdfw"},
+            {"codigo": 1, "nome": "1", "login": "s", "senha": "", "empresaCod": 1, "perfilCod": 1, "empresaNome": "76", "perfilNome": "sdfgs"},
+            {"codigo": 1, "nome": "1", "login": "fht", "senha": "", "empresaCod": 1, "perfilCod": 1, "empresaNome": "jhj", "perfilNome": ""},
+            {"codigo": 1, "nome": "1", "login": "iu", "senha": "", "empresaCod": 1, "perfilCod": 1, "empresaNome": "", "perfilNome": "utys"},
+            {"codigo": 1, "nome": "1", "login": "vbv", "senha": "", "empresaCod": 1, "perfilCod": 1, "empresaNome": "", "perfilNome": "sdfw"},
+            {"codigo": 1, "nome": "1", "login": "asdf", "senha": "", "empresaCod": 1, "perfilCod": 1, "empresaNome": "lo", "perfilNome": "sdfsdg"},
+            {"codigo": 1, "nome": "1", "login": "as", "senha": "", "empresaCod": 1, "perfilCod": 1, "empresaNome": "uyik76", "perfilNome": ""},
+            {"codigo": 1, "nome": "1", "login": "s", "senha": "", "empresaCod": 1, "perfilCod": 1, "empresaNome": "76", "perfilNome": "sdfgs"},
+            {"codigo": 1, "nome": "1", "login": "asdf", "senha": "", "empresaCod": 1, "perfilCod": 1, "empresaNome": "lo", "perfilNome": "sdfsdg"},
+            {"codigo": 1, "nome": "1", "login": "as", "senha": "", "empresaCod": 1, "perfilCod": 1, "empresaNome": "uyik76", "perfilNome": ""},
+            {"codigo": 1, "nome": "1", "login": "s", "senha": "", "empresaCod": 1, "perfilCod": 1, "empresaNome": "76", "perfilNome": "sdfgs"},
+            {"codigo": 1, "nome": "1", "login": "s", "senha": "", "empresaCod": 1, "perfilCod": 1, "empresaNome": "76", "perfilNome": "sdfgs"},
+            {"codigo": 1, "nome": "1", "login": "asdf", "senha": "", "empresaCod": 1, "perfilCod": 1, "empresaNome": "lo", "perfilNome": "sdfsdg"},
+            {"codigo": 1, "nome": "1", "login": "as", "senha": "", "empresaCod": 1, "perfilCod": 1, "empresaNome": "uyik76", "perfilNome": ""},
+            {"codigo": 1, "nome": "1", "login": "vbv", "senha": "", "empresaCod": 1, "perfilCod": 1, "empresaNome": "", "perfilNome": "sdfw"},
+            {"codigo": 1, "nome": "1", "login": "s", "senha": "", "empresaCod": 1, "perfilCod": 1, "empresaNome": "76", "perfilNome": "sdfgs"},
+            {"codigo": 1, "nome": "1", "login": "fht", "senha": "", "empresaCod": 1, "perfilCod": 1, "empresaNome": "jhj", "perfilNome": ""},
+            {"codigo": 1, "nome": "1", "login": "iu", "senha": "", "empresaCod": 1, "perfilCod": 1, "empresaNome": "", "perfilNome": "utys"},
+            {"codigo": 1, "nome": "1", "login": "vbv", "senha": "", "empresaCod": 1, "perfilCod": 1, "empresaNome": "", "perfilNome": "sdfw"},
+            {"codigo": 1, "nome": "1", "login": "asdf", "senha": "", "empresaCod": 1, "perfilCod": 1, "empresaNome": "lo", "perfilNome": "sdfsdg"},
+            {"codigo": 1, "nome": "1", "login": "as", "senha": "", "empresaCod": 1, "perfilCod": 1, "empresaNome": "uyik76", "perfilNome": ""},
+            {"codigo": 1, "nome": "1", "login": "s", "senha": "", "empresaCod": 1, "perfilCod": 1, "empresaNome": "76", "perfilNome": "sdfgs"},
+            {"codigo": 1, "nome": "1", "login": "asdf", "senha": "", "empresaCod": 1, "perfilCod": 1, "empresaNome": "lo", "perfilNome": "sdfsdg"},
+            {"codigo": 1, "nome": "1", "login": "as", "senha": "", "empresaCod": 1, "perfilCod": 1, "empresaNome": "uyik76", "perfilNome": ""},
+            {"codigo": 1, "nome": "1", "login": "s", "senha": "", "empresaCod": 1, "perfilCod": 1, "empresaNome": "76", "perfilNome": "sdfgs"},
+            {"codigo": 1, "nome": "1", "login": "s", "senha": "", "empresaCod": 1, "perfilCod": 1, "empresaNome": "76", "perfilNome": "sdfgs"},
+            {"codigo": 1, "nome": "1", "login": "asdf", "senha": "", "empresaCod": 1, "perfilCod": 1, "empresaNome": "lo", "perfilNome": "sdfsdg"},
+            {"codigo": 1, "nome": "1", "login": "as", "senha": "", "empresaCod": 1, "perfilCod": 1, "empresaNome": "uyik76", "perfilNome": ""},
+            {"codigo": 1, "nome": "1", "login": "vbv", "senha": "", "empresaCod": 1, "perfilCod": 1, "empresaNome": "", "perfilNome": "sdfw"},
+            {"codigo": 1, "nome": "1", "login": "s", "senha": "", "empresaCod": 1, "perfilCod": 1, "empresaNome": "76", "perfilNome": "sdfgs"},
+            {"codigo": 1, "nome": "1", "login": "fht", "senha": "", "empresaCod": 1, "perfilCod": 1, "empresaNome": "jhj", "perfilNome": ""},
+            {"codigo": 1, "nome": "1", "login": "iu", "senha": "", "empresaCod": 1, "perfilCod": 1, "empresaNome": "", "perfilNome": "utys"},
+            {"codigo": 1, "nome": "1", "login": "vbv", "senha": "", "empresaCod": 1, "perfilCod": 1, "empresaNome": "", "perfilNome": "sdfw"},
+            {"codigo": 1, "nome": "1", "login": "asdf", "senha": "", "empresaCod": 1, "perfilCod": 1, "empresaNome": "lo", "perfilNome": "sdfsdg"},
+            {"codigo": 1, "nome": "1", "login": "as", "senha": "", "empresaCod": 1, "perfilCod": 1, "empresaNome": "uyik76", "perfilNome": ""},
+            {"codigo": 1, "nome": "1", "login": "s", "senha": "", "empresaCod": 1, "perfilCod": 1, "empresaNome": "76", "perfilNome": "sdfgs"},
+            {"codigo": 1, "nome": "1", "login": "asdf", "senha": "", "empresaCod": 1, "perfilCod": 1, "empresaNome": "lo", "perfilNome": "sdfsdg"},
+            {"codigo": 1, "nome": "1", "login": "as", "senha": "", "empresaCod": 1, "perfilCod": 1, "empresaNome": "uyik76", "perfilNome": ""},
+            {"codigo": 1, "nome": "1", "login": "s", "senha": "", "empresaCod": 1, "perfilCod": 1, "empresaNome": "76", "perfilNome": "sdfgs"},
+            {"codigo": 1, "nome": "1", "login": "s", "senha": "", "empresaCod": 1, "perfilCod": 1, "empresaNome": "76", "perfilNome": "sdfgs"},
+            {"codigo": 1, "nome": "1", "login": "asdf", "senha": "", "empresaCod": 1, "perfilCod": 1, "empresaNome": "lo", "perfilNome": "sdfsdg"},
+            {"codigo": 1, "nome": "1", "login": "as", "senha": "", "empresaCod": 1, "perfilCod": 1, "empresaNome": "uyik76", "perfilNome": ""},
+            {"codigo": 1, "nome": "1", "login": "vbv", "senha": "", "empresaCod": 1, "perfilCod": 1, "empresaNome": "", "perfilNome": "sdfw"},
+            {"codigo": 1, "nome": "1", "login": "s", "senha": "", "empresaCod": 1, "perfilCod": 1, "empresaNome": "76", "perfilNome": "sdfgs"},
+            {"codigo": 1, "nome": "1", "login": "fht", "senha": "", "empresaCod": 1, "perfilCod": 1, "empresaNome": "jhj", "perfilNome": ""},
+            {"codigo": 1, "nome": "1", "login": "iu", "senha": "", "empresaCod": 1, "perfilCod": 1, "empresaNome": "", "perfilNome": "utys"},
+            {"codigo": 1, "nome": "1", "login": "vbv", "senha": "", "empresaCod": 1, "perfilCod": 1, "empresaNome": "", "perfilNome": "sdfw"},
+            {"codigo": 1, "nome": "1", "login": "asdf", "senha": "", "empresaCod": 1, "perfilCod": 1, "empresaNome": "lo", "perfilNome": "sdfsdg"},
+            {"codigo": 1, "nome": "1", "login": "as", "senha": "", "empresaCod": 1, "perfilCod": 1, "empresaNome": "uyik76", "perfilNome": ""},
+            {"codigo": 1, "nome": "1", "login": "s", "senha": "", "empresaCod": 1, "perfilCod": 1, "empresaNome": "76", "perfilNome": "sdfgs"},
+            {"codigo": 1, "nome": "1", "login": "asdf", "senha": "", "empresaCod": 1, "perfilCod": 1, "empresaNome": "lo", "perfilNome": "sdfsdg"},
+            {"codigo": 1, "nome": "1", "login": "as", "senha": "", "empresaCod": 1, "perfilCod": 1, "empresaNome": "uyik76", "perfilNome": ""},
+            {"codigo": 1, "nome": "1", "login": "s", "senha": "", "empresaCod": 1, "perfilCod": 1, "empresaNome": "76", "perfilNome": "sdfgs"},
+            {"codigo": 1, "nome": "1", "login": "s", "senha": "", "empresaCod": 1, "perfilCod": 1, "empresaNome": "76", "perfilNome": "sdfgs"},
+            {"codigo": 1, "nome": "1", "login": "asdf", "senha": "", "empresaCod": 1, "perfilCod": 1, "empresaNome": "lo", "perfilNome": "sdfsdg"},
+            {"codigo": 1, "nome": "1", "login": "as", "senha": "", "empresaCod": 1, "perfilCod": 1, "empresaNome": "uyik76", "perfilNome": ""},
+            {"codigo": 1, "nome": "1", "login": "vbv", "senha": "", "empresaCod": 1, "perfilCod": 1, "empresaNome": "", "perfilNome": "sdfw"},
+            {"codigo": 1, "nome": "1", "login": "s", "senha": "", "empresaCod": 1, "perfilCod": 1, "empresaNome": "76", "perfilNome": "sdfgs"},
+            {"codigo": 1, "nome": "1", "login": "fht", "senha": "", "empresaCod": 1, "perfilCod": 1, "empresaNome": "jhj", "perfilNome": ""},
+            {"codigo": 1, "nome": "1", "login": "iu", "senha": "", "empresaCod": 1, "perfilCod": 1, "empresaNome": "", "perfilNome": "utys"},
+            {"codigo": 1, "nome": "1", "login": "vbv", "senha": "", "empresaCod": 1, "perfilCod": 1, "empresaNome": "", "perfilNome": "sdfw"},
+            {"codigo": 1, "nome": "1", "login": "asdf", "senha": "", "empresaCod": 1, "perfilCod": 1, "empresaNome": "lo", "perfilNome": "sdfsdg"},
+            {"codigo": 1, "nome": "1", "login": "as", "senha": "", "empresaCod": 1, "perfilCod": 1, "empresaNome": "uyik76", "perfilNome": ""},
+            {"codigo": 1, "nome": "1", "login": "s", "senha": "", "empresaCod": 1, "perfilCod": 1, "empresaNome": "76", "perfilNome": "sdfgs"},
+            {"codigo": 1, "nome": "1", "login": "asdf", "senha": "", "empresaCod": 1, "perfilCod": 1, "empresaNome": "lo", "perfilNome": "sdfsdg"},
+            {"codigo": 1, "nome": "1", "login": "as", "senha": "", "empresaCod": 1, "perfilCod": 1, "empresaNome": "uyik76", "perfilNome": ""},
+            {"codigo": 1, "nome": "1", "login": "s", "senha": "", "empresaCod": 1, "perfilCod": 1, "empresaNome": "76", "perfilNome": "sdfgs"},
+            {"codigo": 1, "nome": "1", "login": "s", "senha": "", "empresaCod": 1, "perfilCod": 1, "empresaNome": "76", "perfilNome": "sdfgs"},
+            {"codigo": 1, "nome": "1", "login": "asdf", "senha": "", "empresaCod": 1, "perfilCod": 1, "empresaNome": "lo", "perfilNome": "sdfsdg"},
+            {"codigo": 1, "nome": "1", "login": "as", "senha": "", "empresaCod": 1, "perfilCod": 1, "empresaNome": "uyik76", "perfilNome": ""},
+            {"codigo": 1, "nome": "1", "login": "vbv", "senha": "", "empresaCod": 1, "perfilCod": 1, "empresaNome": "", "perfilNome": "sdfw"},
+            {"codigo": 1, "nome": "1", "login": "s", "senha": "", "empresaCod": 1, "perfilCod": 1, "empresaNome": "76", "perfilNome": "sdfgs"},
+            {"codigo": 1, "nome": "1", "login": "fht", "senha": "", "empresaCod": 1, "perfilCod": 1, "empresaNome": "jhj", "perfilNome": ""},
+            {"codigo": 1, "nome": "1", "login": "iu", "senha": "", "empresaCod": 1, "perfilCod": 1, "empresaNome": "", "perfilNome": "utys"},
+            {"codigo": 1, "nome": "1", "login": "vbv", "senha": "", "empresaCod": 1, "perfilCod": 1, "empresaNome": "", "perfilNome": "sdfw"},
+            {"codigo": 1, "nome": "1", "login": "asdf", "senha": "", "empresaCod": 1, "perfilCod": 1, "empresaNome": "lo", "perfilNome": "sdfsdg"},
+            {"codigo": 1, "nome": "1", "login": "as", "senha": "", "empresaCod": 1, "perfilCod": 1, "empresaNome": "uyik76", "perfilNome": ""},
+            {"codigo": 1, "nome": "1", "login": "s", "senha": "", "empresaCod": 1, "perfilCod": 1, "empresaNome": "76", "perfilNome": "sdfgs"},
+            {"codigo": 1, "nome": "1", "login": "asdf", "senha": "", "empresaCod": 1, "perfilCod": 1, "empresaNome": "lo", "perfilNome": "sdfsdg"},
+            {"codigo": 1, "nome": "1", "login": "as", "senha": "", "empresaCod": 1, "perfilCod": 1, "empresaNome": "uyik76", "perfilNome": ""},
+            {"codigo": 1, "nome": "1", "login": "s", "senha": "", "empresaCod": 1, "perfilCod": 1, "empresaNome": "76", "perfilNome": "sdfgs"},
+            {"codigo": 1, "nome": "1", "login": "s", "senha": "", "empresaCod": 1, "perfilCod": 1, "empresaNome": "76", "perfilNome": "sdfgs"},
+            {"codigo": 1, "nome": "1", "login": "asdf", "senha": "", "empresaCod": 1, "perfilCod": 1, "empresaNome": "lo", "perfilNome": "sdfsdg"},
+            {"codigo": 1, "nome": "1", "login": "as", "senha": "", "empresaCod": 1, "perfilCod": 1, "empresaNome": "uyik76", "perfilNome": ""},
+            {"codigo": 1, "nome": "1", "login": "vbv", "senha": "", "empresaCod": 1, "perfilCod": 1, "empresaNome": "", "perfilNome": "sdfw"},
+            {"codigo": 1, "nome": "1", "login": "s", "senha": "", "empresaCod": 1, "perfilCod": 1, "empresaNome": "76", "perfilNome": "sdfgs"},
+            {"codigo": 1, "nome": "1", "login": "fht", "senha": "", "empresaCod": 1, "perfilCod": 1, "empresaNome": "jhj", "perfilNome": ""},
+            {"codigo": 1, "nome": "1", "login": "iu", "senha": "", "empresaCod": 1, "perfilCod": 1, "empresaNome": "", "perfilNome": "utys"},
+            {"codigo": 1, "nome": "1", "login": "vbv", "senha": "", "empresaCod": 1, "perfilCod": 1, "empresaNome": "", "perfilNome": "sdfw"},
+            {"codigo": 1, "nome": "1", "login": "asdf", "senha": "", "empresaCod": 1, "perfilCod": 1, "empresaNome": "lo", "perfilNome": "sdfsdg"},
+            {"codigo": 1, "nome": "1", "login": "as", "senha": "", "empresaCod": 1, "perfilCod": 1, "empresaNome": "uyik76", "perfilNome": ""},
+            {"codigo": 1, "nome": "1", "login": "s", "senha": "", "empresaCod": 1, "perfilCod": 1, "empresaNome": "76", "perfilNome": "sdfgs"},
+            {"codigo": 1, "nome": "1", "login": "asdf", "senha": "", "empresaCod": 1, "perfilCod": 1, "empresaNome": "lo", "perfilNome": "sdfsdg"},
+            {"codigo": 1, "nome": "1", "login": "as", "senha": "", "empresaCod": 1, "perfilCod": 1, "empresaNome": "uyik76", "perfilNome": ""},
+            {"codigo": 1, "nome": "1", "login": "s", "senha": "", "empresaCod": 1, "perfilCod": 1, "empresaNome": "76", "perfilNome": "sdfgs"},
+            {"codigo": 1, "nome": "1", "login": "s", "senha": "", "empresaCod": 1, "perfilCod": 1, "empresaNome": "76", "perfilNome": "sdfgs"},
+            {"codigo": 1, "nome": "1", "login": "asdf", "senha": "", "empresaCod": 1, "perfilCod": 1, "empresaNome": "lo", "perfilNome": "sdfsdg"},
+            {"codigo": 1, "nome": "1", "login": "as", "senha": "", "empresaCod": 1, "perfilCod": 1, "empresaNome": "uyik76", "perfilNome": ""},
+        ]}
+    }
+
+
 
 }

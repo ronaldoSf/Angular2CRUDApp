@@ -34,6 +34,10 @@ $datagrid-theme-palette:  $app-theme-palette;
             color: #fff;
             cursor: pointer;
         }
+
+        .bt.disabled {
+            background-color: map-get($datagrid-theme-palette, 200);            
+        }
     }
 }
 

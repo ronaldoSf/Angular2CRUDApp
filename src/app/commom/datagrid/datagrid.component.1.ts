@@ -19,10 +19,7 @@ export class DatagridComponent implements OnInit {
     }
 
     private lastToggleSelects: Boolean = false
-    private totalOfItens: number = 0
-
-
-    public showLoading: boolean = false
+    private totalOfPages: number = 0
     
     @Input()
     public pageSizes:number[] = [0, 5, 10, 20] //Zero is All
@@ -34,7 +31,7 @@ export class DatagridComponent implements OnInit {
     public currentPageSize: number = 0;
     
     @Input()
-    public currentOffset: number = 0;
+    public currentPage: number = 0;
     
     @Input()
     public columns:Column[] = []
@@ -70,14 +67,14 @@ export class DatagridComponent implements OnInit {
     ]
 
     public loadDataFromStart() {
-        this.currentOffset = 0
+        this.currentPage = 0
         this.loadData()
     }
     
     public get canGoNextPage():Boolean {
-        let newOffset = this.currentOffset + this.currentPageSize
+        let newPage = this.currentPage + 1
 
-        if (this.totalOfItens != 0 && this.totalOfItens > newOffset) {
+        if (this.totalOfPages == 0 || this.totalOfPages > newPage) {
             return true
         } else {
             return false
@@ -85,9 +82,9 @@ export class DatagridComponent implements OnInit {
     }
 
     public get canGoBackPage():Boolean {
-        let newOffset = this.currentOffset - this.currentPageSize
+        let newPage = this.currentPage - 1
 
-        if (this.totalOfItens != 0 && newOffset >= 0) {
+        if (this.totalOfPages == 0 || newPage >= 0) {
             return true
         } else {
             return false
@@ -95,52 +92,38 @@ export class DatagridComponent implements OnInit {
     }
     
     private goNextPage() {
-        let newOffset = this.currentOffset + this.currentPageSize
-
+        let newPage = this.currentPage + 1
+        
         if (this.canGoNextPage) {
-            this.currentOffset = newOffset;
+            this.currentPage = newPage;
             this.loadData()
         }
     }
         
     private goBackPage() {
-        let newOffset = this.currentOffset - this.currentPageSize
+        let newPage = this.currentPage - 1
         
         if (this.canGoBackPage) {
-            this.currentOffset = newOffset;
+            this.currentPage = newPage;
             this.loadData()
         }
     }
 
-    private pageSizeSelected() {
-        this.loadData()
-    }
-
-    public loadedOffset: number = 0;
-    public loadedPgSize: number = 0;
-    
     private loadData() {
         this.dataSource = [];
         
         if (this.loadCallback) {
-            this.showLoading = true;
-            
             let observable: Observable<GenericDatagridResponse<any>> = this.loadCallback()
             observable.subscribe(
                 result => { 
-                    this.showLoading = false;
-
                     if (result.status == "OK") {
                         this.dataSource = result.result 
-                        this.loadedOffset = this.currentOffset
-                        this.loadedPgSize = this.currentPageSize
-                        this.totalOfItens = result.total
+                        this.totalOfPages = result.total
                     } else {
                         this.showError(result.status)
                     }
                 },
                 error => { 
-                    this.showLoading = false;
                     this.showError(error)
                 }
             )
