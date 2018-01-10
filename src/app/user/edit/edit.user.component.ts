@@ -2,7 +2,7 @@ import { InputFormConfig } from './../../commom/input.form/input.form.component'
 import { RequiredValidator } from './../../commom/validators/required-validator.directive';
 import { Validators } from '@angular/forms';
 import { FormConfigRow, FormConfig, Property } from './../../commom/forms/my.form.component';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { DialogComponent, DialogConfig, DialogService } from '../../commom/dialog/dialog.service';
 import { Usuario, Empresa, Perfil } from '../../commom/models';
 import { Util } from '../../commom/util';
@@ -13,6 +13,7 @@ import { CurrencyInputFormConfig } from '../../commom/currency.input.form/curren
 import { AutoCompleteFormConfig } from '../../commom/autocomplete.form/auto-complete-form.component';
 import { Observable } from 'rxjs/Observable';
 import { UserService } from '../user.service';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
 	selector: 'app-edit.user',
@@ -22,8 +23,16 @@ import { UserService } from '../user.service';
 })
 export class UserEditComponent extends DialogComponent implements OnInit {
 
-	constructor(public dialogService: DialogService, public userService: UserService) {
-		super()
+	constructor(public dialogRef: MatDialogRef<UserEditComponent>,
+		@Inject(MAT_DIALOG_DATA) public data: any,
+		public dialogService: DialogService, 
+		public userService: UserService
+	) {
+		super();
+
+		if (data.entity) {
+			this.usuario = data.entity;
+		}
 	}
 
 	static dialogConfig:DialogConfig = {height: "auto", width: "400px"}
@@ -94,10 +103,10 @@ export class UserEditComponent extends DialogComponent implements OnInit {
 
 	public formConfigs: FormConfigRow<Usuario>[] = [
 		{
-				formConfigs: [
-					new InputFormConfig(200, new Property("nome"), [], false, "Nome"),
-					new InputFormConfig(0, new Property("login"), [new RequiredValidator()], false, "Login"),
-				]
+			formConfigs: [
+				new InputFormConfig(200, new Property("nome"), [], false, "Nome"),
+				new InputFormConfig(0, new Property("login"), [new RequiredValidator()], false, "Login"),
+			]
 		}, {
 			formConfigs: [
 				new InputFormConfig(0, new Property("novaSenha"), [new RequiredValidator()], true, "Nova Senha")

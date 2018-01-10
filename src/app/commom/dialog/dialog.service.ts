@@ -18,7 +18,7 @@ export class DialogService {
         //this.createDialog(UserEditComponent, null)
     }
 
-    createDialog(componentClass: any): DialogComponent {
+    createDialog(componentClass: any, data: Object = {}): DialogComponent {
 
         let viewModel: typeof DialogComponent = componentClass
         let compType: ComponentType<DialogComponent> = componentClass
@@ -35,7 +35,7 @@ export class DialogService {
             width: dialogConfig.width,
             minHeight: dialogConfig.minHeight,
             minWidth: dialogConfig.minWidth,
-            data: dialogConfig.data,
+            data: data,
             disableClose: !dialogConfig.clickOutsideClosesIt,
         });
 

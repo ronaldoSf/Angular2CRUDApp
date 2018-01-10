@@ -10,7 +10,7 @@ import {Column, Action, DatagridComponent, GenericDatagridResponse} from '../../
 import {Usuario, Empresa} from '../../commom/models';
 import * as Service from '../user.service';
 import { Observable } from 'rxjs/Observable';
-import { CallbackEvent, Util } from '../../commom/util';
+import { Util } from '../../commom/util';
 import { MatDialog } from '@angular/material/dialog';
 
 @Component({
@@ -46,9 +46,9 @@ export class UserListComponent {
 
     //----------------- CALLBACKS -----------------------------------------------
     
-    public deleteItemEvent = CallbackEvent.createFunction(this, this.deleteItem);
-    public editItemEvent = CallbackEvent.createFunction(this, this.editItem);
-    public loadDataEvent = CallbackEvent.createFunction(this, this.loadData);
+    public deleteItemEvent = Util.createCallbackFunction(this, this.deleteItem);
+    public editItemEvent = Util.createCallbackFunction(this, this.editItem);
+    public loadDataEvent = Util.createCallbackFunction(this, this.loadData);
 
     //----------------------- FUNCTIONS ----------------------------------------
 
@@ -57,13 +57,16 @@ export class UserListComponent {
     }
 
     private addItem() {
-        let i = this.dialogService.createDialog(UserEditComponent);    
+
+        let fakeUser: Usuario = {codigo: 1, nome: "a", login: "s", senha: "d", perfilCod: 1, empresaCod: 2, perfilNome: "", empresaNome: ""}
+        
+        let i = this.dialogService.createDialog(UserEditComponent, {entity: fakeUser});    
     }
 
     private editItem(itemIndex: number) {
-        let item = this.datagrid.dataSource[itemIndex]
+        let itemSelected = this.datagrid.dataSource[itemIndex]
 
-        let i = this.dialogService.createDialog(UserEditComponent);
+        let i = this.dialogService.createDialog(UserEditComponent, {entity: itemSelected});
         console.log(i)
     }
     private deleteItem(itemIndex: number) {

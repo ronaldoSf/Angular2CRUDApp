@@ -1,6 +1,12 @@
 
 export class Util {
 
+    public static readonly propertyOf = <TObj>(name: keyof TObj) => name;
+    
+    static readonly Masks = class {
+        public static readonly cpf: string = "000.000.000-00";
+    }
+
     public static getItensFromObject(obj: object): Array<any> {
 
         let itens: Array<any> = [];
@@ -40,8 +46,6 @@ export class Util {
         }
     }
 
-    
-
     public static getDeepValue(obj: Object, path: string | string[]): any {
         
         if (typeof path === "string") {
@@ -73,27 +77,18 @@ export class Util {
         }
     }
 
-
     public static truncate(num, places = 2) {
         return Math.trunc(num * Math.pow(10, places)) / Math.pow(10, places);
     }
-    static readonly Masks = class {
-        public static readonly cpf: string = "000.000.000-00";
+
+    static createCallbackFunction(esse: any, func: Function): Function {
+        let f = function() {
+          return func.call(esse, arguments)
+        }
+    
+        return f;
     }
     
-
-    public static readonly propertyOf = <TObj>(name: keyof TObj) => name;
-
-}
-
-export class CallbackEvent {
-  static createFunction(esse: any, func: Function): Function {
-    let f = function() {
-      return func.call(esse, arguments)
-    }
-
-    return f;
-  }
 }
 
 export class GenericSaveResponse {
