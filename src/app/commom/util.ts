@@ -1,3 +1,6 @@
+import { Column, GenericDatagridResponse, DatagridComponent } from "./datagrid/datagrid.component";
+import { Observable } from "rxjs/Observable";
+
 
 export class Util {
 
@@ -100,6 +103,20 @@ export class GenericSaveRequest<T> {
     model: T;
 }
 
+export abstract class ListComponent {
+    public abstract datagridColumns: Column[]
+    public abstract loadData(): Observable<GenericDatagridResponse<any>>
+    public abstract datagrid: DatagridComponent;
+
+    public abstract deleteItemEvent: Function;
+    public abstract editItemEvent: Function;
+    public abstract loadDataEvent: Function;
+
+    protected abstract addItem()
+    protected abstract editItem(itemIndex: number)
+    protected abstract deleteItem(itemIndex: number)
+    protected abstract onBtSearchClick()
+}
 
 /*
 Object["toArray"] = function() {

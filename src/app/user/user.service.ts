@@ -32,6 +32,8 @@ export class UserService {
 export class FindByFilterRequest extends GenericDatagridRequest {
     nome: string
     empresa: number
+    sortBy: string
+    sortType: string
 }
 
 export class FindByFilterResponse extends GenericDatagridResponse<Usuario> {

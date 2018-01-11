@@ -10,7 +10,7 @@ import {Column, Action, DatagridComponent, GenericDatagridResponse} from '../../
 import {Usuario, Empresa} from '../../commom/models';
 import * as Service from '../user.service';
 import { Observable } from 'rxjs/Observable';
-import { Util } from '../../commom/util';
+import { Util, ListComponent } from '../../commom/util';
 import { MatDialog } from '@angular/material/dialog';
 
 @Component({
@@ -19,10 +19,10 @@ import { MatDialog } from '@angular/material/dialog';
   styleUrls: ['./list.user.component.scss'],
   providers: [ Service.UserService, DialogService ],  
 })
-export class UserListComponent {
+export class UserListComponent extends ListComponent {
     
     constructor(private userService: Service.UserService, public dialogService: DialogService) { 
-        
+        super()
     }
     
     ngOnInit() {
@@ -52,37 +52,41 @@ export class UserListComponent {
 
     //----------------------- FUNCTIONS ----------------------------------------
 
-    private onBtSearchClick() {
+    protected onBtSearchClick() {
         this.datagrid.loadDataFromStart()
     }
 
-    private addItem() {
+    protected addItem() {
 
         let fakeUser: Usuario = {codigo: 1, nome: "a", login: "s", senha: "d", perfilCod: 1, empresaCod: 2, perfilNome: "", empresaNome: "", empresa: null, perfil: null}
         
         let i = this.dialogService.createDialog(UserEditComponent, {entity: fakeUser});    
     }
 
-    private editItem(itemIndex: number) {
+    protected editItem(itemIndex: number) {
         let itemSelected = this.datagrid.dataSource[itemIndex]
 
         let i = this.dialogService.createDialog(UserEditComponent, {entity: itemSelected});
         console.log(i)
     }
-    private deleteItem(itemIndex: number) {
+    protected deleteItem(itemIndex: number) {
         let item = this.datagrid.dataSource[itemIndex]
     }
 
     public loadData(/*offset: number, limit: number)*/): Observable<GenericDatagridResponse<any>> {
         let offset = this.datagrid.currentOffset
         let pgSize = this.datagrid.currentPageSize
+        let sortFl = this.datagrid.currentSortField
+        let sortTp = this.datagrid.currentSortType.valueOf()
         let limitt = offset + pgSize
         
         var request: Service.FindByFilterRequest = {
             "nome": this.filterName, 
             "empresa": this.filterEmpresa == null ? null : this.filterEmpresa.codigo.valueOf(),
             "offset": offset,
-            "limit": limitt
+            "limit": limitt,
+            "sortBy": sortFl,
+            "sortType": sortTp,
         }
 
         let fakeObs = Observable.create(observer => {

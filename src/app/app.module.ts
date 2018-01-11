@@ -21,13 +21,13 @@ import {BreadcrumbModule} from 'primeng/primeng';
 
 import { AppComponent } from './app.component';
 import { DatagridComponent } from './commom/datagrid/datagrid.component';
-import { MyFormComponent } from './commom/forms/my.form.component';
 import { DialogMessageComponent } from './commom/dialog.message/dialog-message-component.component';
 
 const routes: Routes = [
   { path: '', loadChildren: 'app/home/home.module#HomeModule' },  
   { path: 'home', loadChildren: 'app/home/home.module#HomeModule' },  
-  { path: 'usuario', loadChildren: 'app/user/user.module#UserModule' }  
+  { path: 'usuario', loadChildren: 'app/user/user.module#UserModule' },
+  { path: 'perfil', loadChildren: 'app/user/profile.module#ProfileModule' } ,
 ];
 
 @NgModule({
