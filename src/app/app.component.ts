@@ -36,5 +36,9 @@ export class AppComponent {
     this.sidenavOpened = true
     //alert("clo")   
   }
+
+  toogleSidenav() {
+    this.sidenavOpened = !this.sidenavOpened
+  }
             
 }

@@ -33,13 +33,17 @@ $menu-margin: 20px;
 
 mat-sidenav-container {
     
-    position: relative;
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    justify-content: flex-start;
-    
+    display: table;
+
     mat-sidenav {
+        display: block;
+    }
+
+    mat-sidenav-content {
+        display: table-cell;
+    }
+    
+    /*mat-sidenav {
         position: relative;
         width: $sidebar-width;
         overflow: hidden;
@@ -49,7 +53,7 @@ mat-sidenav-container {
         position: absolute;
         //margin-left: 0px !important;
         //width: calc(100% - #{$sidebar-width})
-    }
+    }*/
     
 }
 

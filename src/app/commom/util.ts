@@ -1,7 +1,6 @@
 
 export class Util {
 
-    public static readonly propertyOf = <TObj>(name: keyof TObj) => name;
     
     static readonly Masks = class {
         public static readonly cpf: string = "000.000.000-00";

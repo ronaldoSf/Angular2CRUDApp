@@ -1,5 +1,5 @@
 import { InputFormConfig } from './../../commom/input.form/input.form.component';
-import { FormConfigRow } from './../../commom/forms/my.form.component';
+import { FormConfigRow, Property } from './../../commom/forms/my.form.component';
 import { DialogService } from './../../commom/dialog/dialog.service';
 import { UserEditComponent } from './../edit/edit.user.component';
 import {Component, ViewChild} from '@angular/core';
@@ -36,10 +36,10 @@ export class UserListComponent {
     public filterEmpresa: Empresa = null;
     
     public datagridColumns: Column[] = [
-        {title: "Nome", column: Util.propertyOf<Usuario>("nome"), sortable: true},
-        {title: "Login", column: Util.propertyOf<Usuario>("login"), sortable: false},
-        {title: "Perfil", column: Util.propertyOf<Usuario>("perfilNome"), sortable: false},
-        {title: "Empresa", column: Util.propertyOf<Usuario>("empresaNome"), sortable: false},
+        {title: "Nome", modelField: new Property<Usuario>("nome").name, sortable: true},
+        {title: "Login", modelField: new Property<Usuario>("login").name, sortable: true},
+        {title: "Perfil", modelField: new Property<Usuario>("perfilNome").name, sortable: false},
+        {title: "Empresa", modelField: new Property<Usuario>("empresaNome").name, sortable: false},
     ]
 
     
@@ -90,7 +90,7 @@ export class UserListComponent {
             setTimeout(() => {
                 let fakeUsersJson = this.fakeUsersJson
                 fakeUsersJson.totalItens = fakeUsersJson.result.length
-                fakeUsersJson.result = (fakeUsersJson.result as Array<any>).slice(offset, limitt)
+                fakeUsersJson.result = pgSize == 0 ? fakeUsersJson.result : (fakeUsersJson.result as Array<any>).slice(offset, limitt)
                 observer.next(fakeUsersJson)
                 observer.complete()
             }, 500)

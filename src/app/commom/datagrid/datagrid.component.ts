@@ -34,7 +34,7 @@ export class DatagridComponent implements OnInit {
     public currentPageSize: number = 0;
     
     @Input()
-    public currentOffset: number = 0;
+    public currentPage: number = 0;
     
     @Input()
     public columns:Column[] = []
@@ -44,6 +44,12 @@ export class DatagridComponent implements OnInit {
 
     @Input()
     public showSelections:Boolean = true
+    
+    @Input()
+    public currentSortField: string = null
+        
+    @Input()
+    public currentSortType: SortType = SortType.ASC
     
     /*@Output()
     public loadEvent = new EventEmitter();
@@ -70,14 +76,14 @@ export class DatagridComponent implements OnInit {
     ]
 
     public loadDataFromStart() {
-        this.currentOffset = 0
+        this.currentPage = 1
         this.loadData()
     }
     
     public get canGoNextPage():Boolean {
-        let newOffset = this.currentOffset + this.currentPageSize
+        let newPage = this.currentPage + 1
 
-        if (this.totalOfItens != 0 && this.totalOfItens > newOffset) {
+        if (this.totalOfItens != 0 && (newPage * this.currentPageSize) < this.totalOfItens) {
             return true
         } else {
             return false
@@ -85,39 +91,52 @@ export class DatagridComponent implements OnInit {
     }
 
     public get canGoBackPage():Boolean {
-        let newOffset = this.currentOffset - this.currentPageSize
-
-        if (this.totalOfItens != 0 && newOffset >= 0) {
+        let newPage = this.currentPage - 1
+        
+        if (this.totalOfItens != 0 && newPage >= 0) {
             return true
         } else {
             return false
         }
     }
+
+    public get currentOffset(): number {
+        return (this.currentPage * this.currentPageSize)
+    }
+
+    private get totalOfPages(): number {
+        return Math.trunc( this.currentPageSize == 0 ? 1 : (this.totalOfItens / this.currentPageSize))
+    }
     
     private goNextPage() {
-        let newOffset = this.currentOffset + this.currentPageSize
-
+        let newPage = this.currentPage + 1
+        
         if (this.canGoNextPage) {
-            this.currentOffset = newOffset;
+            this.currentPage = newPage;
             this.loadData()
         }
     }
         
     private goBackPage() {
-        let newOffset = this.currentOffset - this.currentPageSize
+        let newPage = this.currentPage - 1
         
         if (this.canGoBackPage) {
-            this.currentOffset = newOffset;
+            this.currentPage = newPage;
             this.loadData()
         }
     }
 
     private pageSizeSelected() {
+
+        if (this.currentPage > this.totalOfPages) {
+            this.currentPage = this.totalOfPages
+        }
+
         this.loadData()
     }
 
-    public loadedOffset: number = 0;
-    public loadedPgSize: number = 0;
+    public loadedPage: number = 0;
+    public loadedPageSize: number = 0;
     
     private loadData() {
         this.dataSource = [];
@@ -131,9 +150,9 @@ export class DatagridComponent implements OnInit {
                     this.showLoading = false;
 
                     if (result.status == "OK") {
-                        this.dataSource = result.result 
-                        this.loadedOffset = this.currentOffset
-                        this.loadedPgSize = this.currentPageSize
+                        this.dataSource = result.result
+                        this.loadedPage = this.currentPage
+                        this.loadedPageSize = this.currentPageSize
                         this.totalOfItens = result.total
                     } else {
                         this.showError(result.status)
@@ -145,6 +164,17 @@ export class DatagridComponent implements OnInit {
                 }
             )
         }
+    }
+
+    private selectColumnToSort(column: Column) {
+
+        if (this.currentSortField != column.modelField) {
+            this.currentSortType = SortType.ASC
+        } else {
+            this.currentSortType =  this.currentSortType == SortType.ASC ? SortType.DSC : SortType.ASC      
+        }
+
+        this.currentSortField = column.modelField
     }
 
     private showError(error: any) {
@@ -179,7 +209,7 @@ export class DatagridComponent implements OnInit {
     }
 
     private makeDescriptionForModel(item: Object, column: Column) {  
-        let value = item[column.column.toString()]
+        let value = item[column.modelField.toString()]
 
         if (column.format) {
             return column.format(value)
@@ -202,11 +232,11 @@ export class DatagridComponent implements OnInit {
 
 
 export class Column {
-  title:String
-  column:String
+  title: string
+  modelField: string
   sortable?: Boolean = false
   format?: Function
-  itemReplace?: {from:String, to: String}[]
+  itemReplace?: {from: string, to: string}[]
 }
 
 export class Action {
@@ -224,4 +254,9 @@ export abstract class GenericDatagridResponse<T> {
 export abstract class GenericDatagridRequest {
     offset: number
     limit:number
+}
+
+export enum SortType {
+    ASC = "ASC",
+    DSC = "DESC",
 }

@@ -6,11 +6,14 @@
                         <input type="checkbox" (change)="toggleAllSelects()"/>
                 </th>
                             
-                <th *ngFor="let column of columns">
+                <th *ngFor="let column of columns" (click)="selectColumnToSort(column)">
                     <div>
                             <span>{{column.title}}</span>
-                            <i class="material-icons" [hidden]="!column.sortable">arrow_drop_down</i>
-                    </div>
+                            <ng-content></ng-content>
+                            <img src="assets/column-asc.png"  class="material-icons" *ngIf="column.sortable && currentSortField == column.modelField && currentSortType == 'ASC'" />
+                            <img src="assets/column-desc.png" class="material-icons" *ngIf="column.sortable && currentSortField == column.modelField && currentSortType == 'DESC'"/>
+                            <img src="assets/column-sort.png" class="material-icons" *ngIf="column.sortable && currentSortField != column.modelField"/>
+                        </div>
                 </th>
 
                 <th *ngIf="actions.length > 0">
@@ -54,7 +57,7 @@
                         <div class="space"></div>
 
                         <div [ngClass]="canGoBackPage ? 'bt' : 'bt disabled'" (click)="goBackPage()"><</div>
-                        <div class="bt">{{ (currentOffset / currentPageSize) + 1 }}</div>
+                        <div class="bt">{{ currentPage }}</div>
                         <div [ngClass]="canGoNextPage ? 'bt' : 'bt disabled'"  (click)="goNextPage()">></div>
 
                         <div class="space"></div>
@@ -71,7 +74,10 @@
 
                         <div style="flex-grow: 1000"></div>
 
-                        Mostrando página {{ loadedPgSize == 0 ? 0 : ((loadedOffset / loadedPgSize) + 1) }} de {{ ( loadedPgSize == 0 ? 0 : (totalOfItens / loadedPgSize) ) | number:'1.0-0' }}
+                        <div *ngIf="loadedPage != 0">
+                            Mostrando página {{ loadedPage }} de {{ totalOfPages }}                            
+                        </div>
+
                         <div class="space"></div>
                         
                     </div>
