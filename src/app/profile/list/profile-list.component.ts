@@ -1,16 +1,23 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ListComponent, Util } from '../../commom/util';
 import { GenericDatagridResponse, Column, DatagridComponent } from '../../commom/datagrid/datagrid.component';
 import { Observable } from 'rxjs/Observable';
-import { ViewChild } from '@angular/core/src/metadata/di';
+import { DialogService } from '../../commom/dialog/dialog.service';
+import { ProfileEditComponent } from '../edit/profile-edit.component';
 
 @Component({
   selector: 'app-profile-list',
   templateUrl: './profile-list.component.html',
-  styleUrls: ['./profile-list.component.scss']
+  styleUrls: ['./profile-list.component.scss'],
+  providers: [ DialogService ],  
 })
 export class ProfileListComponent extends ListComponent {
     
+
+    constructor(public dialogService: DialogService) { 
+        super()
+    }
+
     public datagridColumns: Column[] = [
         {title: "Nome", modelField: "nome", sortable: true}
     ];
@@ -28,7 +35,7 @@ export class ProfileListComponent extends ListComponent {
     }
 
     protected addItem() {
-        throw new Error("Method not implemented.");
+        let i = this.dialogService.createDialog(ProfileEditComponent, {});    
     }
 
     protected editItem(itemIndex: number) {
@@ -41,10 +48,6 @@ export class ProfileListComponent extends ListComponent {
 
     protected onBtSearchClick() {
         throw new Error("Method not implemented.");
-    }
-
-    constructor() {
-        super()
     }
 
     ngOnInit() {

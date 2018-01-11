@@ -5,7 +5,7 @@ import { FormConfigRow, FormConfig, Property } from './../../commom/forms/my.for
 import { Component, OnInit, Inject } from '@angular/core';
 import { DialogComponent, DialogConfig, DialogService } from '../../commom/dialog/dialog.service';
 import { Usuario, Empresa, Perfil } from '../../commom/models';
-import { Util } from '../../commom/util';
+import { Util, EditComponent } from '../../commom/util';
 import { CalendarFormComponent, CalendarFormConfig } from '../../commom/calendar.form/calendar-form.component';
 import { MaskedInputFormComponent, MaskedInputFormConfig } from '../../commom/masked.input.form/masked-input-form.component';
 import { ComboboxFormConfig } from '../../commom/combobox.form/combobox-form.component';
@@ -21,7 +21,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 	styleUrls: ['./edit.user.component.scss'],
 	providers: [ UserService, DialogService ],	
 })
-export class UserEditComponent extends DialogComponent implements OnInit {
+export class UserEditComponent extends EditComponent implements OnInit {
 
 	constructor(public dialogRef: MatDialogRef<UserEditComponent>,
 		@Inject(MAT_DIALOG_DATA) public data: any,
@@ -35,7 +35,7 @@ export class UserEditComponent extends DialogComponent implements OnInit {
 		}
 	}
 
-	static dialogConfig:DialogConfig = {height: "auto", width: "400px"}
+	static dialogConfig: DialogConfig = {height: "auto", width: "400px"}
 
 	//public usuario: Usuario = {codigo: 1, nome: "a", login: "s", senha: "d", perfilCod: 1, empresaCod: 2, perfilNome: "", empresaNome: "", testeData: new Date(), testeEmpresa: new Empresa(3, "Umaa"), testeNumber: 80.798, testePerfil: new Perfil(2, "asdfasd")}
 	public usuario: Usuario = new Usuario()

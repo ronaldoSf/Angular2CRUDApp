@@ -37,7 +37,6 @@
 // })
 // export class UserModule { }
 
-import { InputFormComponent } from './../commom/input.form/input.form.component';
 import { DynamicFormHolderComponent, MyFormComponent } from './../commom/forms/my.form.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -67,7 +66,7 @@ const routes: Routes = [
     RouterModule.forChild(routes)
   ],
   declarations: [UserListComponent, UserEditComponent],
-  entryComponents: [UserEditComponent, InputFormComponent],
+  entryComponents: [UserEditComponent],
   exports: [RouterModule]
 })
 export class UserModule { }

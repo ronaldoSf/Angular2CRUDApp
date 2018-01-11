@@ -1,5 +1,7 @@
 import { Column, GenericDatagridResponse, DatagridComponent } from "./datagrid/datagrid.component";
 import { Observable } from "rxjs/Observable";
+import { DialogComponent } from "./dialog/dialog.service";
+import { FormConfigRow } from "./forms/my.form.component";
 
 
 export class Util {
@@ -116,6 +118,14 @@ export abstract class ListComponent {
     protected abstract editItem(itemIndex: number)
     protected abstract deleteItem(itemIndex: number)
     protected abstract onBtSearchClick()
+}
+
+
+export abstract class EditComponent extends DialogComponent {
+    abstract save()
+    abstract cancel()
+    abstract windowTitle: string
+    abstract formConfigs: FormConfigRow<any>[]
 }
 
 /*

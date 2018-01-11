@@ -27,7 +27,7 @@ const routes: Routes = [
   { path: '', loadChildren: 'app/home/home.module#HomeModule' },  
   { path: 'home', loadChildren: 'app/home/home.module#HomeModule' },  
   { path: 'usuario', loadChildren: 'app/user/user.module#UserModule' },
-  { path: 'perfil', loadChildren: 'app/user/profile.module#ProfileModule' } ,
+  { path: 'perfil', loadChildren: 'app/profile/profile.module#ProfileModule' } ,
 ];
 
 @NgModule({

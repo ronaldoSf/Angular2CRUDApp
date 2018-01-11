@@ -93,7 +93,7 @@ export class Config {
             label: 'Outros',
             icon: 'monetization-on',
             items: [
-              { label: "Perfís", icon: "settings", url:"/usuario", permission: PERMISSIONS.USUARIO.instance.LIST},
+              { label: "Perfís", icon: "settings", url:"/perfil", permission: PERMISSIONS.PERFIL.instance.LIST},
               { label: "Configurações", icon: "settings", url:"/usuario", permission: PERMISSIONS.CLIENTE.instance.LIST},
             ]
         }

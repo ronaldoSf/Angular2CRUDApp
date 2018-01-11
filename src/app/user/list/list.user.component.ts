@@ -57,10 +57,7 @@ export class UserListComponent extends ListComponent {
     }
 
     protected addItem() {
-
-        let fakeUser: Usuario = {codigo: 1, nome: "a", login: "s", senha: "d", perfilCod: 1, empresaCod: 2, perfilNome: "", empresaNome: "", empresa: null, perfil: null}
-        
-        let i = this.dialogService.createDialog(UserEditComponent, {entity: fakeUser});    
+        let i = this.dialogService.createDialog(UserEditComponent, {});    
     }
 
     protected editItem(itemIndex: number) {
