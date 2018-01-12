@@ -101,7 +101,7 @@ export class DatagridComponent implements OnInit {
     }
 
     public get currentOffset(): number {
-        return (this.currentPage * this.currentPageSize)
+        return (this.currentPage -1) * this.currentPageSize
     }
 
     private get totalOfPages(): number {

@@ -4,6 +4,8 @@ import { GenericDatagridResponse, Column, DatagridComponent } from '../../commom
 import { Observable } from 'rxjs/Observable';
 import { DialogService } from '../../commom/dialog/dialog.service';
 import { ProfileEditComponent } from '../edit/profile-edit.component';
+import { ListTemplateComponent } from '../../commom/templates/list/list-template.component';
+import { Perfil } from '../../commom/models';
 
 @Component({
   selector: 'app-profile-list',
@@ -11,47 +13,82 @@ import { ProfileEditComponent } from '../edit/profile-edit.component';
   styleUrls: ['./profile-list.component.scss'],
   providers: [ DialogService ],  
 })
-export class ProfileListComponent extends ListComponent {
+export class ProfileListComponent /*extends ListComponent*/ {
     
-
-    constructor(public dialogService: DialogService) { 
-        super()
+    constructor(public dialogService: DialogService) {
+        //super()
     }
+
+    //----------------------------------------------------------------
+
+    @ViewChild("listTemplate")
+    public listTemplate: ListTemplateComponent;
 
     public datagridColumns: Column[] = [
         {title: "Nome", modelField: "nome", sortable: true}
     ];
 
-
-    public deleteItemEvent = Util.createCallbackFunction(this, this.deleteItem);
-    public editItemEvent = Util.createCallbackFunction(this, this.editItem);
-    public loadDataEvent = Util.createCallbackFunction(this, this.loadData);
-
-    @ViewChild("datagrid")
-    public datagrid: DatagridComponent;
+    //----------------------------------------------------------------
 
     public loadData(): Observable<GenericDatagridResponse<any>> {
-        throw new Error("Method not implemented.");
+        let offset = this.listTemplate.datagrid.currentOffset
+        let pgSize = this.listTemplate.datagrid.currentPageSize
+        let sortFl = this.listTemplate.datagrid.currentSortField
+        let sortTp = this.listTemplate.datagrid.currentSortType.valueOf()
+        let limitt = offset + pgSize
+
+        let fakeObs = Observable.create(observer => {
+
+            setTimeout(() => {
+                let fakeJson = this.fakeProfilesJson
+                fakeJson.totalItens = fakeJson.result.length
+                fakeJson.result = pgSize == 0 ? fakeJson.result : (fakeJson.result as Array<any>).slice(offset, limitt)
+                observer.next(fakeJson)
+                observer.complete()
+            }, 500)
+            
+        })
+        
+        return fakeObs
     }
 
     protected addItem() {
-        let i = this.dialogService.createDialog(ProfileEditComponent, {});    
+        this.dialogService.createDialog(ProfileEditComponent, {});
     }
 
     protected editItem(itemIndex: number) {
-        throw new Error("Method not implemented.");
+        let itemSelected = this.listTemplate.datagrid.dataSource[itemIndex]
+        this.dialogService.createDialog(ProfileEditComponent, {entity: itemSelected});
     }
 
     protected deleteItem(itemIndex: number) {
-        throw new Error("Method not implemented.");
-    }
-
-    protected onBtSearchClick() {
-        throw new Error("Method not implemented.");
+        let item = this.listTemplate.datagrid.dataSource[itemIndex]
+        this.listTemplate.datagrid.dataSource.splice(itemIndex, 1)
     }
 
     ngOnInit() {
+        this.listTemplate.title = "Perfís"
+        this.listTemplate.datagridColumns = this.datagridColumns;
         
+        this.listTemplate.deleteItemEvent = Util.createCallbackFunction(this, this.deleteItem);
+        this.listTemplate.editItemEvent = Util.createCallbackFunction(this, this.editItem);
+        this.listTemplate.loadDataEvent = Util.createCallbackFunction(this, this.loadData);
+        this.listTemplate.addItemEvent = Util.createCallbackFunction(this, this.addItem);
+        
+        this.listTemplate.init()
+    }
+
+
+    get fakeProfilesJson(): any {
+        return {"status": "OK", "total": 102, "result":[
+            new Perfil(1, "Tasdfa"),
+            new Perfil(2, "asdfa"),
+            new Perfil(3, "Taasdfsdfa"),
+            new Perfil(4, "Tasfsdfsadfa"),
+            new Perfil(5, "asdfasdfa"),
+            new Perfil(6, "adssadfa"),
+        ]}
     }
 
 }
+

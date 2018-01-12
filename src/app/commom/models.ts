@@ -29,13 +29,13 @@ export class Usuario {
 
 export class Perfil {
 
-    constructor(codigo: Number, nome: String) {
+    constructor(codigo?: Number, nome?: String) {
         this.codigo = codigo
         this.nome = nome
     }
 
-    codigo: Number
-    nome: String
+    codigo: Number = null
+    nome: String = null
 }
 
 export class Permissao {

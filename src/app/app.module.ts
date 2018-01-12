@@ -33,7 +33,7 @@ const routes: Routes = [
 @NgModule({
   declarations: [
     AppComponent,
-    DialogMessageComponent
+    DialogMessageComponent,
   ],
   imports: [
     BrowserModule, BrowserAnimationsModule, HttpClientModule,

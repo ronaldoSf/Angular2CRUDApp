@@ -1,29 +1,7 @@
-<div class="panel panel-default">
-  <div class="panel-heading">
-    <h4 class="panel-title">
-      {{ windowTitle }}
-      <button type="button" class="close" (click)="closeModal()" aria-label="Close">
-          <span aria-hidden="true">×</span>
-      </button>
-    </h4>
-  </div>
-  <div class="panel-body">
+<app-edit-template #editTemplate>
 
-    Model: {{profile | json}}
+    <ng-template #treeViewTemplateRef>
+            <p-tree [value]="permissionsTree"></p-tree>            
+    </ng-template>
 
-    <app-my-form 
-      [teste]="'aa'" 
-      [formConfigs]="formConfigs"  
-      [modelObject]="usuario"
-      (saveEvent)="save()"
-      (cancelEvent)="cancel()"
-      [bottomTemplateRef]="bottomTemplateRef"
-    >
-      <ng-template  #bottomTemplateRef>
-          <button type="submit" class="btn btn-primary" style="float: right" (click)="save()">Salvar</button>
-          <button type="submit" class="btn" style="float: right" (click)="cancel()">Cancelar</button>
-      </ng-template>
-    </app-my-form>
-
-  </div>
-</div>
+</app-edit-template>

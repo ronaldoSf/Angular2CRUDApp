@@ -1,0 +1,56 @@
+
+<div class="breadcrumb">
+  Home &nbsp;&nbsp; > &nbsp;&nbsp; {{ title }}
+</div>
+
+<div class="margin-big">
+
+
+  <div class="flex-h flex-align-center">
+              
+                  <h4>{{ title }}</h4>
+                  
+                  <span class="fill-space"></span>
+                  
+                  <button type="submit" class="btn btn-primary" (click)="addItemEvent()">
+                      <i class="icon-search icon-white"></i>
+                      Adicionar
+                  </button>    
+                  <div class="space-med"></div>
+                  <button type="submit" class="btn btn-primary">
+                      <i class="icon-search icon-white"></i>
+                      Excluir selecionados
+                  </button>    
+                  
+  </div>
+
+  <div class="space-med"></div>
+  
+              
+    <div class="filter-box">
+        <div class="flex-h flex-justify-sb">
+
+        <ng-template [ngTemplateOutlet]="filtersTemplateRef">
+              
+            </ng-template>
+
+            <div class="space-med"></div>
+
+            <span class="fill-space"></span>
+
+            <button type="submit" class="btn btn-primary" (click)="callGridLoadData()">
+                <i class="icon-search icon-white"></i>
+                Buscar
+            </button>
+        </div>
+    </div>
+
+  <div class="space-med"></div>
+  
+  <app-datagrid #datagrid
+      [columns]="datagridColumns" 
+      [actionsCallbacks]="[editItemEvent, deleteItemEvent]"
+      [loadCallback]="loadDataEvent"
+  > </app-datagrid>
+
+</div>

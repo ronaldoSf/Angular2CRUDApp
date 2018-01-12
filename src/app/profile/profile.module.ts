@@ -54,6 +54,10 @@ import { CurrencyInputFormModule } from '../commom/currency.input.form/currency-
 import { MaskedInputFormModule } from '../commom/masked.input.form/masked-input-form.module';
 import { ProfileListComponent } from './list/profile-list.component';
 import { ProfileEditComponent } from './edit/profile-edit.component';
+import { ListTemplateComponent } from '../commom/templates/list/list-template.component';
+import { EditTemplateComponent } from '../commom/templates/edit/edit-template.component';
+import { CustomFormModule } from '../commom/custom.form/custom-form.module';
+import {TreeModule,TreeNode} from 'primeng/primeng';
 
 const routes: Routes = [
   { path: '', component: ProfileListComponent },
@@ -61,11 +65,11 @@ const routes: Routes = [
 
 @NgModule({
   imports: [
-    CommonModule, DatagridModule, MatDialogModule, FormsModule, MyFormModule, 
-    AutocompleteFormModule, CalendarFormModule, ComboboxFormModule,  CurrencyInputFormModule, InputFormModule, MaskedInputFormModule,
+    CommonModule, DatagridModule, MatDialogModule, FormsModule, MyFormModule, TreeModule,
+    AutocompleteFormModule, CalendarFormModule, ComboboxFormModule,  CurrencyInputFormModule, InputFormModule, MaskedInputFormModule, CustomFormModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [ProfileListComponent, ProfileEditComponent],
+  declarations: [ProfileListComponent, ProfileEditComponent, ListTemplateComponent, EditTemplateComponent],
   entryComponents: [ProfileEditComponent],
   exports: [RouterModule]
 })
