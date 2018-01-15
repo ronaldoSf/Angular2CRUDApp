@@ -4,7 +4,6 @@ import { Validators } from '@angular/forms';
 import { FormConfigRow, FormConfig, Property } from './../../commom/forms/my.form.component';
 import { Component, OnInit, Inject } from '@angular/core';
 import { DialogComponent, DialogConfig, DialogService } from '../../commom/dialog/dialog.service';
-import { Usuario, Empresa, Perfil } from '../../commom/models';
 import { Util, EditComponent } from '../../commom/util';
 import { CalendarFormComponent, CalendarFormConfig } from '../../commom/calendar.form/calendar-form.component';
 import { MaskedInputFormComponent, MaskedInputFormConfig } from '../../commom/masked.input.form/masked-input-form.component';
@@ -14,6 +13,7 @@ import { AutoCompleteFormConfig } from '../../commom/autocomplete.form/auto-comp
 import { Observable } from 'rxjs/Observable';
 import { UserService } from '../user.service';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { User, Company, Profile } from '../../commom/models';
 
 @Component({
 	selector: 'app-edit.user',
@@ -38,10 +38,10 @@ export class UserEditComponent extends EditComponent implements OnInit {
 	static dialogConfig: DialogConfig = {height: "auto", width: "400px"}
 
 	//public usuario: Usuario = {codigo: 1, nome: "a", login: "s", senha: "d", perfilCod: 1, empresaCod: 2, perfilNome: "", empresaNome: "", testeData: new Date(), testeEmpresa: new Empresa(3, "Umaa"), testeNumber: 80.798, testePerfil: new Perfil(2, "asdfasd")}
-	public usuario: Usuario = new Usuario()
+	public usuario: User = new User()
 
-	public empresas: Empresa[] = [new Empresa(1, "Umaa"), new Empresa(2, "Duaaas"), new Empresa(3, "Treees"), new Empresa(4, "Quaaatro")]
-	public perfis: Perfil[] = [new Perfil(1, "Umaa"), new Perfil(2, "Duaaas"), new Perfil(3, "Treees"), new Perfil(4, "Quaaatro")]
+	public empresas: Company[] = [new Company(1, "Umaa"), new Company(2, "Duaaas"), new Company(3, "Treees"), new Company(4, "Quaaatro")]
+	public perfis: Profile[] = [new Profile(1, "Umaa"), new Profile(2, "Duaaas"), new Profile(3, "Treees"), new Profile(4, "Quaaatro")]
 	
 	/*public formConfigs: FormConfigRow<Usuario>[] = [
 		{
@@ -81,7 +81,7 @@ export class UserEditComponent extends EditComponent implements OnInit {
 		} else {
 			this.userService.save({model: this.usuario}).subscribe(
 				(result) => { 
-					this.usuario.codigo = result.id
+					this.usuario.id = result.id
 					this.matDialogRef.close()
 				},
 				(error) => { 
@@ -98,30 +98,30 @@ export class UserEditComponent extends EditComponent implements OnInit {
 
 
 	get windowTitle(): string {
-		return this.usuario.codigo > 0 ? "Editar usuário" : "Novo usuário";
+		return this.usuario.id > 0 ? "Editar usuário" : "Novo usuário";
 	}
 
-	public formConfigs: FormConfigRow<Usuario>[] = [
+	public formConfigs: FormConfigRow<User>[] = [
 		{
 			formConfigs: [
-				new InputFormConfig(200, new Property("nome"), [], false, "Nome"),
+				new InputFormConfig(200, new Property("name"), [], false, "Nome"),
 				new InputFormConfig(0, new Property("login"), [new RequiredValidator()], false, "Login"),
 			]
 		}, {
 			formConfigs: [
-				new InputFormConfig(0, new Property("novaSenha"), [new RequiredValidator()], true, "Nova Senha")
+				new InputFormConfig(0, new Property("newPassword"), [new RequiredValidator()], true, "Nova Senha")
 			]
 		}, {
 			formConfigs: [
-				new ComboboxFormConfig<Usuario, Empresa>(0, new Property("empresaCod"), [new RequiredValidator()], this.empresas, new Property("codigo"), new Property("nome"), true, "Empresa..."),
-				new ComboboxFormConfig<Usuario, Perfil>(0, new Property("perfilCod"), [], this.perfis, new Property("codigo"), new Property("nome"), true, "Perfil..."),
+				new ComboboxFormConfig<User, Company>(0, new Property("companyId"), [new RequiredValidator()], this.empresas, new Property("id"), new Property("name"), true, "Empresa..."),
+				new ComboboxFormConfig<User, Profile>(0, new Property("profileId"), [], this.perfis, new Property("id"), new Property("name"), true, "Perfil..."),
 			]
 		}
 	]
 
-	getPerfisByName(valueStr: String): Observable<Perfil> {
+	getPerfisByName(valueStr: String): Observable<User> {
 			return Observable.create(observer => {
-					let newItens = [new Perfil(1, "Umaa"), new Perfil(2, "Duaaas"), new Perfil(4, "Quaaatro")]
+					let newItens = [new Profile(1, "Umaa"), new Profile(2, "Duaaas"), new Profile(4, "Quaaatro")]
 					observer.next(newItens);
 					observer.complete();
 			});

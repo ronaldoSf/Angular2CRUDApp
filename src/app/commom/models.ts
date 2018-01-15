@@ -1,71 +1,65 @@
 
-export class Usuario {
-    codigo: Number = null;
-    nome: String = null;
+export class User {
+    id: Number = null;
+    name: String = null;
     login: String = null;
-    senha: String = null;
-    novaSenha?: String = null;
+    password: String = null;
+    newPassword?: String = null;
     
-    empresaCod: Number = null;
-    empresaNome:String = null;
+    companyId: Number = null;
+    companyName:String = null;
 
-    perfilCod: Number = null;
-    perfilNome:String = null;
+    profileId: Number = null;
+    profileName:String = null;
 
-    get empresa(): Empresa {
-        return new Empresa(this.empresaCod, this.empresaNome)
+    get company(): Company {
+        return new Company(this.companyId, this.companyName)
     }
 
-    get perfil(): Perfil {
-        return new Perfil(this.perfilCod, this.perfilNome)
+    get profile(): Profile {
+        return new Profile(this.profileId, this.profileName)
     }
-
-    /*testeData?:Date = new Date()
-    testeCpf?: string = ""
-    testeEmpresa?: Empresa
-    testePerfil?: Perfil
-    testeNumber?: number = 80.798*/
 }
 
-export class Perfil {
+export class Profile {
 
-    constructor(codigo?: Number, nome?: String) {
-        this.codigo = codigo
-        this.nome = nome
+    constructor(id?: Number, name?: String) {
+        this.id = id
+        this.name = name
     }
 
-    codigo: Number = null
-    nome: String = null
+    id: Number = null
+    name: String = null
 }
 
-export class Permissao {
-    codigo: Number
-    grupo: String
-    nome: String
+export class Permission {
+    id: Number
+    groupName: String
+    permsName: String
 
-    perfilCod: Number    
+    profileId: Number    
 }
 
 
-export class Empresa {
+export class Company {
 
-    constructor(codigo: Number, nome: String) {
-        this.codigo = codigo
-        this.nome = nome
+    constructor(id?: Number, name?: String) {
+        this.id = id
+        this.name = name
     }
 
-    codigo: Number
-    nome: String
+    id: Number = null
+    name: String = null
     cpj: String
-    dtNascimento: Date
-    rua: String
-    bairro: String
+    birthday: Date
+    address: String
+    county: String
     cep: String
-    numeroCasa: String
-    telefone1: String
-    telefone2: String
+    addressNumber: String
+    phone1: String
+    phone2: String
     email: String
     
-    cidadeCod: Number
-    matrizCod: Number
+    cityId: Number
+    companyParentId: Number
 }

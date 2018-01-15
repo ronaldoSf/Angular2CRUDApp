@@ -5,7 +5,7 @@ import { Observable } from 'rxjs/Observable';
 import { DialogService } from '../../commom/dialog/dialog.service';
 import { ProfileEditComponent } from '../edit/profile-edit.component';
 import { ListTemplateComponent } from '../../commom/templates/list/list-template.component';
-import { Perfil } from '../../commom/models';
+import { Profile } from '../../commom/models';
 
 @Component({
   selector: 'app-profile-list',
@@ -81,12 +81,12 @@ export class ProfileListComponent /*extends ListComponent*/ {
 
     get fakeProfilesJson(): any {
         return {"status": "OK", "total": 102, "result":[
-            new Perfil(1, "Tasdfa"),
-            new Perfil(2, "asdfa"),
-            new Perfil(3, "Taasdfsdfa"),
-            new Perfil(4, "Tasfsdfsadfa"),
-            new Perfil(5, "asdfasdfa"),
-            new Perfil(6, "adssadfa"),
+            new Profile(1, "Tasdfa"),
+            new Profile(2, "asdfa"),
+            new Profile(3, "Taasdfsdfa"),
+            new Profile(4, "Tasfsdfsadfa"),
+            new Profile(5, "asdfasdfa"),
+            new Profile(6, "adssadfa"),
         ]}
     }
 

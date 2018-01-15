@@ -5,7 +5,7 @@ import { Util } from '../util';
 import { FormValidator } from '../validators/required-validator.directive';
 import { MaskedInputFormConfig } from '../masked.input.form/masked-input-form.component';
 import { Validators } from '@angular/forms/src/validators';
-import { Perfil } from '../models';
+import { Profile } from '../models';
 import { Observable } from 'rxjs/Observable';
 import { AutoComplete } from 'primeng/primeng';
 

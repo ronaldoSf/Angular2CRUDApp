@@ -1,5 +1,5 @@
 import {Util} from './util'
-import {Usuario} from './models'
+import {User} from './models'
 import {PERMISSION, PERMISSIONS, GROUP_PERMISSION} from './permissions'
 
 export class MenuItem {
@@ -18,7 +18,7 @@ export class DataBase {
 
 export class Config {
 
-    static currentUser: Usuario;
+    static currentUser: User;
     static currentBase: DataBase = { name: "Produção", baseUrl: "http://localhost:80/Angular2CRUDApp/src/mocks/" };
 
     static readonly allPermissions: GROUP_PERMISSION[] = Util.getItensFromObject(PERMISSION)

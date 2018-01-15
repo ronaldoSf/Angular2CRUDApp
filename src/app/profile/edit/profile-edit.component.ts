@@ -3,7 +3,7 @@ import { DialogConfig, DialogService } from '../../commom/dialog/dialog.service'
 import { EditComponent, Util } from '../../commom/util';
 import { FormConfigRow, Property } from '../../commom/forms/my.form.component';
 import { EditTemplateComponent } from '../../commom/templates/edit/edit-template.component';
-import { Perfil } from '../../commom/models';
+import { Profile } from '../../commom/models';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { UserEditComponent } from '../../user/edit/edit.user.component';
 import { ProfileService } from '../profile.service';
@@ -86,10 +86,10 @@ export class ProfileEditComponent implements OnInit {
             }
     ]
 
-    public formConfigs: FormConfigRow<Perfil>[] = [
+    public formConfigs: FormConfigRow<Profile>[] = [
         {
             formConfigs: [
-                new InputFormConfig(0, new Property("nome"), [], false, "Nome"),
+                new InputFormConfig(0, new Property("name"), [], false, "Nome"),
             ]
         },
         {
@@ -99,7 +99,7 @@ export class ProfileEditComponent implements OnInit {
         },
     ];
 
-    public profile: Perfil = new Perfil()
+    public profile: Profile = new Profile()
     
     static dialogConfig: DialogConfig = {height: "auto", width: "400px"}
     
@@ -107,7 +107,7 @@ export class ProfileEditComponent implements OnInit {
         this.makePermissionsTree()
 
         this.editTemplate.formConfigs = this.formConfigs
-        this.editTemplate.windowTitle = this.profile.codigo > 0 ? "Editar perfíl" : "Novo perfíl";
+        this.editTemplate.windowTitle = this.profile.id > 0 ? "Editar perfíl" : "Novo perfíl";
         this.editTemplate.doSaveEvent = Util.createCallbackFunction(this, this.doSave)
         this.editTemplate.dialogRef = this.dialogRef
         this.editTemplate.entity = this.profile
