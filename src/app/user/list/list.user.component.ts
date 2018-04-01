@@ -7,7 +7,7 @@ import {MenuItem} from 'primeng/primeng';
 
 import {Column, Action, DatagridComponent, GenericDatagridResponse} from '../../commom/datagrid/datagrid.component';
 
-import {Usuario, Empresa} from '../../commom/models';
+import {User, Company} from '../../commom/models';
 import * as Service from '../user.service';
 import { Observable } from 'rxjs/Observable';
 import { Util, ListComponent } from '../../commom/util';
@@ -33,13 +33,13 @@ export class UserListComponent extends ListComponent {
     public datagrid: DatagridComponent;
 
     public filterName: string = "";
-    public filterEmpresa: Empresa = null;
+    public filterEmpresa: Company = null;
     
     public datagridColumns: Column[] = [
-        {title: "Nome", modelField: new Property<Usuario>("nome").name, sortable: true},
-        {title: "Login", modelField: new Property<Usuario>("login").name, sortable: true},
-        {title: "Perfil", modelField: new Property<Usuario>("perfilNome").name, sortable: false},
-        {title: "Empresa", modelField: new Property<Usuario>("empresaNome").name, sortable: false},
+        {title: "Nome", modelField: new Property<User>("name").name, sortable: true},
+        {title: "Login", modelField: new Property<User>("login").name, sortable: true},
+        {title: "Perfil", modelField: new Property<User>("profileName").name, sortable: false},
+        {title: "Empresa", modelField: new Property<User>("companyName").name, sortable: false},
     ]
 
     
@@ -79,7 +79,7 @@ export class UserListComponent extends ListComponent {
         
         var request: Service.FindByFilterRequest = {
             "nome": this.filterName, 
-            "empresa": this.filterEmpresa == null ? null : this.filterEmpresa.codigo.valueOf(),
+            "empresa": this.filterEmpresa == null ? null : this.filterEmpresa.id.valueOf(),
             "offset": offset,
             "limit": limitt,
             "sortBy": sortFl,
