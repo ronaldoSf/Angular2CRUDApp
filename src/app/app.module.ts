@@ -27,6 +27,7 @@ const routes: Routes = [
   { path: '', loadChildren: 'app/home/home.module#HomeModule' },  
   { path: 'home', loadChildren: 'app/home/home.module#HomeModule' },  
   { path: 'usuario', loadChildren: 'app/user/user.module#UserModule' },
+  { path: 'cliente', loadChildren: 'app/client/client.module#ClientModule' },
   { path: 'perfil', loadChildren: 'app/profile/profile.module#ProfileModule' } ,
 ];
 

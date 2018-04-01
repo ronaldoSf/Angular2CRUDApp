@@ -94,6 +94,10 @@ $font-big: 30px;
     flex: 1 1 auto;
 }
 
+.padding-med {
+    padding: $margin-med !important;
+}
+
 .margin-med {
     margin: $margin-med !important;
 }

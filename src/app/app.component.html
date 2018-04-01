@@ -2,17 +2,19 @@
     <div class="main-header">
         <mat-toolbar color="primary">
 
-            <div class="side-title">
+            <div style="display:flex; justify-content: center;" class="side-title">
                 <span class="margin-med-l margin-med-r">CRUD APP</span>
-                    
-                
             </div>
             
             <div class="space-med"></div>
-            <button mat-icon-button matTooltip="Abrir/Fechar Menu" (click)="toogleSidenav()">
-                <mat-icon>menu</mat-icon>
-            </button>
-            
+
+            <div style="display:flex; align-items: center;" class="hover-dark full-height padding-med"  [routerLink]="['/usuario']">
+                USUÁRIOS
+            </div>
+
+            <div style="display:flex; align-items: center;" class="hover-dark full-height padding-med"  [routerLink]="['/cliente']">
+                CLIENTES
+            </div>
 
             <span class="fill-space"></span>
 
@@ -35,12 +37,9 @@
     </div>
     <div class="main-content">
 
-        <!--<mat-sidenav-container class="main-sidenav-fab-container" >
-
-
-            <mat-sidenav #sidenav mode="side" opened="true" class="main-sidenav" color="primary" (close)="onSidenavClosed()" (open)="onSidenavOpened()">
-                
+        <div style="width: 100%; background: white; display:flex">
             
+            <!-- <div  style="width: 250px; -webkit-transition: margin-left 0.5s; transition: margin-left 0.5s;" valign="top" [style.margin-left]="sidenavOpened ? '0px' : '-250px'">
                 <span class="server-infs hide">
                     <button mat-fab >
                             <mat-icon>settings</mat-icon>
@@ -51,97 +50,43 @@
                         <span>Empresa: <b>Unilever</b></span>
                     </span>
                 </span>
-
+    
                 <div class="server-infs2">
                     <div class=""><div class="point-green margin-med-rv"></div>Base de dados: Teste</div>
                     <div class=""><div class="point-green margin-med-rv"></div>Empresa: Unilever</div>
                 </div>
-
+    
                 <div class="server-infs2 hide">
                     <div class=""><mat-icon class="icon-small icon-black margin-med-rv">settings</mat-icon>Base de dados: Teste</div>
                     <div class=""><mat-icon class="icon-small icon-black margin-med-rv">settings</mat-icon>Empresa: Unilever</div>
                 </div>
-
+    
                 <div class="menu-list">
                     <div>
                         <div *ngFor="let menu of menus" class="menu">
                                 <div class="menu-bottom"></div>
-
+    
                                 <span class="menu-text">{{ menu.label }}</span>
-
+    
                             <div class="submenus">
                                 <div *ngFor="let submenu of menu.items" class="submenu"  [routerLink]="[submenu.url]">
                                     <mat-icon >{{ submenu.icon }}</mat-icon>
                                     {{ submenu.label }}
                                 </div>
                             </div>
-
+    
                             
                         </div>
                     </div>
                 </div>
-
-            </mat-sidenav>
-            
-            <mat-sidenav-content class="sidenav-content"> 
-
-                    <div style="width:100%">
-                            <router-outlet></router-outlet>
-                    </div>
-                    
-                    
-            </mat-sidenav-content>
-        </mat-sidenav-container>-->
-        <div style="width: 100%; background: white; display:flex">
-            <!-- <tr> -->
-                <div  style="width: 250px; -webkit-transition: margin-left 0.5s; transition: margin-left 0.5s;" valign="top" [style.margin-left]="sidenavOpened ? '0px' : '-250px'">
-                    <span class="server-infs hide">
-                        <button mat-fab >
-                                <mat-icon>settings</mat-icon>
-                        </button>
-                        <span >
-                            <span>Base de dados: <b>Teste</b></span>
-                            <div class="space-med"></div>
-                            <span>Empresa: <b>Unilever</b></span>
-                        </span>
-                    </span>
-        
-                    <div class="server-infs2">
-                        <div class=""><div class="point-green margin-med-rv"></div>Base de dados: Teste</div>
-                        <div class=""><div class="point-green margin-med-rv"></div>Empresa: Unilever</div>
-                    </div>
-        
-                    <div class="server-infs2 hide">
-                        <div class=""><mat-icon class="icon-small icon-black margin-med-rv">settings</mat-icon>Base de dados: Teste</div>
-                        <div class=""><mat-icon class="icon-small icon-black margin-med-rv">settings</mat-icon>Empresa: Unilever</div>
-                    </div>
-        
-                    <div class="menu-list">
-                        <div>
-                            <div *ngFor="let menu of menus" class="menu">
-                                    <div class="menu-bottom"></div>
-        
-                                    <span class="menu-text">{{ menu.label }}</span>
-        
-                                <div class="submenus">
-                                    <div *ngFor="let submenu of menu.items" class="submenu"  [routerLink]="[submenu.url]">
-                                        <mat-icon >{{ submenu.icon }}</mat-icon>
-                                        {{ submenu.label }}
-                                    </div>
-                                </div>
-        
-                                
-                            </div>
-                        </div>
-                    </div>
+            </div>-->
+            <div valign="top" style="flex-grow: 1000">
+                <div style="width:100%">
+                    <router-outlet></router-outlet>
                 </div>
-                <div valign="top" style="flex-grow: 1000">
-                    <div style="width:100%">
-                        <router-outlet></router-outlet>
-                    </div>
-                </div>
-            <!-- </tr> -->
             </div>
+        
+        </div>
     </div>
 </div>
 
