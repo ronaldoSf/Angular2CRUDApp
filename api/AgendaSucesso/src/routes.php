@@ -4,9 +4,11 @@ use Slim\Http\Request;
 use Slim\Http\Response;
 
 include("daos/ClientDao.php");
+include("daos/UserDao.php");
 // Routes
 
 $clientDao = new ClientDao();
+$userDao = new UserDao();
 
 $app->add(function ($req, $res, $next) {
     $response = $next($req, $res);
@@ -48,16 +50,42 @@ $app->put('/client', function (Request $request, Response $response, array $args
 });
 
 $app->delete('/client', function (Request $request, Response $response, array $args) {
-	$data = $request->getParsedBody();
+    $data = $request->getParsedBody();
 
-	if ($keysNotFound = Util::hasKeys($data, ["ids"])) {
-    	return $response->withJson(Util::makeError("Fields Missing: ".json_encode($keysNotFound)));
-	} else {
-		global $clientDao;
-		$objResponse = $clientDao->remove($data['ids']);
-    	
-    	return $response->withJson(Util::makeSuccess($objResponse));
-	}
+    if ($keysNotFound = Util::hasKeys($data, ["ids"])) {
+        return $response->withJson(Util::makeError("Fields Missing: ".json_encode($keysNotFound)));
+    } else {
+        global $clientDao;
+        $objResponse = $clientDao->remove($data['ids']);
+        
+        return $response->withJson(Util::makeSuccess($objResponse));
+    }
+});
+
+$app->post('/login', function (Request $request, Response $response, array $args) {
+    $data = $request->getParsedBody();
+
+    if ($keysNotFound = Util::hasKeys($data, ["login", "password"])) {
+        return $response->withJson(Util::makeError("Fields Missing: ".json_encode($keysNotFound)));
+    } else {
+        global $userDao;
+        $objResponse = $userDao->login($data);
+        
+        return $response->withJson($objResponse);
+    }
+});
+
+$app->post('/isLogged', function (Request $request, Response $response, array $args) {
+    $data = $request->getParsedBody();
+
+    if ($keysNotFound = Util::hasKeys($data, ["id", "hash"])) {
+        return $response->withJson(Util::makeError("Fields Missing: ".json_encode($keysNotFound)));
+    } else {
+        global $userDao;
+        $objResponse = $userDao->isLogged($data);
+        
+        return $response->withJson(Util::makeSuccess($objResponse));
+    }
 });
 
 $app->get('/[{name}]', function (Request $request, Response $response, array $args) {
