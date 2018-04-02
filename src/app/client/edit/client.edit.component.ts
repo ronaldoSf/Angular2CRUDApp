@@ -51,10 +51,10 @@ export class ClientEditComponent extends EditComponent implements OnInit {
 	public perfis: Profile[] = [new Profile(1, "Umaa"), new Profile(2, "Duaaas"), new Profile(3, "Treees"), new Profile(4, "Quaaatro")]
 	
 	private clientInfsTypes = [
-		{label: "Telefone", key: "PHONE"},
-		{label: "Facebook", key: "FACEBOOK"},
-		{label: "Website" , key: "WEBSITE"},
-		{label: "Endereço", key: "ADDRESS"},
+		{label: "Telefone", key: "PHONE", icon: "phone"},
+		{label: "Facebook", key: "FACEBOOK", icon: "face"},
+		{label: "Website" , key: "WEBSITE", icon: "web"},
+		{label: "Endereço", key: "ADDRESS", icon: "place"},
 	]
 
 	public save() {
