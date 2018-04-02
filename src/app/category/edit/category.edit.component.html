@@ -1,0 +1,30 @@
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<h4 class="panel-title">
+		{{ windowTitle }}
+		<button type="button" class="close" (click)="closeModal()" aria-label="Close">
+			<span aria-hidden="true">×</span>
+		</button>
+		</h4>
+	</div>
+	<div class="panel-body">
+
+			
+		{{category | json}}
+
+		<app-my-form 
+		[teste]="'aa'" 
+		[formConfigs]="formConfigs"  
+		[modelObject]="category"
+		(saveEvent)="save()"
+		(cancelEvent)="cancel()"
+		[bottomTemplateRef]="bottomTemplateRef"
+		>
+		<ng-template  #bottomTemplateRef>
+			<button type="button" class="btn btn-primary" style="float: right;" (click)="save()">Salvar</button>
+			<button type="button" class="btn" style="float: right;" (click)="cancel()">Cancelar</button>
+		</ng-template>
+		</app-my-form>
+
+	</div>
+</div>

@@ -1,0 +1,54 @@
+
+<div class="breadcrumb">
+    Home &nbsp;&nbsp; > &nbsp;&nbsp; Categorias
+</div>
+
+<div class="margin-big">
+
+
+    <div class="flex-h flex-align-center">
+                
+                    <h4>Categorias</h4>
+                    
+                    <span class="fill-space"></span>
+                    
+                    <button type="submit" class="btn btn-primary" (click)="addItem()">
+                        <i class="icon-search icon-white"></i>
+                        Adicionar
+                    </button>    
+                    <div class="space-med"></div>
+                    <button type="submit" class="btn btn-primary"  (click)="onDeleteSelected()">
+                        <i class="icon-search icon-white"></i>
+                        Excluir selecionados
+                    </button>    
+                    
+    </div>
+
+    <div class="space-med"></div>
+    
+                
+    <div class="filter-box">
+        <div class="flex-h flex-justify-sb">
+                <div class="filter-item-content">
+                    <input matInput placeholder="Nome" value="" class="form-control" [(ngModel)]="filterName">
+                </div>
+                <div class="space-med"></div>
+
+                <span class="fill-space"></span>
+
+                <button type="submit" class="btn btn-primary" (click)="onBtSearchClick()">
+                    <i class="icon-search icon-white"></i>
+                    Buscar
+                </button>
+        </div>
+    </div>
+
+    <div class="space-med"></div>
+    
+    <app-datagrid #datagrid
+        [columns]="datagridColumns" 
+        [actionsCallbacks]="[editItemEvent, deleteItemEvent]"
+        [loadCallback]="loadDataEvent"
+    > </app-datagrid>
+
+</div>
