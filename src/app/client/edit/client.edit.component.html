@@ -9,7 +9,8 @@
 	</div>
 	<div class="panel-body">
 
-		<!--{{client | json}}-->
+			{{client | json}}
+		<!---->
 
 		<ng-template  #imageUploaderTemplateRef>
 			<image-upload 
@@ -20,15 +21,20 @@
 				dropBoxMessage="OU ARRASTE PRA CÁ"
 				clearButtonCaption="LIMPAR"
 				[uploadedFiles]="[this.client.image]"
+				(removed)="onRemoved($event)"
+				(uploadFinished)="onUploadFinished($event)"
+				(uploadStateChanged)="onUploadStateChanged($event)"
 			>
 			</image-upload>				
 		</ng-template>
 
 		<ng-template #clientInfsTemplateRef>
 			<table>
-					<tr *ngFor="let infType of clientInfsTypes" style="border-width: 1;border-color: gray">
+					<tr *ngFor="let infType of client.informations; let in = index" style="border-width: 1;border-color: gray">
 						<td class="padding-med"><mat-icon color="primary">{{infType.icon}}</mat-icon></td>
-						<td class="padding-med" style="width: 100%;padding-right: 0 !important"><input matInput class="form-control" placeholder="{{infType.label}}"/></td>
+						<td class="padding-med" style="width: 100%;padding-right: 0 !important">
+							<input matInput class="form-control" name="infClient-{{in}}" [(ngModel)]="infType.value" placeholder="{{infType.label}}"/>
+						</td>
 					</tr>
 			</table>
 		</ng-template>
@@ -42,8 +48,8 @@
 		[bottomTemplateRef]="bottomTemplateRef"
 		>
 		<ng-template  #bottomTemplateRef>
-			<button type="submit" class="btn btn-primary" style="float: right" (click)="save()">Salvar</button>
-			<button type="submit" class="btn" style="float: right" (click)="cancel()">Cancelar</button>
+			<button type="button" class="btn btn-primary" style="float: right;" (click)="save()">Salvar</button>
+			<button type="button" class="btn" style="float: right;" (click)="cancel()">Cancelar</button>
 		</ng-template>
 		</app-my-form>
 

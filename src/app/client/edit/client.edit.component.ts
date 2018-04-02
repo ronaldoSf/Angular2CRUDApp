@@ -16,6 +16,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Client, Company, Profile } from '../../commom/models';
 import { CustomFormConfig } from '../../commom/custom.form/custom-form.component';
 import { ViewChild } from '@angular/core';
+import { FileHolder } from 'angular2-image-upload/lib/image-upload/image-upload.component';
 
 @Component({
 	selector: 'app-edit.client',
@@ -50,13 +51,6 @@ export class ClientEditComponent extends EditComponent implements OnInit {
 	public empresas: Company[] = [new Company(1, "Umaa"), new Company(2, "Duaaas"), new Company(3, "Treees"), new Company(4, "Quaaatro")]
 	public perfis: Profile[] = [new Profile(1, "Umaa"), new Profile(2, "Duaaas"), new Profile(3, "Treees"), new Profile(4, "Quaaatro")]
 	
-	private clientInfsTypes = [
-		{label: "Telefone", key: "PHONE", icon: "phone"},
-		{label: "Facebook", key: "FACEBOOK", icon: "face"},
-		{label: "Website" , key: "WEBSITE", icon: "web"},
-		{label: "Endereço", key: "ADDRESS", icon: "place"},
-	]
-
 	public save() {
 		let strErrors: string[] = []
 
@@ -74,6 +68,7 @@ export class ClientEditComponent extends EditComponent implements OnInit {
 				
 			})
 		})
+
 
 		if (strErrors.length > 0 ) {
 			this.dialogService.createDialogMessage(strErrors.join(" <br/> "));			
@@ -103,8 +98,8 @@ export class ClientEditComponent extends EditComponent implements OnInit {
 	public formConfigs: FormConfigRow<Client>[] = [
 		{
 			formConfigs: [
-				new InputFormConfig(200, new Property("name"), [], false, "Nome"),
-				new InputFormConfig(0, new Property("cnpj"), [new RequiredValidator()], false, "CNPJ"),
+				new InputFormConfig(200, new Property("name"), [new RequiredValidator()], false, "Nome"),
+				new InputFormConfig(0, new Property("cnpj"), [], false, "CNPJ"),
 			]
 		}, {
 			formConfigs: [
@@ -129,6 +124,18 @@ export class ClientEditComponent extends EditComponent implements OnInit {
 	}
 	
 	ngOnInit() {
+	}
+
+	imageFinishedUploading(file: FileHolder) {
+		console.log(JSON.stringify(file.serverResponse));
+	}
+	
+	onRemoved(file: FileHolder) {
+	// do some stuff with the removed file.
+	}
+	
+	onUploadStateChanged(state: boolean) {
+	console.log(JSON.stringify(state));
 	}
 
 }
