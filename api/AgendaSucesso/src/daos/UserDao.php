@@ -1,5 +1,6 @@
 <?php
 
+include_once('../src/util.php');
 
 class UserDao {
 	
@@ -32,11 +33,11 @@ class UserDao {
 
 				return array("status" => "OK", "result" => array("hash" => $newHash, "user" => $user));
 			} else {
-				return array("status" => "ERROR", "message" => "Usuário ou senha inválida");
+				return array("status" => "ERROR", "cause" => "Usuário ou senha inválida");
 			}
 
 		} catch (PDOException $e) {
-			return array("status" => "ERROR", "message" => $e->getMessage());
+			return array("status" => "ERROR", "cause" => $e->getMessage());
 		}
 
 	}

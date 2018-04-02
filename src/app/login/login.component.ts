@@ -14,21 +14,20 @@ export class LoginComponent implements OnInit {
   password = "";
 
   onClickLogin() {
-	/*this.userService.login({login: this.userName, password: this.password})
+	this.userService.login({login: this.userName, password: this.password})
 	.subscribe((result) => {
 		if (result.status == "OK" && result.result.hash) {
-			localStorage.setItem('loginHash', result.result.hash);
-			localStorage.setItem('loginName', result.result.user.name.toString());
+			localStorage.setItem('loginData', JSON.stringify(result.result));
+			window.location.reload();
 		} else {
-			alert("Erro desonhecido")
+			alert(result.cause)
 		}
 	}, (error) => {
 		alert(error)
-	})*/
+	})
 
-	localStorage.setItem('loginData', JSON.stringify({hash: "", user: {}}));
-
-	window.location.reload();
+	//localStorage.setItem('loginData', JSON.stringify({hash: "", user: {}}));
+	//window.location.reload();
   }
 
   ngOnInit() {

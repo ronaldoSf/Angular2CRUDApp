@@ -3,18 +3,12 @@ export class Client {
     id: Number = null;
     name: String = null;
     cnpj: String = null;
-    image: string = "https://static.independent.co.uk/s3fs-public/styles/story_medium/public/thumbnails/image/2016/10/11/14/beats-logo-1200-80.jpg";
+    image: string = null;
     description: string = null;
     isFavorite: Boolean = false;
     importanceOrder: number = 1;
 
-    informations: ClientInformation[] = [
-		{label: "Telefone", type: "PHONE", icon: "phone", value: "a"},
-		{label: "Facebook", type: "FACEBOOK", icon: "face", value: ""},
-		{label: "Website" , type: "WEBSITE", icon: "web", value: ""},
-		{label: "Endereço", type: "ADDRESS", icon: "place", value: ""},
-	]
-;
+    informations: ClientInformation[] = []
 }
 
 export class ClientInformation {
@@ -63,6 +57,12 @@ export class Permission {
     permsName: String
 
     profileId: Number    
+}
+
+
+export class Category {
+    id: Number
+    name: String  
 }
 
 

@@ -14,18 +14,20 @@ export class MenuItem {
 export class DataBase {
     name: String;
     baseUrl: String;
+    baseDomain: String;
 }
 
 export class Config {
 
     static currentUser: User;
-    static currentBase: DataBase = { name: "Produção", baseUrl: "http://localhost:80/api/AgendaSucesso/public" };
+    //static currentBase: DataBase = { name: "Produção", baseUrl: "http://localhost:80/api/AgendaSucesso/public" };
+    static currentBase: DataBase = { name: "Produção", baseUrl: "http://localhost/Angular2CrudApp/api/AgendaSucesso/public", baseDomain: "http://localhost" };
 
     static readonly allPermissions: GROUP_PERMISSION[] = Util.getItensFromObject(PERMISSION)
     static readonly allDataBases: DataBase[] = [
-        { name: "Produção", baseUrl: "http://localhost:80/Angular2CRUDApp/src/mocks/" },
-        { name: "Teste", baseUrl: "http://localhost:80/Angular2CRUDApp/src/mocks/" },
-        { name: "Local", baseUrl: "http://localhost:80/Angular2CRUDApp/src/mocks/" },
+        { name: "Produção", baseUrl: "http://localhost:80/Angular2CRUDApp/src/mocks/", baseDomain: "" },
+        { name: "Teste", baseUrl: "http://localhost:80/Angular2CRUDApp/src/mocks/", baseDomain: "" },
+        { name: "Local", baseUrl: "http://localhost:80/Angular2CRUDApp/src/mocks/", baseDomain: "" },
     ]
     static readonly allMenus: MenuItem[] = [
         {

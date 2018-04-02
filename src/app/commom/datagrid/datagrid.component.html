@@ -8,12 +8,12 @@
                             
                 <th *ngFor="let column of columns" (click)="selectColumnToSort(column)">
                     <div>
-                            <span>{{column.title}}</span>
-                            <ng-content></ng-content>
-                            <img src="assets/column-asc.png"  class="material-icons" *ngIf="column.sortable && currentSortField == column.modelField && currentSortType == 'ASC'" />
-                            <img src="assets/column-desc.png" class="material-icons" *ngIf="column.sortable && currentSortField == column.modelField && currentSortType == 'DESC'"/>
-                            <img src="assets/column-sort.png" class="material-icons" *ngIf="column.sortable && currentSortField != column.modelField"/>
-                        </div>
+						<span>{{column.title}}</span>
+						<ng-content></ng-content>
+						<img src="assets/column-asc.png"  class="material-icons" *ngIf="column.sortable && currentSortField == column.modelField && currentSortType == 'ASC'" />
+						<img src="assets/column-desc.png" class="material-icons" *ngIf="column.sortable && currentSortField == column.modelField && currentSortType == 'DESC'"/>
+						<img src="assets/column-sort.png" class="material-icons" *ngIf="column.sortable && currentSortField != column.modelField"/>
+					</div>
                 </th>
 
                 <th *ngIf="actions.length > 0">

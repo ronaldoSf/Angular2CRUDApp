@@ -14,13 +14,14 @@
 
 		<ng-template  #imageUploaderTemplateRef>
 			<image-upload 
-				url="https://httpbin.org/status/200" 
+				#imageUploadComponent
+				url="http://localhost/Angular2CrudApp/api/AgendaSucesso/public/uploadImage" 
 				[max]="1" 
 				[extensions]="['jpeg','png']"
 				buttonCaption="SELECIONE IMAGEM"
 				dropBoxMessage="OU ARRASTE PRA CÁ"
 				clearButtonCaption="LIMPAR"
-				[uploadedFiles]="[this.client.image]"
+				[uploadedFiles]="this.client.image ? [this.client.image] : null"
 				(removed)="onRemoved($event)"
 				(uploadFinished)="onUploadFinished($event)"
 				(uploadStateChanged)="onUploadStateChanged($event)"

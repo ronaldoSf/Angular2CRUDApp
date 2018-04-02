@@ -24,7 +24,7 @@ export class UserService {
 	}*/
 	
     public login(parameters: {login:String, password: String}): Observable<LoginResponse> {
-        return this.http.post<LoginResponse>(this.getApiUrl('usuario/login.json'), parameters);
+        return this.http.post<LoginResponse>(this.getApiUrl('/login'), parameters);
     }
     
 
@@ -44,5 +44,6 @@ export class FindByFilterResponse extends GenericDatagridResponse<User> {
 
 export class LoginResponse {
 	status: string;
+	cause: string;
 	result: {hash: string, user: User};
 }

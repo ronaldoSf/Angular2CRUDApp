@@ -16,7 +16,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Client, Company, Profile } from '../../commom/models';
 import { CustomFormConfig } from '../../commom/custom.form/custom-form.component';
 import { ViewChild } from '@angular/core';
-import { FileHolder } from 'angular2-image-upload/lib/image-upload/image-upload.component';
+import { FileHolder, ImageUploadComponent } from 'angular2-image-upload/lib/image-upload/image-upload.component';
 
 @Component({
 	selector: 'app-edit.client',
@@ -36,15 +36,43 @@ export class ClientEditComponent extends EditComponent implements OnInit {
 		if (data.entity) {
 			this.client = data.entity;
 		}
+
+		this.mergeDefaultInfs();
+	}
+
+	mergeDefaultInfs() {
+		let defaultInfs = [
+			{label: "Telefone", type: "PHONE", icon: "phone", value: ""},
+			{label: "Facebook", type: "FACEBOOK", icon: "face", value: ""},
+			{label: "Website" , type: "WEBSITE", icon: "web", value: ""},
+			{label: "Endereço", type: "ADDRESS", icon: "place", value: ""},
+		]
+		
+		if (this.client.informations) { 
+			defaultInfs.forEach((item, index) => {
+				let itemSaved = this.client.informations.find((savedItem) => savedItem.type == item.type)
+				console.log("itemSaved" + itemSaved)
+				if (itemSaved) {
+					item.value = itemSaved.value;
+				}
+			})
+		}
+
+		console.log("defaultInfs" + JSON.stringify(defaultInfs))
+		
+		this.client.informations = defaultInfs
 	}
 	
 	@ViewChild('imageUploaderTemplateRef') 
 	public imageUploaderTemplate: TemplateRef<any>;
 		
+	@ViewChild('imageUploadComponent') 
+	public imageUploadComponent: ImageUploadComponent;
+
 	@ViewChild('clientInfsTemplateRef') 
 	public clientInfsTemplate: TemplateRef<any>;
 	
-	static dialogConfig: DialogConfig = {height: "auto", width: "400px"}
+	static dialogConfig: DialogConfig = {height: "auto", width: "600px"}
 
 	public client: Client = new Client()
 
@@ -130,8 +158,13 @@ export class ClientEditComponent extends EditComponent implements OnInit {
 	ngOnInit() {
 	}
 
-	imageFinishedUploading(file: FileHolder) {
+	onUploadFinished(file: FileHolder) {
 		console.log(JSON.stringify(file.serverResponse));
+		let response = (file.serverResponse as any)._body
+		let body = JSON.parse(response)
+
+		this.imageUploadComponent.deleteAll()
+		this.client.image = body.result.link
 	}
 	
 	onRemoved(file: FileHolder) {
@@ -139,7 +172,7 @@ export class ClientEditComponent extends EditComponent implements OnInit {
 	}
 	
 	onUploadStateChanged(state: boolean) {
-	console.log(JSON.stringify(state));
+		console.log(JSON.stringify(state));
 	}
 
 }

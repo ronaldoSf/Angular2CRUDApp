@@ -1,8 +1,7 @@
 <?php
 
-$inc = '../src/util.php';
-//echo $inc;
-include($inc);
+include_once('../src/util.php');
+
 
 class ClientDao {
 	
@@ -13,7 +12,14 @@ class ClientDao {
 			$res->bindValue(':id', $id);
 
 			$res->execute();
-			return $res->fetch(PDO::FETCH_ASSOC);
+			$item = $res->fetch(PDO::FETCH_ASSOC);
+
+			$resInfs = Util::getCon()->prepare("SELECT * FROM client_information WHERE clientId = :clientId");
+			$resInfs->bindValue(":clientId", $item['id']);
+			$resInfs->execute();
+			$item['informations'] = $resInfs->fetchAll(PDO::FETCH_ASSOC);
+
+			return $item;
 
 		} catch (PDOException $e) {
 			echo $e;
@@ -47,13 +53,13 @@ class ClientDao {
 			$items = $resItems->fetchAll(PDO::FETCH_ASSOC);
 			$count = $resCount->fetch(PDO::FETCH_ASSOC)['countttttt'];
 
-
-			foreach ($items as $item) {
+			foreach ($items as $key => $item) {
 				$resInfs = Util::getCon()->prepare("SELECT * FROM client_information WHERE clientId = :clientId");
-				$resInfs->bindValue(":clientId", $item['id'])
+				$resInfs->bindValue(":clientId", $item['id']);
 				$resInfs->execute();
-
-				$items['informations'] = $resInfs->fetchAll(PDO::FETCH_ASSOC);
+				
+				$item["informations"] = $resInfs->fetchAll(PDO::FETCH_ASSOC);
+				$items[$key] = $item;
 			}
 
 			return array("items" => $items, "total" => intval($count));
@@ -69,8 +75,16 @@ class ClientDao {
 
 		try {
 			//echo json_encode($data);
-			$stmt = Util::getCon()->prepare('INSERT INTO client (name, cnpj, image)
-			 VALUES (:name, :cnpj, :image) RETURNING id');
+
+			if (Util::inArray('id', $data)) {
+				$stmt = Util::getCon()->prepare('UPDATE client SET name = :name, cnpj = :cnpj, image = :image
+							WHERE id = :id RETURNING id');
+				$stmt->bindValue(':id', $data['id']);
+			} else {
+				$stmt = Util::getCon()->prepare('INSERT INTO client (name, cnpj, image)
+				VALUES (:name, :cnpj, :image) RETURNING id');
+			}
+			
 		
 			$stmt->bindValue(':name', $data['name']);
 			$stmt->bindValue(':cnpj', $data['cnpj']);
@@ -128,10 +142,59 @@ class ClientDao {
 			return $e->getMessage(); 
 		}
 	}
-}
 
-class Client {
+	function uploadImage() {
+		$imageName = "image";
 
+		if ( isset( $_FILES[ $imageName ][ 'name' ] ) && $_FILES[ $imageName ][ 'error' ] == 0 ) {
+			//echo 'Você enviou o arquivo: <strong>' . $_FILES[ $imageName ][ 'name' ] . '</strong><br />';
+			//echo 'Este arquivo é do tipo: <strong > ' . $_FILES[ $imageName ][ 'type' ] . ' </strong ><br />';
+			//echo 'Temporáriamente foi salvo em: <strong>' . $_FILES[ $imageName ][ 'tmp_name' ] . '</strong><br />';
+			//echo 'Seu tamanho é: <strong>' . $_FILES[ $imageName ][ 'size' ] . '</strong> Bytes<br /><br />';
+		 
+			$arquivo_tmp = $_FILES[ $imageName ][ 'tmp_name' ];
+			$nome = $_FILES[ $imageName ][ 'name' ];
+		 
+			// Pega a extensão
+			$extensao = pathinfo ( $nome, PATHINFO_EXTENSION );
+		 
+			// Converte a extensão para minúsculo
+			$extensao = strtolower ( $extensao );
+		 
+			// Somente imagens, .jpg;.jpeg;.gif;.png
+			// Aqui eu enfileiro as extensões permitidas e separo por ';'
+			// Isso serve apenas para eu poder pesquisar dentro desta String
+			if ( strstr ( '.jpg;.jpeg;.gif;.png', $extensao ) ) {
+				// Cria um nome único para esta imagem
+				// Evita que duplique as imagens no servidor.
+				// Evita nomes com acentos, espaços e caracteres não alfanuméricos
+				$novoNome = uniqid ( time () ) . '.' . $extensao;
+		 
+				// Concatena a pasta com o nome
+				$destino =  __DIR__ . '/../../imagens/' . $novoNome;
+				$link = "http://" . $_SERVER['SERVER_NAME'] . str_replace($_SERVER['DOCUMENT_ROOT'], "", $destino);
+				
+				// tenta mover o arquivo para o destino
+				if ( @move_uploaded_file ( $arquivo_tmp, $destino ) ) {
+					//echo 'Arquivo salvo com sucesso em : <strong>' . $destino . '</strong><br />';
+					//echo ' < img src = "' . $destino . '" />';
+					return array("status" => "OK", "result" => array("link" => $link, "destino" => $destino));
+				}
+				else {
+					//echo 'Erro ao salvar o arquivo. Aparentemente você não tem permissão de escrita em ' . $destino;					
+					return array("status" => "ERROR", "cause" => 'Erro ao salvar o arquivo. Aparentemente você não tem permissão de escrita em ' . $destino);
+				}
+			}
+			else {
+				//echo 'Você poderá enviar apenas arquivos "*.jpg;*.jpeg;*.gif;*.png"<br />';
+				return array("status" => "ERROR", "cause" => 'Você poderá enviar apenas arquivos "*.jpg;*.jpeg;*.gif;*.png"<br />');
+			}
+		}
+		else {
+			//echo 'Você não enviou nenhum arquivo!';
+			return array("status" => "ERROR", "cause" => 'Você não enviou nenhum arquivo!');
+		}
+	}
 }
 
 ?>
