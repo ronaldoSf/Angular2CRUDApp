@@ -83,7 +83,7 @@ export class DatagridComponent implements OnInit {
     public get canGoNextPage():Boolean {
         let newPage = this.currentPage + 1
 
-        if (this.totalOfItens != 0 && (newPage * this.currentPageSize) < this.totalOfItens) {
+        if (this.totalOfItens != 0 && newPage <= this.totalOfPages) {
             return true
         } else {
             return false
@@ -93,7 +93,7 @@ export class DatagridComponent implements OnInit {
     public get canGoBackPage():Boolean {
         let newPage = this.currentPage - 1
         
-        if (this.totalOfItens != 0 && newPage >= 0) {
+        if (this.totalOfItens != 0 && newPage > 0) {
             return true
         } else {
             return false
@@ -101,11 +101,11 @@ export class DatagridComponent implements OnInit {
     }
 
     public get currentOffset(): number {
-        return (this.currentPage -1) * this.currentPageSize
+        return this.currentPage <= 0 ? 0 : (this.currentPage -1) * this.currentPageSize
     }
 
     private get totalOfPages(): number {
-        return Math.trunc( this.currentPageSize == 0 ? 1 : (this.totalOfItens / this.currentPageSize))
+        return Math.ceil( this.currentPageSize == 0 ? 1 : (this.totalOfItens / this.currentPageSize))
     }
     
     private goNextPage() {
@@ -140,6 +140,7 @@ export class DatagridComponent implements OnInit {
     
     private loadData() {
         this.dataSource = [];
+
         
         if (this.loadCallback) {
             this.showLoading = true;
@@ -148,12 +149,17 @@ export class DatagridComponent implements OnInit {
             observable.subscribe(
                 result => { 
                     this.showLoading = false;
+                    console.log(result)
 
                     if (result.status == "OK") {
-                        this.dataSource = result.result
+                        
+                        if (this.currentPage == 0)
+                            this.currentPage = 1;
+
+                        this.dataSource = result.result.items
                         this.loadedPage = this.currentPage
                         this.loadedPageSize = this.currentPageSize
-                        this.totalOfItens = result.total
+                        this.totalOfItens = result.result.total
                     } else {
                         this.showError(result.status)
                     }
@@ -177,7 +183,7 @@ export class DatagridComponent implements OnInit {
         this.currentSortField = column.modelField
     }
 
-    private showError(error: any) {
+    public showError(error: any) {
         if (this.errorCallback) {
             this.errorCallback(error)
         } else {
@@ -197,6 +203,9 @@ export class DatagridComponent implements OnInit {
         let action = this.actions[actionIndex]
         let item = this.dataSource[modelIndex]
         let actionCallBack = this.actionsCallbacks[actionIndex];
+
+        //console.log("modelIndex " + modelIndex)
+        //console.log("actionIndex " + actionIndex)
 
         if (action.action) {
             action.action(modelIndex)
@@ -246,14 +255,17 @@ export class Action {
 }
 
 export abstract class GenericDatagridResponse<T> {
-    total: number
+    //total: number
     status: string
-    result: T[]
+    result: {items: T[], total: number} 
 }
 
 export abstract class GenericDatagridRequest {
     offset: number
     limit:number
+
+    sortBy?: string
+    sortType?: string
 }
 
 export enum SortType {

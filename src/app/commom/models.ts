@@ -1,4 +1,21 @@
 
+export class Client {
+    id: Number = null;
+    name: String = null;
+    cnpj: String = null;
+    image: string = null;
+    description: string = null;
+    isFavorite: Boolean = false;
+    importanceOrder: number = 1;
+
+    informations: ClientInformation[] = [];
+}
+
+export class ClientInformation {
+    type: string;
+    value: string;
+}
+
 export class User {
     id: Number = null;
     name: String = null;

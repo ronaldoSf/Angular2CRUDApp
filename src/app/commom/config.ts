@@ -19,7 +19,7 @@ export class DataBase {
 export class Config {
 
     static currentUser: User;
-    static currentBase: DataBase = { name: "Produção", baseUrl: "http://localhost:80/Angular2CRUDApp/src/mocks/" };
+    static currentBase: DataBase = { name: "Produção", baseUrl: "http://localhost:80/api/AgendaSucesso/public" };
 
     static readonly allPermissions: GROUP_PERMISSION[] = Util.getItensFromObject(PERMISSION)
     static readonly allDataBases: DataBase[] = [

@@ -87,7 +87,8 @@ export class Util {
 
     static createCallbackFunction(esse: any, func: Function): Function {
         let f = function() {
-          return func.call(esse, arguments)
+          //console.log("arguments" + arguments)
+          return func.apply(esse, arguments)
         }
     
         return f;
@@ -103,6 +104,24 @@ export class GenericSaveResponse {
 
 export class GenericSaveRequest<T> {
     model: T;
+}
+
+export class GenericRemoveRequest {
+    ids: number[]
+}
+
+export class GenericRemoveResponse {
+    status: string;
+    ids: number[]
+}
+
+export class GenericFindByIdRequest {
+    id: number
+}
+
+export class GenericFindByIdResponse<T> {
+    status: string;
+    response: T;
 }
 
 export abstract class ListComponent {
