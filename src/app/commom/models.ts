@@ -8,11 +8,19 @@ export class Client {
     isFavorite: Boolean = false;
     importanceOrder: number = 1;
 
-    informations: ClientInformation[] = [];
+    informations: ClientInformation[] = [
+		{label: "Telefone", type: "PHONE", icon: "phone", value: "a"},
+		{label: "Facebook", type: "FACEBOOK", icon: "face", value: ""},
+		{label: "Website" , type: "WEBSITE", icon: "web", value: ""},
+		{label: "Endereço", type: "ADDRESS", icon: "place", value: ""},
+	]
+;
 }
 
 export class ClientInformation {
     type: string;
+    label: string;
+    icon: string;
     value: string;
 }
 
