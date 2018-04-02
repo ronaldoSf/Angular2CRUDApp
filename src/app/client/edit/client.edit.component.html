@@ -9,7 +9,7 @@
 	</div>
 	<div class="panel-body">
 
-		Model: {{client | json}}
+		<!--{{client | json}}-->
 
 		<ng-template  #imageUploaderTemplateRef>
 			<image-upload 
@@ -27,8 +27,8 @@
 		<ng-template #clientInfsTemplateRef>
 			<table>
 					<tr *ngFor="let infType of clientInfsTypes" style="border-width: 1;border-color: gray">
-						<td class="padding-med">{{infType.label}}</td>
-						<td class="padding-med" style="width: 100%;"><input matInput class="form-control" /></td>
+						<td class="padding-med"><mat-icon color="primary">{{infType.icon}}</mat-icon></td>
+						<td class="padding-med" style="width: 100%;padding-right: 0 !important"><input matInput class="form-control" placeholder="{{infType.label}}"/></td>
 					</tr>
 			</table>
 		</ng-template>

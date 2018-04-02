@@ -18,6 +18,7 @@ import { ClientListComponent } from './list/client.list.component';
 import { ClientEditComponent } from './edit/client.edit.component';
 import { ImageUploadModule } from "angular2-image-upload";
 import { CustomFormModule } from '../commom/custom.form/custom-form.module';
+import { MatIconModule } from '@angular/material/icon';
 
 const routes: Routes = [
   { path: '', component: ClientListComponent },
@@ -25,7 +26,7 @@ const routes: Routes = [
 
 @NgModule({
   imports: [
-  CommonModule, DatagridModule, MatDialogModule, FormsModule, MyFormModule, 
+  CommonModule, DatagridModule, MatDialogModule, FormsModule, MyFormModule, MatIconModule,
     AutocompleteFormModule, CalendarFormModule, ComboboxFormModule,  CurrencyInputFormModule, InputFormModule, MaskedInputFormModule, CustomFormModule, CustomFormModule, 
     RouterModule.forChild(routes), ImageUploadModule.forRoot()
   ],
