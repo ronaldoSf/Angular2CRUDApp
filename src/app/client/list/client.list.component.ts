@@ -13,6 +13,7 @@ import * as Service from '../client.service';
 import { Observable } from 'rxjs/Observable';
 import { Util, ListComponent } from '../../commom/util';
 import { MatDialog } from '@angular/material/dialog';
+import { ClientEditComponent } from '../edit/client.edit.component';
 
 @Component({
   selector: 'list-client',
@@ -82,14 +83,14 @@ export class ClientListComponent extends ListComponent {
     }
 
     protected addItem() {
-        //let i = this.dialogService.createDialog(ClientEditComponent, {});    
+        let i = this.dialogService.createDialog(ClientEditComponent, {});    
     }
 
     protected editItem(itemIndex: number) {
         let itemSelected = this.datagrid.dataSource[itemIndex]
 
-        //let i = this.dialogService.createDialog(ClientEditComponent, {entity: itemSelected});
-        //console.log(i)
+        let i = this.dialogService.createDialog(ClientEditComponent, {entity: itemSelected});
+        console.log(i)
     }
     protected deleteItem(itemIndex: number) {
         //console.log("itemIndex " + itemIndex)

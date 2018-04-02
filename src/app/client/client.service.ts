@@ -30,7 +30,7 @@ export class ClientService {
         return this.http.get<GenericFindByIdResponse<Client>>(this.getApiUrl('/client'));
     }
     
-    public save(request: GenericSaveRequest<User>): Observable<GenericSaveResponse> {
+    public save(request: GenericSaveRequest<Client>): Observable<GenericSaveResponse> {
         return this.http.put<GenericSaveResponse>(this.getApiUrl('/client'), request);
     }
 
@@ -49,6 +49,6 @@ export class FindByFilterRequest extends GenericDatagridRequest {
     empresa: number
 }
 
-export class FindByFilterResponse extends GenericDatagridResponse<User> {
+export class FindByFilterResponse extends GenericDatagridResponse<Client> {
 
 }

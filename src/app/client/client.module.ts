@@ -15,6 +15,9 @@ import { CalendarFormModule } from '../commom/calendar.form/calendar-form.module
 import { CurrencyInputFormModule } from '../commom/currency.input.form/currency-input-form.module';
 import { MaskedInputFormModule } from '../commom/masked.input.form/masked-input-form.module';
 import { ClientListComponent } from './list/client.list.component';
+import { ClientEditComponent } from './edit/client.edit.component';
+import { ImageUploadModule } from "angular2-image-upload";
+import { CustomFormModule } from '../commom/custom.form/custom-form.module';
 
 const routes: Routes = [
   { path: '', component: ClientListComponent },
@@ -22,12 +25,12 @@ const routes: Routes = [
 
 @NgModule({
   imports: [
-    CommonModule, DatagridModule, MatDialogModule, FormsModule, MyFormModule, 
-    AutocompleteFormModule, CalendarFormModule, ComboboxFormModule,  CurrencyInputFormModule, InputFormModule, MaskedInputFormModule,
-    RouterModule.forChild(routes)
+  CommonModule, DatagridModule, MatDialogModule, FormsModule, MyFormModule, 
+    AutocompleteFormModule, CalendarFormModule, ComboboxFormModule,  CurrencyInputFormModule, InputFormModule, MaskedInputFormModule, CustomFormModule, CustomFormModule, 
+    RouterModule.forChild(routes), ImageUploadModule.forRoot()
   ],
-  declarations: [ClientListComponent, /*ClientEditComponent*/],
-  entryComponents: [/*ClientEditComponent*/],
+  declarations: [ClientListComponent, ClientEditComponent, ClientEditComponent],
+  entryComponents: [ClientEditComponent],
   exports: [RouterModule]
 })
 export class ClientModule { }

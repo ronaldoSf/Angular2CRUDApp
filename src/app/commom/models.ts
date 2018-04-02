@@ -3,7 +3,7 @@ export class Client {
     id: Number = null;
     name: String = null;
     cnpj: String = null;
-    image: string = null;
+    image: string = "https://static.independent.co.uk/s3fs-public/styles/story_medium/public/thumbnails/image/2016/10/11/14/beats-logo-1200-80.jpg";
     description: string = null;
     isFavorite: Boolean = false;
     importanceOrder: number = 1;

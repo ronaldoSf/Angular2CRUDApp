@@ -16,21 +16,21 @@ export class AppComponent {
   menus: MenuItem[] = Config.allMenus
 
   ngOnInit() {
-    this.userService.login({ login: "", password: ""}).subscribe(
-      result => {},
-      error => { 
-        //alert(error) 
-      }
-    )
+    console.log(localStorage.getItem('loginData') != null)
   }
 
   sidenavOpened = true
+  logged = localStorage.getItem('loginData') != null
 
   onSidenavClosed() {
     this.sidenavOpened = false
     //alert("clo")
   }
 
+  logoff() {
+	localStorage.removeItem('loginData')
+	window.location.reload();
+  }
 
   onSidenavOpened() {
     this.sidenavOpened = true

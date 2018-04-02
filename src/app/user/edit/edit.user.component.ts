@@ -79,7 +79,7 @@ export class UserEditComponent extends EditComponent implements OnInit {
 		if (strErrors.length > 0 ) {
 			this.dialogService.createDialogMessage(strErrors.join(" <br/> "));			
 		} else {
-			this.userService.save({model: this.usuario}).subscribe(
+			/*this.userService.save({model: this.usuario}).subscribe(
 				(result) => { 
 					this.usuario.id = result.id
 					this.matDialogRef.close()
@@ -87,7 +87,7 @@ export class UserEditComponent extends EditComponent implements OnInit {
 				(error) => { 
 					this.dialogService.createDialogMessage("Erro ao salvar") 
 				},
-			)
+			)*/
 		}
 
 	}

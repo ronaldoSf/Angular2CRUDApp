@@ -22,6 +22,7 @@ import {BreadcrumbModule} from 'primeng/primeng';
 import { AppComponent } from './app.component';
 import { DatagridComponent } from './commom/datagrid/datagrid.component';
 import { DialogMessageComponent } from './commom/dialog.message/dialog-message-component.component';
+import { LoginComponent } from './login/login.component';
 
 const routes: Routes = [
   { path: '', loadChildren: 'app/home/home.module#HomeModule' },  
@@ -35,11 +36,12 @@ const routes: Routes = [
   declarations: [
     AppComponent,
     DialogMessageComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule, BrowserAnimationsModule, HttpClientModule,
     ButtonModule, CalendarModule,  MatMenuModule, MatIconModule, MatButtonModule, MatTooltipModule,
-    MatSidenavModule, MatToolbarModule, TieredMenuModule, PanelMenuModule, BreadcrumbModule, ReactiveFormsModule,
+    MatSidenavModule, MatToolbarModule, TieredMenuModule, PanelMenuModule, BreadcrumbModule, FormsModule, ReactiveFormsModule,
     RouterModule.forRoot(routes)
   ],
   providers: [],

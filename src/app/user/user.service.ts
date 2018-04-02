@@ -15,17 +15,18 @@ export class UserService {
         return Config.currentBase.baseUrl + str;
     }
     
-    public login(parameters: {login:String, password: String}): Observable<User> {
-        return this.http.post<User>(this.getApiUrl('usuario/login.json'), parameters);
-    }
-    
-    public findByFilter(request: FindByFilterRequest): Observable<FindByFilterResponse> {
+    /*public findByFilter(request: FindByFilterRequest): Observable<FindByFilterResponse> {
         return this.http.post<FindByFilterResponse>(this.getApiUrl('usuarios.json'), request);
     }
     
     public save(request: GenericSaveRequest<User>): Observable<GenericSaveResponse> {
         return this.http.post<GenericSaveResponse>(this.getApiUrl('usuarios.json'), request);
+	}*/
+	
+    public login(parameters: {login:String, password: String}): Observable<LoginResponse> {
+        return this.http.post<LoginResponse>(this.getApiUrl('usuario/login.json'), parameters);
     }
+    
 
 }
 
@@ -38,4 +39,10 @@ export class FindByFilterRequest extends GenericDatagridRequest {
 
 export class FindByFilterResponse extends GenericDatagridResponse<User> {
 
+}
+
+
+export class LoginResponse {
+	status: string;
+	result: {hash: string, user: User};
 }
