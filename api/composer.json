@@ -1,6 +1,0 @@
-{
-    "require": {
-        "slim/slim": "^3.9",
-        "catfan/medoo": "^1.5"
-    }
-}
