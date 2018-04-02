@@ -1,0 +1,51 @@
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<h4 class="panel-title">
+		{{ windowTitle }}
+		<button type="button" class="close" (click)="closeModal()" aria-label="Close">
+			<span aria-hidden="true">×</span>
+		</button>
+		</h4>
+	</div>
+	<div class="panel-body">
+
+		Model: {{client | json}}
+
+		<ng-template  #imageUploaderTemplateRef>
+			<image-upload 
+				url="https://httpbin.org/status/200" 
+				[max]="1" 
+				[extensions]="['jpeg','png']"
+				buttonCaption="SELECIONE IMAGEM"
+				dropBoxMessage="OU ARRASTE PRA CÁ"
+				clearButtonCaption="LIMPAR"
+				[uploadedFiles]="[this.client.image]"
+			>
+			</image-upload>				
+		</ng-template>
+
+		<ng-template #clientInfsTemplateRef>
+			<table>
+					<tr *ngFor="let infType of clientInfsTypes" style="border-width: 1;border-color: gray">
+						<td class="padding-med">{{infType.label}}</td>
+						<td class="padding-med" style="width: 100%;"><input matInput class="form-control" /></td>
+					</tr>
+			</table>
+		</ng-template>
+
+		<app-my-form 
+		[teste]="'aa'" 
+		[formConfigs]="formConfigs"  
+		[modelObject]="client"
+		(saveEvent)="save()"
+		(cancelEvent)="cancel()"
+		[bottomTemplateRef]="bottomTemplateRef"
+		>
+		<ng-template  #bottomTemplateRef>
+			<button type="submit" class="btn btn-primary" style="float: right" (click)="save()">Salvar</button>
+			<button type="submit" class="btn" style="float: right" (click)="cancel()">Cancelar</button>
+		</ng-template>
+		</app-my-form>
+
+	</div>
+</div>
