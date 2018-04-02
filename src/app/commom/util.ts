@@ -98,6 +98,7 @@ export class Util {
 
 export class GenericSaveResponse {
     status: string;
+    cause: string;
     id: number;    
 }
 

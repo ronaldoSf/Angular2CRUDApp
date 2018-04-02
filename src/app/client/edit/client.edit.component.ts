@@ -75,8 +75,12 @@ export class ClientEditComponent extends EditComponent implements OnInit {
 		} else {
 			this.clientService.save({model: this.client}).subscribe(
 				(result) => { 
-					this.client.id = result.id
-					this.matDialogRef.close()
+                    if (result.status == "OK") {
+                        this.client.id = result.id
+                        this.matDialogRef.close()
+                    } else {
+                        alert("Erro: " + result.cause)
+                    }
 				},
 				(error) => { 
 					this.dialogService.createDialogMessage("Erro ao salvar") 

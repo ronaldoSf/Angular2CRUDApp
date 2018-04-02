@@ -47,6 +47,15 @@ class ClientDao {
 			$items = $resItems->fetchAll(PDO::FETCH_ASSOC);
 			$count = $resCount->fetch(PDO::FETCH_ASSOC)['countttttt'];
 
+
+			foreach ($items as $item) {
+				$resInfs = Util::getCon()->prepare("SELECT * FROM client_information WHERE clientId = :clientId");
+				$resInfs->bindValue(":clientId", $item['id'])
+				$resInfs->execute();
+
+				$items['informations'] = $resInfs->fetchAll(PDO::FETCH_ASSOC);
+			}
+
 			return array("items" => $items, "total" => intval($count));
 
 		} catch (PDOException $e) {
@@ -69,7 +78,27 @@ class ClientDao {
 
 			$stmt->execute();
 
-			return $stmt->fetch(PDO::FETCH_ASSOC);
+			$clientId = $stmt->fetch(PDO::FETCH_ASSOC)['id'];
+
+
+			$stmt = Util::getCon()->prepare('DELETE FROM client_information WHERE clientId = :clientId');
+			$stmt->bindValue(':clientId', $clientId);
+			$stmt->execute();
+
+			$informations = $data['informations'];
+
+			foreach ($informations as $inf) {
+				$stmt = Util::getCon()->prepare('INSERT INTO client_information (type, value, clientId)
+					VALUES (:type, :value, :clientId)');
+
+				$stmt->bindValue(':clientId', $clientId);
+				$stmt->bindValue(':type', $inf['type']);
+				$stmt->bindValue(':value', $inf['value']);
+
+				$stmt->execute();
+			}
+
+			return array("id" => $clientId);
 
 		} catch (PDOException $e) {
 			echo $e;
