@@ -67,7 +67,7 @@ $app->get('/client', function (Request $request, Response $response, array $args
 $app->put('/client', function (Request $request, Response $response, array $args) {
 	$data = $request->getParsedBody();
 
-	if ($keysNotFound = Util::hasKeys($data['model'], ["name", "cnpj", "image", "informations"])) {
+	if ($keysNotFound = Util::hasKeys($data['model'], ["name", "cnpj", "image", "informations", "categoryId", "cityId"])) {
     	return $response->withJson(Util::makeError("Fields Missing: ".json_encode($keysNotFound)));
 	} else {
 		global $clientDao;

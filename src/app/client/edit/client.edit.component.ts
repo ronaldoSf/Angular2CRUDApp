@@ -1,3 +1,6 @@
+import { State, City, Importance } from './../../commom/models';
+import { ComboboxFormConfig } from './../../commom/combobox.form/combobox-form.component';
+import { CategoryService } from './../../category/category.service';
 import { InputFormConfig } from './../../commom/input.form/input.form.component';
 import { RequiredValidator } from './../../commom/validators/required-validator.directive';
 import { Validators } from '@angular/forms';
@@ -7,29 +10,30 @@ import { DialogComponent, DialogConfig, DialogService } from '../../commom/dialo
 import { Util, EditComponent } from '../../commom/util';
 import { CalendarFormComponent, CalendarFormConfig } from '../../commom/calendar.form/calendar-form.component';
 import { MaskedInputFormComponent, MaskedInputFormConfig } from '../../commom/masked.input.form/masked-input-form.component';
-import { ComboboxFormConfig } from '../../commom/combobox.form/combobox-form.component';
 import { CurrencyInputFormConfig } from '../../commom/currency.input.form/currency-input-form.component';
 import { AutoCompleteFormConfig } from '../../commom/autocomplete.form/auto-complete-form.component';
 import { Observable } from 'rxjs/Observable';
 import { ClientService } from '../client.service';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Client, Company, Profile } from '../../commom/models';
+import { Client, Company, Profile, Category } from '../../commom/models';
 import { CustomFormConfig } from '../../commom/custom.form/custom-form.component';
 import { ViewChild } from '@angular/core';
 import { FileHolder, ImageUploadComponent } from 'angular2-image-upload/lib/image-upload/image-upload.component';
+import { DataBase, Config } from '../../commom/config';
 
 @Component({
 	selector: 'app-edit.client',
 	templateUrl: './client.edit.component.html',
 	styleUrls: ['./client.edit.component.scss'],
-	providers: [ ClientService, DialogService ],	
+	providers: [ ClientService, CategoryService, DialogService ],	
 })
 export class ClientEditComponent extends EditComponent implements OnInit {
 
 	constructor(public dialogRef: MatDialogRef<ClientEditComponent>,
 		@Inject(MAT_DIALOG_DATA) public data: any,
 		public dialogService: DialogService, 
-		public clientService: ClientService
+		public clientService: ClientService,
+		public categoryService: CategoryService,
 	) {
 		super();
 
@@ -74,7 +78,9 @@ export class ClientEditComponent extends EditComponent implements OnInit {
 	
 	static dialogConfig: DialogConfig = {height: "auto", width: "600px"}
 
-	public client: Client = new Client()
+    public client: Client = new Client()
+    
+    public categories: Category[] = []
 
 	public empresas: Company[] = [new Company(1, "Umaa"), new Company(2, "Duaaas"), new Company(3, "Treees"), new Company(4, "Quaaatro")]
 	public perfis: Profile[] = [new Profile(1, "Umaa"), new Profile(2, "Duaaas"), new Profile(3, "Treees"), new Profile(4, "Quaaatro")]
@@ -125,13 +131,79 @@ export class ClientEditComponent extends EditComponent implements OnInit {
 
 	get windowTitle(): string {
 		return this.client.id > 0 ? "Editar cliente" : "Novo cliente";
-	}
+    }
+    
+    updateCategories() {
+        this.categoryService.findByFilter({name: ""})
+        .subscribe((result) => {
+            if (result.status == "OK") {
+                this.comboCategoriesConfig.itens = result.result.items;
+                this.comboCategoriesConfig.component.updateCurrentValue();
+            }
+        }, (error) => {
+            alert("Não foi possível carregar categorias")
+        })
+    }
+    
+    updateStates() {
+        this.clientService.getStates({})
+        .subscribe((result) => {
+            //console.log("result.result.items" + result.result)
+            if (result.status == "OK") {
+                this.comboStatesConfig.itens = result.result;
+                this.comboStatesConfig.component.updateCurrentValue();
+                this.updateCities();
+            }
+        }, (error) => {
+            alert("Não foi possível carregar categorias")
+        })
+    }
+    
+    updateCities() {
+        this.clientService.getCitiesByState({ufSigla: this.client.ufSigla})
+        .subscribe((result) => {
+            //console.log("result.result.items" + result.result)
+            if (result.status == "OK") {
+                this.comboCitiesConfig.itens = result.result;
+                this.comboCitiesConfig.component.updateCurrentValue();
+                this.comboCitiesConfig.component.updateModelValue(false);
+            }
+        }, (error) => {
+            alert("Não foi possível carregar categorias")
+        })
+    }
+
+    makeFormConfig() {
+
+    }
+
+    get currentBase(): DataBase {
+        return Config.currentBase;
+    }
+
+    private comboCategoriesConfig = new ComboboxFormConfig<Client, Category>(200, new Property("categoryId"), [new RequiredValidator()], [], new Property("id"), new Property("name"), true, "Categoria...");
+    private comboStatesConfig = new ComboboxFormConfig<Client, State>(0, new Property("ufSigla"), [new RequiredValidator()], [], new Property("sigla"), new Property("name"), true, "Estado...", this.updateCities.bind(this));
+    private comboCitiesConfig = new ComboboxFormConfig<Client, City>(200, new Property("cityId"), [new RequiredValidator()], [], new Property("id"), new Property("name"), true, "Cidade...");
+    
 
 	public formConfigs: FormConfigRow<Client>[] = [
 		{
 			formConfigs: [
 				new InputFormConfig(200, new Property("name"), [new RequiredValidator()], false, "Nome"),
 				new InputFormConfig(0, new Property("cnpj"), [], false, "CNPJ"),
+			]
+		}, {
+			formConfigs: [
+				this.comboCategoriesConfig,
+				this.comboStatesConfig,
+				this.comboCitiesConfig,
+				//new InputFormConfig(0, new Property("newPassword"), [new RequiredValidator()], true, "Nova Senha")
+			]
+		}, {
+			formConfigs: [
+				new ComboboxFormConfig<Client, Importance>(170, new Property("importanceOrder"), [new RequiredValidator()], Importance.importances, new Property("value"), new Property("label"), true, "Ordem..."),
+				new InputFormConfig(0, new Property("description"), [], false, "Detalhes do cliente"),
+				//new InputFormConfig(0, new Property("newPassword"), [new RequiredValidator()], true, "Nova Senha")
 			]
 		}, {
 			formConfigs: [
@@ -156,6 +228,8 @@ export class ClientEditComponent extends EditComponent implements OnInit {
 	}
 	
 	ngOnInit() {
+        this.updateCategories();
+        this.updateStates();
 	}
 
 	onUploadFinished(file: FileHolder) {

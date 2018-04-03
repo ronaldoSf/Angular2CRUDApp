@@ -1,11 +1,11 @@
-import { Client } from './../commom/models';
+import { Client, State, City } from './../commom/models';
 import { GenericRemoveRequest, GenericRemoveResponse, GenericFindByIdRequest, GenericFindByIdResponse } from './../commom/util';
 import { Injectable } from '@angular/core';
 import {HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HttpClient } from '@angular/common/http';
 import { Observable }    from 'rxjs/Observable';
 import { User }    from '../commom/models';
 import { Config }    from '../commom/config';
-import { GenericDatagridResponse, GenericDatagridRequest } from '../commom/datagrid/datagrid.component';
+import { GenericDatagridResponse, GenericDatagridRequest, GenericListResponse } from '../commom/datagrid/datagrid.component';
 import { GenericSaveRequest, GenericSaveResponse } from '../commom/util';
 import { RequestOptions } from '@angular/http';
 import { RequestMethod } from '@angular/http';
@@ -41,12 +41,29 @@ export class ClientService {
 
         return this.http.request<GenericRemoveResponse>("DELETE", this.getApiUrl('/client'), options);
     }
+    
+    
+    public getStates(request: GenericDatagridRequest): Observable<GenericListResponse<State>> {
+        const options = { params: request as {} };
+
+        return this.http.get<GenericListResponse<State>>(this.getApiUrl('/states'), options);
+    }
+
+    public getCitiesByState(request: CitiesByStateRequest): Observable<GenericListResponse<City>> {
+        const options = { params: request as {} };
+
+        return this.http.get<GenericListResponse<City>>(this.getApiUrl('/citiesByState'), options);
+    }
 
 }
 
 export class FindByFilterRequest extends GenericDatagridRequest {
     name: string
     empresa: number
+}
+
+export class CitiesByStateRequest extends GenericDatagridRequest {
+    ufSigla: string
 }
 
 export class FindByFilterResponse extends GenericDatagridResponse<Client> {

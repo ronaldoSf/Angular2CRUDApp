@@ -260,9 +260,15 @@ export abstract class GenericDatagridResponse<T> {
     result: {items: T[], total: number} 
 }
 
+export abstract class GenericListResponse<T> {
+    //total: number
+    status: string
+    result:  T[]
+}
+
 export abstract class GenericDatagridRequest {
-    offset: number
-    limit:number
+    offset?: number
+    limit?:number
 
     sortBy?: string
     sortType?: string

@@ -2,6 +2,7 @@ import {Component} from '@angular/core';
 import {MenuItem, Config} from './commom/config';
 import {PERMISSIONS} from './commom/permissions';
 import {UserService} from './user/user.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-root',
@@ -11,8 +12,11 @@ import {UserService} from './user/user.service';
 })
 export class AppComponent {
 
-  constructor(private userService: UserService) {}
-  
+  constructor(private userService: UserService, private titleService: Title) {
+      this.titleService.setTitle(Config.appName)
+  }
+
+  headerText: string = Config.appName.toUpperCase()
   menus: MenuItem[] = Config.allMenus
 
   ngOnInit() {

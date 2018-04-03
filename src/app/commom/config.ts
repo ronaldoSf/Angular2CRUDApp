@@ -20,15 +20,20 @@ export class DataBase {
 export class Config {
 
     static currentUser: User;
-    //static currentBase: DataBase = { name: "Produção", baseUrl: "http://localhost:80/api/AgendaSucesso/public" };
-    static currentBase: DataBase = { name: "Produção", baseUrl: "http://localhost/Angular2CrudApp/api/AgendaSucesso/public", baseDomain: "http://localhost" };
+
+    static appName: string = "Agenda Sucesso"
+
+    static get currentBase(): DataBase {
+        return Config.allDataBases.LOC;
+     };
 
     static readonly allPermissions: GROUP_PERMISSION[] = Util.getItensFromObject(PERMISSION)
-    static readonly allDataBases: DataBase[] = [
-        { name: "Produção", baseUrl: "http://localhost:80/Angular2CRUDApp/src/mocks/", baseDomain: "" },
-        { name: "Teste", baseUrl: "http://localhost:80/Angular2CRUDApp/src/mocks/", baseDomain: "" },
-        { name: "Local", baseUrl: "http://localhost:80/Angular2CRUDApp/src/mocks/", baseDomain: "" },
-    ]
+    static readonly allDataBases = {
+        "PRD" : { name: "Produção", baseUrl: "http://localhost/Angular2AgendaApp/api/AgendaSucesso/public", baseDomain: "" },
+        "WRK" : { name: "Work", baseUrl: "http://localhost/Angular2AgendaApp/api/AgendaSucesso/public", baseDomain: "" },
+        "LOC" : { name: "Local", baseUrl: "http://localhost/Angular2AgendaApp/api/AgendaSucesso/public", baseDomain: "" },
+    }
+
     static readonly allMenus: MenuItem[] = [
         {
             label: 'Home',

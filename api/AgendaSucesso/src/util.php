@@ -10,10 +10,10 @@ class Util {
 	}*/
 
 	static function getCon() {
-		//$con = pg_connect ("host=localhost, port=5433, dbname=agenda_sucesso, user=postgres, password=1");
 
 		$con = new PDO(
-		    'pgsql:host=localhost;port=5432;dbname=postgres', 'postgres', '121212',
+		    //'pgsql:host=localhost;port=5432;dbname=postgres', 'postgres', '121212',
+		    'pgsql:host=localhost;port=5433;dbname=ags', 'postgres', '1',
 		    array(
 		        PDO::ATTR_PERSISTENT => true
 		    )

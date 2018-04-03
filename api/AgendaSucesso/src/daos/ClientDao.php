@@ -8,10 +8,13 @@ class ClientDao {
 	function getById($id) {
 		try {
 
-			$res = Util::getCon()->prepare("SELECT * FROM client WHERE id = :id");
-			$res->bindValue(':id', $id);
+			$res = Util::getCon()->prepare("SELECT city.ufSigla as \"ufSigla\", c.name, c.image, c.id, c.cnpj, c.categoryid as \"categoryId\", c.cityid as \"cityId\", importanceOrder as \"importanceOrder\", c.description 
+                        FROM client c LEFT JOIN city ON city.id = c.cityId
+                        WHERE id = :id");
 
-			$res->execute();
+			$res->bindValue(':id', $id);
+            $res->execute();
+            
 			$item = $res->fetch(PDO::FETCH_ASSOC);
 
 			$resInfs = Util::getCon()->prepare("SELECT * FROM client_information WHERE clientId = :clientId");
@@ -38,8 +41,12 @@ class ClientDao {
 			$limit 	= Util::sqlPart($data, "limit", "LIMIT " . $data["limit"]);
 			$sort   = Util::sqlPart($data, "sortBy", "OFFSET " . "ORDER BY " . $data["sortBy"] . $data["sortType"] . "");
 
-			$sqlItems = "SELECT * FROM client WHERE 1 = 1 $where $sort $offset $limit";
-			$sqlCount = "SELECT count(*) as countttttt FROM client WHERE 1 = 1 $where ";
+			$sqlItems = "SELECT city.ufSigla as \"ufSigla\", c.name, c.image, c.id, c.cnpj, c.categoryid as \"categoryId\", c.cityid as \"cityId\", importanceOrder as \"importanceOrder\", c.description 
+                        FROM client c LEFT JOIN city ON city.id = c.cityId
+                        WHERE 1 = 1 $where $sort $offset $limit";
+			$sqlCount = "SELECT count(*) as countttttt 
+                        FROM client 
+                        WHERE 1 = 1 $where ";
 
 			$resItems = Util::getCon()->prepare($sqlItems);
 			$resCount = Util::getCon()->prepare($sqlCount);
@@ -77,19 +84,23 @@ class ClientDao {
 			//echo json_encode($data);
 
 			if (Util::inArray('id', $data)) {
-				$stmt = Util::getCon()->prepare('UPDATE client SET name = :name, cnpj = :cnpj, image = :image
+				$stmt = Util::getCon()->prepare('UPDATE client SET name = :name, cnpj = :cnpj, image = :image, cityId = :cityId, categoryId = :categoryId, importanceOrder = :importanceOrder, description = :description
 							WHERE id = :id RETURNING id');
 				$stmt->bindValue(':id', $data['id']);
 			} else {
-				$stmt = Util::getCon()->prepare('INSERT INTO client (name, cnpj, image)
-				VALUES (:name, :cnpj, :image) RETURNING id');
+				$stmt = Util::getCon()->prepare('INSERT INTO client (name, cnpj, image, categoryId, cityId, importanceOrder, description)
+				VALUES (:name, :cnpj, :image, :categoryId, :cityId, :importanceOrder, :description) RETURNING id');
 			}
 			
 		
 			$stmt->bindValue(':name', $data['name']);
 			$stmt->bindValue(':cnpj', $data['cnpj']);
 			$stmt->bindValue(':image', $data['image']);
-
+			$stmt->bindValue(':categoryId', intval($data['categoryId']));
+			$stmt->bindValue(':cityId', intval($data['cityId']));
+			$stmt->bindValue(':importanceOrder', intval($data['importanceOrder']));
+            $stmt->bindValue(':description', $data['description']);
+            
 			$stmt->execute();
 
 			$clientId = $stmt->fetch(PDO::FETCH_ASSOC)['id'];
@@ -141,7 +152,8 @@ class ClientDao {
 			echo $e->getMessage();
 			return $e->getMessage(); 
 		}
-	}
+    }
+    
 
 	function uploadImage() {
 		$imageName = "image";
@@ -169,11 +181,16 @@ class ClientDao {
 				// Evita que duplique as imagens no servidor.
 				// Evita nomes com acentos, espaços e caracteres não alfanuméricos
 				$novoNome = uniqid ( time () ) . '.' . $extensao;
-		 
+                
 				// Concatena a pasta com o nome
-				$destino =  __DIR__ . '/../../imagens/' . $novoNome;
+				$destino = str_replace("\\", "/", __DIR__) . '/../../imagens/' . $novoNome;
 				$link = "http://" . $_SERVER['SERVER_NAME'] . str_replace($_SERVER['DOCUMENT_ROOT'], "", $destino);
-				
+                
+                //echo ($_SERVER['DOCUMENT_ROOT'] . "<br/>");
+				//echo ($destino . "<br/>");
+                //echo ($link . "<br/>");
+                //die();
+
 				// tenta mover o arquivo para o destino
 				if ( @move_uploaded_file ( $arquivo_tmp, $destino ) ) {
 					//echo 'Arquivo salvo com sucesso em : <strong>' . $destino . '</strong><br />';

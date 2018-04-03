@@ -46,7 +46,7 @@ export class CategoryService {
 
 export class FindByFilterRequest extends GenericDatagridRequest {
     name: string
-    empresa: number
+    empresa?: number
 }
 
 export class FindByFilterResponse extends GenericDatagridResponse<Category> {

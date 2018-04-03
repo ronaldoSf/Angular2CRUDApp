@@ -38,8 +38,8 @@ export class ClientListComponent extends ListComponent {
     public filterEmpresa: Company = null;
     
     public datagridColumns: Column[] = [
-        {title: "Nome", modelField: new Property<Client>("name").name, sortable: true},
-        {title: "CNPJ", modelField: new Property<Client>("cnpj").name, sortable: true},/*
+        {title: "Nome", modelField: new Property<Client>("name").name, sortable: false},
+        {title: "CNPJ", modelField: new Property<Client>("cnpj").name, sortable: false},/*
         {title: "Login", modelField: new Property<Client>("login").name, sortable: true},
         {title: "Perfil", modelField: new Property<Client>("profileName").name, sortable: false},
         {title: "Empresa", modelField: new Property<Client>("companyName").name, sortable: false},*/
@@ -60,6 +60,10 @@ export class ClientListComponent extends ListComponent {
         let ids = this.datagrid.dataSource
             .filter((item) => item.selected)
             .map((item) => item.id);
+
+        if (ids.length <= 0) {
+            return;
+        }
 
         this.clientService.remove({ids: ids})
             .subscribe((result) => {

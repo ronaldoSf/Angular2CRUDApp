@@ -9,13 +9,13 @@
 	</div>
 	<div class="panel-body">
 
-			{{client | json}}
-		<!---->
+			
+		<!--{{client | json}}-->
 
 		<ng-template  #imageUploaderTemplateRef>
 			<image-upload 
 				#imageUploadComponent
-				url="http://localhost/Angular2CrudApp/api/AgendaSucesso/public/uploadImage" 
+				url="{{currentBase.baseUrl + '/uploadImage'}}" 
 				[max]="1" 
 				[extensions]="['jpeg','png']"
 				buttonCaption="SELECIONE IMAGEM"

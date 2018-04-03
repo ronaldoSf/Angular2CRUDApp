@@ -28,9 +28,9 @@ class CategoryDao {
 			$where 	= "";
 			$where .= Util::sqlPart($data, "name", " AND name ILIKE :name");
 			
-			$offset = Util::sqlPart($data, "offset", "OFFSET " . $data["offset"]);
-			$limit 	= Util::sqlPart($data, "limit", "LIMIT " . $data["limit"]);
-			$sort   = Util::sqlPart($data, "sortBy", "OFFSET " . "ORDER BY " . $data["sortBy"] . $data["sortType"] . "");
+			$offset = Util::sqlPart($data, "offset", "OFFSET " . @$data["offset"]);
+			$limit 	= Util::sqlPart($data, "limit", "LIMIT " . @$data["limit"]);
+			$sort   = Util::sqlPart($data, "sortBy", "OFFSET " . "ORDER BY " . @$data["sortBy"] . @$data["sortType"] . "");
 
 			$sqlItems = "SELECT * FROM category WHERE 1 = 1 $where $sort $offset $limit";
 			$sqlCount = "SELECT count(*) as countttttt FROM category WHERE 1 = 1 $where ";

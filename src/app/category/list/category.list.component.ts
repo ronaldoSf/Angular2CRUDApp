@@ -38,7 +38,7 @@ export class CategoryListComponent extends ListComponent {
     public filterEmpresa: Company = null;
     
     public datagridColumns: Column[] = [
-        {title: "Nome", modelField: new Property<Category>("name").name, sortable: true},
+        {title: "Nome", modelField: new Property<Category>("name").name, sortable: false},
     ]
 
     
@@ -57,6 +57,10 @@ export class CategoryListComponent extends ListComponent {
             .filter((item) => item.selected)
             .map((item) => item.id);
 
+        if (ids.length <= 0) {
+            return;
+        }
+        
         this.categoryService.remove({ids: ids})
             .subscribe((result) => {
                 //console.log("indexes " + indexes)

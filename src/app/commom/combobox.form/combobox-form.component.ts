@@ -25,37 +25,48 @@ export class ComboboxFormComponent implements FormComponent, OnInit {
     private nullItem: Object = {}
 
     private currentValueChanged($event) {
+        this.updateModelValue();
+    }
 
+    constructor() { }
+
+    ngOnInit() {
+        this.formConfig.component = this;
+
+        this.formControl = this.formConfig.createFormControl();
+        this.formControl.setValue(Util.getDeepValue(this.modelObject, this.formConfig.modelProperty.name))
+        
+        this.nullItem[this.formConfig.idItemProperty.name] = 0;
+        this.nullItem[this.formConfig.descItemProperty.name] = this.formConfig.placeHolder;
+      
+        this.updateCurrentValue();
+    }
+
+    updateModelValue(maskAsDirty = true) {
         var newValue = null;
-
+        
         if (this.currentValue == null || this.currentValue == this.nullItem) {
             newValue = null
         } else {
             newValue = !this.formConfig.modelPropertyIsId ? this.currentValue : this.currentValue[this.formConfig.idItemProperty.name]        
         }
 
-        this.formControl.markAsDirty()
+        if (maskAsDirty) {
+            this.formControl.markAsDirty()
+        }
+
         this.formControl.setValue(newValue)
         Util.setDeepValue(this.modelObject, newValue, this.formConfig.modelProperty.name)
+
+        if (this.formConfig.onChanged) {
+            this.formConfig.onChanged(newValue)
+        }
     }
 
-    constructor() { }
-
-    ngOnInit() {
-        this.formControl = this.formConfig.createFormControl();
-        this.formControl.setValue(Util.getDeepValue(this.modelObject, this.formConfig.modelProperty.name))
+    updateCurrentValue() {
         
-        /*if (this.formConfig.itens.length == 0 || this.formConfig.itens[0][this.formConfig.idItemProperty.name] != this.nullItem[this.formConfig.idItemProperty.name]) {
-            this.formConfig.itens.unshift(this.nullItem)
-        }*/
-
-        
-
-        this.nullItem[this.formConfig.idItemProperty.name] = 0;
-        this.nullItem[this.formConfig.descItemProperty.name] = this.formConfig.placeHolder;
-      
         var newValue = null;
-
+        
         if (!this.formConfig.modelPropertyIsId) {
             let selectedItem = Util.getDeepValue(this.modelObject, this.formConfig.modelProperty.name)
 
@@ -82,7 +93,14 @@ export class ComboboxFormComponent implements FormComponent, OnInit {
                     return result
                 })
             }
-    }
+
+            console.log(
+                " modelProperty: " + this.formConfig.modelProperty.name +
+                " idItemProperty: " + this.formConfig.idItemProperty.name + 
+                " selectedItemValue: " + selectedItemValue + 
+                " newValue: " + newValue
+            )
+        }
 
         this.currentValue = newValue
     }
@@ -101,10 +119,12 @@ export class ComboboxFormConfig<TModel, TItemModel> extends FormConfig<TModel> {
       public idItemProperty: Property<TItemModel>,
       public descItemProperty: Property<TItemModel>,
       public modelPropertyIsId: Boolean,
-      public placeHolder: string = "Selecione..."
+      public placeHolder: string = "Selecione...",
+      public onChanged?: Function,
     ) {
       super(validators)
   }
   
+  public component?: ComboboxFormComponent;
 }
 

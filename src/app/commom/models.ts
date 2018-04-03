@@ -4,11 +4,33 @@ export class Client {
     name: String = null;
     cnpj: String = null;
     image: string = null;
+
+    categoryId: number = null;
+    cityId: number = null;
+    ufSigla: string = null;
+
     description: string = null;
-    isFavorite: Boolean = false;
-    importanceOrder: number = 1;
+    importanceOrder: number = 5;
 
     informations: ClientInformation[] = []
+}
+
+export class Importance {
+    label: string
+    value: number;
+
+    static importances: Importance[] = [
+        {label: "Ordem: 0", value: 0},
+        {label: "Ordem: 1", value: 1},
+        {label: "Ordem: 2", value: 2},
+        {label: "Ordem: 3", value: 3},
+        {label: "Ordem: 4", value: 4},
+        {label: "Ordem: 5", value: 5},
+        {label: "Ordem: 6", value: 6},
+        {label: "Ordem: 7", value: 7},
+        {label: "Ordem: 8", value: 8},
+        {label: "Ordem: 9", value: 9},
+    ]
 }
 
 export class ClientInformation {
@@ -63,6 +85,17 @@ export class Permission {
 export class Category {
     id: Number
     name: String  
+}
+
+export class City {
+    id: Number
+    name: string 
+    ufSigla: string;
+}
+
+export class State {
+    sigla: string
+    name: string  
 }
 
 

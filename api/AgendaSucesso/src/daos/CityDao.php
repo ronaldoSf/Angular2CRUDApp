@@ -23,7 +23,7 @@ class CityDao {
 	function getCitiesByState($ufSigla) {
 		try {
 
-			$res = Util::getCon()->prepare("SELECT * FROM ags.city WHERE ufSigla = :ufSigla");
+			$res = Util::getCon()->prepare("SELECT c.id, c.name, c.ufSigla as \"ufSigla\" FROM ags.city c WHERE ufSigla = :ufSigla");
 
 			$res->bindValue(":ufSigla", $ufSigla);
 
