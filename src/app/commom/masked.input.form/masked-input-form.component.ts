@@ -23,7 +23,7 @@ export class MaskedInputFormComponent implements FormComponent, OnInit {
   public formConfig: MaskedInputFormConfig<any>;
   
 
-  private currentValueChanged($event) {
+  public currentValueChanged($event) {
       Util.setDeepValue(this.modelObject, this.currentValue, this.formConfig.modelProperty.name)
   }
 

@@ -7,7 +7,7 @@ class CityDao {
 	function getStates() {
 		try {
 
-			$res = Util::getCon()->prepare("SELECT * FROM ags.state");
+			$res = Util::getCon()->prepare("SELECT * FROM ags.state ORDER BY name");
 
 			$res->execute();
 			$items = $res->fetchAll(PDO::FETCH_ASSOC);
@@ -23,7 +23,8 @@ class CityDao {
 	function getCitiesByState($ufSigla) {
 		try {
 
-			$res = Util::getCon()->prepare("SELECT c.id, c.name, c.ufSigla as \"ufSigla\" FROM ags.city c WHERE ufSigla = :ufSigla");
+			$res = Util::getCon()->prepare("SELECT c.id, c.name, c.ufSigla as \"ufSigla\" FROM ags.city c 
+					WHERE ufSigla = :ufSigla ORDER BY c.name");
 
 			$res->bindValue(":ufSigla", $ufSigla);
 

@@ -29,7 +29,7 @@ export class AutoCompleteFormComponent implements FormComponent, OnInit {
   @Input()
   public formConfig: AutoCompleteFormConfig<any, any>;
 
-  private loadData() {
+  public loadData() {
     if (this.formConfig.searchFunction) {
       let observable: Observable<any[]> = this.formConfig.searchFunction(this.currentValueStr)
 
@@ -59,7 +59,7 @@ export class AutoCompleteFormComponent implements FormComponent, OnInit {
       })*/
   }
   
-  private currentValueStrChanged() {
+  public currentValueStrChanged() {
       this.currentValue = this.formConfig.itens.find((item) => { return item[this.formConfig.descItemProperty.name] == this.currentValueStr })
       Util.setDeepValue(this.modelObject, this.currentValue, this.formConfig.modelProperty.name)
   }

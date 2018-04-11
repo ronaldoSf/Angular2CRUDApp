@@ -134,10 +134,10 @@ export abstract class ListComponent {
     public abstract editItemEvent: Function;
     public abstract loadDataEvent: Function;
 
-    protected abstract addItem()
-    protected abstract editItem(itemIndex: number)
-    protected abstract deleteItem(itemIndex: number)
-    protected abstract onBtSearchClick()
+    public abstract addItem()
+    public abstract editItem(itemIndex: number)
+    public abstract deleteItem(itemIndex: number)
+    public abstract onBtSearchClick()
 }
 
 

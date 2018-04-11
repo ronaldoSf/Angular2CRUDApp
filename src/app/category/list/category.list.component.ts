@@ -51,7 +51,7 @@ export class CategoryListComponent extends ListComponent {
 
     //----------------------- FUNCTIONS ----------------------------------------
 
-    protected onDeleteSelected() {
+    public onDeleteSelected() {
 
         let ids = this.datagrid.dataSource
             .filter((item) => item.selected)
@@ -78,21 +78,21 @@ export class CategoryListComponent extends ListComponent {
             })
     }
 
-    protected onBtSearchClick() {
+    public onBtSearchClick() {
         this.datagrid.loadDataFromStart()
     }
 
-    protected addItem() {
+    public addItem() {
         let i = this.dialogService.createDialog(CategoryEditComponent, {});    
     }
 
-    protected editItem(itemIndex: number) {
+    public editItem(itemIndex: number) {
         let itemSelected = this.datagrid.dataSource[itemIndex]
 
         let i = this.dialogService.createDialog(CategoryEditComponent, {entity: itemSelected});
         console.log(i)
     }
-    protected deleteItem(itemIndex: number) {
+    public deleteItem(itemIndex: number) {
         //console.log("itemIndex " + itemIndex)
         let item = this.datagrid.dataSource[itemIndex]
         

@@ -181,9 +181,9 @@ export class ClientEditComponent extends EditComponent implements OnInit {
         return Config.currentBase;
     }
 
-    private comboCategoriesConfig = new ComboboxFormConfig<Client, Category>(200, new Property("categoryId"), [new RequiredValidator()], [], new Property("id"), new Property("name"), true, "Categoria...");
-    private comboStatesConfig = new ComboboxFormConfig<Client, State>(0, new Property("ufSigla"), [new RequiredValidator()], [], new Property("sigla"), new Property("name"), true, "Estado...", this.updateCities.bind(this));
-    private comboCitiesConfig = new ComboboxFormConfig<Client, City>(200, new Property("cityId"), [new RequiredValidator()], [], new Property("id"), new Property("name"), true, "Cidade...");
+    public comboCategoriesConfig = new ComboboxFormConfig<Client, Category>(200, new Property("categoryId"), [new RequiredValidator()], [], new Property("id"), new Property("name"), true, "Categoria...");
+    public comboStatesConfig = new ComboboxFormConfig<Client, State>(0, new Property("ufSigla"), [new RequiredValidator()], [], new Property("sigla"), new Property("name"), true, "Estado...", this.updateCities.bind(this));
+    public comboCitiesConfig = new ComboboxFormConfig<Client, City>(200, new Property("cityId"), [new RequiredValidator()], [], new Property("id"), new Property("name"), true, "Cidade...");
     
 
 	public formConfigs: FormConfigRow<Client>[] = [

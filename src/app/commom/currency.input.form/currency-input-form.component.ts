@@ -24,7 +24,7 @@ export class CurrencyInputFormComponent implements FormComponent, OnInit {
     @ViewChild("myInput")
     public inputChild: any
 
-    private currentValueChanged($event) {
+    public currentValueChanged($event) {
         //this.currentValue = parseFloat(this.currentValueStr.replace(".", "").replace(",", "."))
         Util.setDeepValue(this.modelObject, this.currentValue, this.formConfig.modelProperty.name)
     }

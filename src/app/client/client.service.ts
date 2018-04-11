@@ -16,7 +16,7 @@ export class ClientService {
 
     constructor(private http:HttpClient) {}
 
-    private getApiUrl(str:string): string {
+    public getApiUrl(str:string): string {
         return Config.currentBase.baseUrl + str;
     }
     

@@ -52,16 +52,16 @@ export class ProfileListComponent /*extends ListComponent*/ {
         return fakeObs
     }
 
-    protected addItem() {
+    public addItem() {
         this.dialogService.createDialog(ProfileEditComponent, {});
     }
 
-    protected editItem(itemIndex: number) {
+    public editItem(itemIndex: number) {
         let itemSelected = this.listTemplate.datagrid.dataSource[itemIndex]
         this.dialogService.createDialog(ProfileEditComponent, {entity: itemSelected});
     }
 
-    protected deleteItem(itemIndex: number) {
+    public deleteItem(itemIndex: number) {
         let item = this.listTemplate.datagrid.dataSource[itemIndex]
         this.listTemplate.datagrid.dataSource.splice(itemIndex, 1)
     }

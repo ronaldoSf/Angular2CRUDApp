@@ -16,9 +16,9 @@ export class CalendarFormComponent implements FormComponent, OnInit {
     constructor() { }
 
     public currentValue: Date = null;
-    private currentValueStr: string = ""
+    public currentValueStr: string = ""
     public formControl: FormControl;
-    private isCalendarShowing: Boolean = false
+    public isCalendarShowing: Boolean = false
     
     @Input()
     public modelObject: Object;
@@ -38,27 +38,27 @@ export class CalendarFormComponent implements FormComponent, OnInit {
     };
     
     /*
-    private get currentValueStr(): string {
+    public get currentValueStr(): string {
         return moment(this.currentValue).format("DD/MM/YYYY")
     }*/
 
-    private currentValueChanged($event) {
+    public currentValueChanged($event) {
         let momentDate = moment(this.currentValue);
         this.currentValueStr = this.currentValue == null ? this.currentValueStr : momentDate.format("DD/MM/YYYY")
         Util.setDeepValue(this.modelObject, this.currentValue, this.formConfig.modelProperty.name)
     }
 
-    private currentInputValueChanged($event) {
+    public currentInputValueChanged($event) {
         let momentDate = moment(this.currentValueStr, "DD/MM/YYYY", true);
         this.currentValue = !momentDate.isValid() ? null : momentDate.toDate()
         Util.setDeepValue(this.modelObject, this.currentValue, this.formConfig.modelProperty.name)
     }
 
-    private inputfocusIn() {
+    public inputfocusIn() {
         this.isCalendarShowing = true
     }
 
-    private inputfocusOut() {
+    public inputfocusOut() {
         this.isCalendarShowing = false
         //setTimeout(() => { 
         //    this.isCalendarShowing = false            

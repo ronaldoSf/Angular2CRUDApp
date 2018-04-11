@@ -24,12 +24,12 @@ export class Config {
     static appName: string = "Agenda Sucesso"
 
     static get currentBase(): DataBase {
-        return Config.allDataBases.LOC;
+        return Config.allDataBases.PRD;
      };
 
     static readonly allPermissions: GROUP_PERMISSION[] = Util.getItensFromObject(PERMISSION)
     static readonly allDataBases = {
-        "PRD" : { name: "Produção", baseUrl: "http://localhost/Angular2AgendaApp/api/AgendaSucesso/public", baseDomain: "" },
+        "PRD" : { name: "Produção", baseUrl: "http://agendasucessoms.com.br/backend/api/public", baseDomain: "" },
         "WRK" : { name: "Work", baseUrl: "http://localhost/Angular2AgendaApp/api/AgendaSucesso/public", baseDomain: "" },
         "LOC" : { name: "Local", baseUrl: "http://localhost/Angular2AgendaApp/api/AgendaSucesso/public", baseDomain: "" },
     }

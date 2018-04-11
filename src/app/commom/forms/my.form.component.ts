@@ -106,7 +106,7 @@ export abstract class FormConfig<TModel> extends FormConfigRow<TModel> {
 })
 export class DynamicFormHolderComponent implements OnInit {
 
-    private rootViewContainer;
+    public rootViewContainer;
     public createdComponent: FormComponent;
 
     @Input()

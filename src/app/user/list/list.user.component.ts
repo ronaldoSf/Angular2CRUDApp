@@ -52,21 +52,21 @@ export class UserListComponent extends ListComponent {
 
     //----------------------- FUNCTIONS ----------------------------------------
 
-    protected onBtSearchClick() {
+    public onBtSearchClick() {
         this.datagrid.loadDataFromStart()
     }
 
-    protected addItem() {
+    public addItem() {
         let i = this.dialogService.createDialog(UserEditComponent, {});    
     }
 
-    protected editItem(itemIndex: number) {
+    public editItem(itemIndex: number) {
         let itemSelected = this.datagrid.dataSource[itemIndex]
 
         let i = this.dialogService.createDialog(UserEditComponent, {entity: itemSelected});
         console.log(i)
     }
-    protected deleteItem(itemIndex: number) {
+    public deleteItem(itemIndex: number) {
         let item = this.datagrid.dataSource[itemIndex]
     }
 

@@ -22,9 +22,9 @@ export class ComboboxFormComponent implements FormComponent, OnInit {
     @Input()
     public formConfig: ComboboxFormConfig<any, any>;
 
-    private nullItem: Object = {}
+    public nullItem: Object = {}
 
-    private currentValueChanged($event) {
+    public currentValueChanged($event) {
         this.updateModelValue();
     }
 

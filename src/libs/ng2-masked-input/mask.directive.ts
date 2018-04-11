@@ -17,7 +17,7 @@ export class MaskDirective {
   @Input('mask') pattern: string;
 
   constructor(private el: ElementRef, private zone: NgZone, private control: NgControl,
-    private maskService: MaskService) {
+    public maskService: MaskService) {
 
     $.jMaskGlobals = {
       translation: {

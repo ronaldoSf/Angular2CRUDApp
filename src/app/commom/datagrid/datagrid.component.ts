@@ -18,8 +18,8 @@ export class DatagridComponent implements OnInit {
         }
     }
 
-    private lastToggleSelects: Boolean = false
-    private totalOfItens: number = 0
+    public lastToggleSelects: Boolean = false
+    public totalOfItens: number = 0
 
 
     public showLoading: boolean = false
@@ -104,11 +104,11 @@ export class DatagridComponent implements OnInit {
         return this.currentPage <= 0 ? 0 : (this.currentPage -1) * this.currentPageSize
     }
 
-    private get totalOfPages(): number {
+    public get totalOfPages(): number {
         return Math.ceil( this.currentPageSize == 0 ? 1 : (this.totalOfItens / this.currentPageSize))
     }
     
-    private goNextPage() {
+    public goNextPage() {
         let newPage = this.currentPage + 1
         
         if (this.canGoNextPage) {
@@ -117,7 +117,7 @@ export class DatagridComponent implements OnInit {
         }
     }
         
-    private goBackPage() {
+    public goBackPage() {
         let newPage = this.currentPage - 1
         
         if (this.canGoBackPage) {
@@ -126,7 +126,7 @@ export class DatagridComponent implements OnInit {
         }
     }
 
-    private pageSizeSelected() {
+    public pageSizeSelected() {
 
         if (this.currentPage > this.totalOfPages) {
             this.currentPage = this.totalOfPages
@@ -138,7 +138,7 @@ export class DatagridComponent implements OnInit {
     public loadedPage: number = 0;
     public loadedPageSize: number = 0;
     
-    private loadData() {
+    public loadData() {
         this.dataSource = [];
 
         
@@ -172,7 +172,7 @@ export class DatagridComponent implements OnInit {
         }
     }
 
-    private selectColumnToSort(column: Column) {
+    public selectColumnToSort(column: Column) {
 
         if (this.currentSortField != column.modelField) {
             this.currentSortType = SortType.ASC
@@ -199,7 +199,7 @@ export class DatagridComponent implements OnInit {
         }
     }
 
-    private callAction(actionIndex: number, modelIndex: number) {
+    public callAction(actionIndex: number, modelIndex: number) {
         let action = this.actions[actionIndex]
         let item = this.dataSource[modelIndex]
         let actionCallBack = this.actionsCallbacks[actionIndex];
@@ -217,7 +217,7 @@ export class DatagridComponent implements OnInit {
         }
     }
 
-    private makeDescriptionForModel(item: Object, column: Column) {  
+    public makeDescriptionForModel(item: Object, column: Column) {  
         let value = item[column.modelField.toString()]
 
         if (column.format) {

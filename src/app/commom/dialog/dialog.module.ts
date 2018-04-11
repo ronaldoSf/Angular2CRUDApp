@@ -9,7 +9,8 @@ import { DialogMessageComponent } from '../dialog.message/dialog-message-compone
     CommonModule, MatDialogModule
   ],
   declarations: [DialogMessageComponent],
+  providers: [DialogService],
   entryComponents: [DialogMessageComponent],
-  exports: [DialogService, DialogMessageComponent],
+  exports: [DialogMessageComponent],
 })
 export class DialogModule { }

@@ -20,7 +20,7 @@ export class InputFormComponent implements FormComponent, OnInit {
     @Input()
     public formConfig: InputFormConfig<any>;
     
-    private currentValueChanged($event) {
+    public currentValueChanged($event) {
         Util.setDeepValue(this.modelObject, this.currentValue, this.formConfig.modelProperty.name)
     }
 

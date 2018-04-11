@@ -28,10 +28,10 @@
        
     
         <div class="form-row" style="overflow: hidden;"  *ngIf="bottomTemplateRef != null">
-                <ng-template [ngTemplateOutlet]="templateRef"></ng-template>
+                <ng-template [ngTemplateOutlet]="bottomTemplateRef"></ng-template>
         </div>
 
-        <div class="form-row" style="overflow: hidden;" *ngIf="templateRef == null">
+        <div class="form-row" style="overflow: hidden;" *ngIf="bottomTemplateRef == null">
                 <button type="button" class="btn btn-primary" style="float: right; cursor: pointer;" (click)="save()">Salvar</button>
                 <button type="button" class="btn" style="float: right;margin-right: 10px; cursor: pointer;" (click)="cancel()">Cancelar</button>
         </div>

@@ -23,6 +23,8 @@ import { AppComponent } from './app.component';
 import { DatagridComponent } from './commom/datagrid/datagrid.component';
 import { DialogMessageComponent } from './commom/dialog.message/dialog-message-component.component';
 import { LoginComponent } from './login/login.component';
+import { DialogModule } from './commom/dialog/dialog.module';
+import { KeysPipe } from './commom/pipes';
 
 const routes: Routes = [
   { path: '', loadChildren: 'app/home/home.module#HomeModule' },  
@@ -36,11 +38,11 @@ const routes: Routes = [
 @NgModule({
   declarations: [
     AppComponent,
-    DialogMessageComponent,
-    LoginComponent,
+	LoginComponent,
+	KeysPipe,
   ],
   imports: [
-    BrowserModule, BrowserAnimationsModule, HttpClientModule,
+  BrowserModule, BrowserAnimationsModule, HttpClientModule, DialogModule,
     ButtonModule, CalendarModule,  MatMenuModule, MatIconModule, MatButtonModule, MatTooltipModule,
     MatSidenavModule, MatToolbarModule, TieredMenuModule, PanelMenuModule, BreadcrumbModule, FormsModule, ReactiveFormsModule,
     RouterModule.forRoot(routes)
