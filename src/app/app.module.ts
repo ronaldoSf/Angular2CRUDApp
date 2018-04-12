@@ -25,21 +25,22 @@ import { DialogMessageComponent } from './commom/dialog.message/dialog-message-c
 import { LoginComponent } from './login/login.component';
 import { DialogModule } from './commom/dialog/dialog.module';
 import { KeysPipe } from './commom/pipes';
+import { AuthGuard } from './guard.auth';
 
 const routes: Routes = [
-  { path: '', loadChildren: 'app/home/home.module#HomeModule' },  
-  { path: 'home', loadChildren: 'app/home/home.module#HomeModule' },  
-  { path: 'usuario', loadChildren: 'app/user/user.module#UserModule' },
-  { path: 'cliente', loadChildren: 'app/client/client.module#ClientModule' },
-  { path: 'categoria', loadChildren: 'app/category/category.module#CategoryModule' },
-  { path: 'perfil', loadChildren: 'app/profile/profile.module#ProfileModule' } ,
+  { path: '', loadChildren: 'app/home/home.module#HomeModule', canActivate: [AuthGuard] },  
+  { path: 'home', loadChildren: 'app/home/home.module#HomeModule', canActivate: [AuthGuard] },  
+  { path: 'usuario', loadChildren: 'app/user/user.module#UserModule', canActivate: [AuthGuard] },
+  { path: 'cliente', loadChildren: 'app/client/client.module#ClientModule', canActivate: [AuthGuard] },
+  { path: 'categoria', loadChildren: 'app/category/category.module#CategoryModule', canActivate: [AuthGuard] },
+  { path: 'perfil', loadChildren: 'app/profile/profile.module#ProfileModule', canActivate: [AuthGuard] } ,
 ];
 
 @NgModule({
   declarations: [
     AppComponent,
-	LoginComponent,
-	KeysPipe,
+	  LoginComponent,
+	  KeysPipe,
   ],
   imports: [
   BrowserModule, BrowserAnimationsModule, HttpClientModule, DialogModule,
@@ -47,7 +48,7 @@ const routes: Routes = [
     MatSidenavModule, MatToolbarModule, TieredMenuModule, PanelMenuModule, BreadcrumbModule, FormsModule, ReactiveFormsModule,
     RouterModule.forRoot(routes)
   ],
-  providers: [],
+  providers: [AuthGuard],
   entryComponents: [DialogMessageComponent],
   bootstrap: [AppComponent]
 })

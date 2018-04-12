@@ -12,8 +12,8 @@ import { AutoCompleteFormConfig, AutoCompleteFormComponent } from '../autocomple
 
 @Component({
   selector: 'app-multiselect-form',
-  templateUrl: './auto-complete-form.component.html',
-  styleUrls: ['./auto-complete-form.component.scss']
+  templateUrl: './multiselect-form.component.html',
+  styleUrls: ['./multiselect-form.component.scss']
 })
 export class MultiSelectFormComponent implements FormComponent, OnInit {
 
@@ -30,10 +30,14 @@ export class MultiSelectFormComponent implements FormComponent, OnInit {
   public acFormConfig: AutoCompleteFormConfig<any, any>;
   public acModelObject: {label: string} = {label: ""};
 
-  public acItens: any[]
+  setItens(itens: any[]) {
+      this.formConfig.itens = itens;
+      this.acFormConfig.itens = itens;
+      this.acFormConfig.component.makeItensStr();
+  }
 
   onAcModelChanged() {
-    if (!Util.getDeepValue(this.modelObject, this.formConfig.modelProperty.name)) {
+    /*if (!Util.getDeepValue(this.modelObject, this.formConfig.modelProperty.name)) {
 			  Util.setDeepValue(this.modelObject, [], this.formConfig.modelProperty.name)
 		}
 
@@ -42,12 +46,12 @@ export class MultiSelectFormComponent implements FormComponent, OnInit {
       modelProp.push(this.acModelObject.label)
 			this.acModelObject.label = null
 			this.acFormConfig.component.currentValueStr = ""
-		}
+    }*/
   }
 
   ngOnInit() {
-      this.acFormConfig = new AutoCompleteFormConfig<any, any>(50, new Property("label"), [], this.acItens, this.formConfig.descItemProperty, this.formConfig.searchFunction, this.formConfig.idItemProperty, this.formConfig.placeHolder, this.onAcModelChanged.bind(this))
-      super.ngOnInit()
+    this.formConfig.component = this
+    this.acFormConfig = new AutoCompleteFormConfig<any, any>(50, new Property("label"), [], [], this.formConfig.descItemProperty, this.formConfig.searchFunction, this.formConfig.idItemProperty, this.formConfig.placeHolder, this.onAcModelChanged.bind(this))
   }
 
   getModelProperty() {
@@ -60,7 +64,7 @@ export class MultiSelectFormComponent implements FormComponent, OnInit {
 
 }
 
-export class MultiSelectFormConfig<TModel, TItemModel> extends AutoCompleteFormConfig<TModel, TItemModel> {
+export class MultiSelectFormConfig<TModel, TItemModel> extends FormConfig<TModel> {
   componentType: any = MultiSelectFormComponent
 
   
@@ -75,7 +79,10 @@ export class MultiSelectFormConfig<TModel, TItemModel> extends AutoCompleteFormC
     public placeHolder: string = "",
     public onModelChanged: Function = null,
   ) {
-    super(width, modelProperty, validators, itens, descItemProperty, searchFunction, idItemProperty, placeHolder, onModelChanged)
+    super(validators)
+    //super(width, modelProperty, validators, itens, descItemProperty, searchFunction, idItemProperty, placeHolder, onModelChanged)
   }
+
+  component: MultiSelectFormComponent
 
 }

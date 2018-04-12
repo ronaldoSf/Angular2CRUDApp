@@ -121,7 +121,7 @@ export class ClientListComponent extends ListComponent {
         
         var request: Service.FindByFilterRequest = {
             "name": this.filterName, 
-            "empresa": this.filterEmpresa == null ? null : this.filterEmpresa.id.valueOf(),
+            //"empresa": this.filterEmpresa == null ? null : this.filterEmpresa.id.valueOf(),
             "offset": offset,
             "limit": limitt,
             "sortBy": sortFl,

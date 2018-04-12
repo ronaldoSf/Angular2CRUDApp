@@ -47,7 +47,7 @@ import { UserEditComponent } from './edit/edit.user.component';
 import { Routes, RouterModule } from '@angular/router';
 import { InputFormModule } from '../commom/input.form/input-form.module';
 import { DatagridModule } from '../commom/datagrid/datagrid.module';
-import { DialogModule } from 'primeng/primeng';
+import { DialogModule, AutoCompleteModule } from 'primeng/primeng';
 import { MatDialogModule } from '@angular/material/dialog';
 import { ComboboxFormModule } from '../commom/combobox.form/combobox-form.module';
 import { AutocompleteFormModule } from '../commom/autocomplete.form/autocomplete.form.module';
@@ -64,7 +64,7 @@ const routes: Routes = [
 @NgModule({
   imports: [
     CommonModule, DatagridModule, MatDialogModule, FormsModule, MyFormModule, MultiselectDropdownModule,
-    AutocompleteFormModule, CalendarFormModule, ComboboxFormModule,  CurrencyInputFormModule, InputFormModule, MaskedInputFormModule, CustomFormModule,
+    AutoCompleteModule, CalendarFormModule, ComboboxFormModule,  CurrencyInputFormModule, InputFormModule, MaskedInputFormModule, CustomFormModule,
     RouterModule.forChild(routes)
   ],
   declarations: [UserListComponent, UserEditComponent],

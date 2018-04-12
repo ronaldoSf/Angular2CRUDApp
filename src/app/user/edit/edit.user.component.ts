@@ -37,35 +37,22 @@ export class UserEditComponent extends EditComponent implements OnInit {
 
 		if (data.entity) {
 			this.usuario = data.entity;
+			
+			this.usuario.citiesAllowed.forEach(item => this.allCities[item.name.toString()] = item)
+			this.citiesStrSelected = this.usuario.citiesAllowed.map(cat => cat.name.toString())
 		}
-	}
 
-	optionsModel: number[];
-    myOptions: IMultiSelectOption[];
+		this.passwordConfig.validators = this.usuario.id > 0 ? [] : [new RequiredValidator()]
+		this.newPasswordConfig.validators = this.usuario.id > 0 ? [] : [new RequiredValidator()]
+	}
 
 	static dialogConfig: DialogConfig = {height: "auto", width: "400px"}
 
-	//public usuario: Usuario = {codigo: 1, nome: "a", login: "s", senha: "d", perfilCod: 1, empresaCod: 2, perfilNome: "", empresaNome: "", testeData: new Date(), testeEmpresa: new Empresa(3, "Umaa"), testeNumber: 80.798, testePerfil: new Perfil(2, "asdfasd")}
 	public usuario: User = new User()
 
 	public empresas: Company[] = [new Company(1, "Umaa"), new Company(2, "Duaaas"), new Company(3, "Treees"), new Company(4, "Quaaatro")]
 	public perfis: Profile[] = [new Profile(1, "Umaa"), new Profile(2, "Duaaas"), new Profile(3, "Treees"), new Profile(4, "Quaaatro")]
 	
-	/*public formConfigs: FormConfigRow<Usuario>[] = [
-		{
-				formConfigs: [
-					new InputFormConfig(new Property("nome"), []),
-					new InputFormConfig(new Property("login"), [new RequiredValidator()]),
-					new InputFormConfig(new Property("senha"), [new RequiredValidator()], true),
-					new CalendarFormConfig(new Property("testeData"), []),
-					//new MaskedInputFormConfig(new Property("testeCpf"), [], Util.Masks.cpf),
-					new ComboboxFormConfig<Usuario, Empresa>(new Property("testeEmpresa"), [], this.empresas, new Property("codigo"), new Property("nome"), false),
-					new CurrencyInputFormConfig(new Property("testeNumber"), []),
-					new AutoCompleteFormConfig<Usuario, Perfil>(new Property("testePerfil"), [], this.perfis, new Property("nome"), (valueStr) => { return this.getPerfisByName(valueStr) }),
-				]
-		}
-	]*/
-
 	public save() {
 		let strErrors: string[] = []
 
@@ -87,7 +74,7 @@ export class UserEditComponent extends EditComponent implements OnInit {
 		if (strErrors.length > 0 ) {
 			this.dialogService.createDialogMessage(strErrors.join(" <br/> "));			
 		} else {
-			/*this.userService.save({model: this.usuario}).subscribe(
+			this.userService.save({model: this.usuario}).subscribe(
 				(result) => { 
 					this.usuario.id = result.id
 					this.matDialogRef.close()
@@ -95,7 +82,7 @@ export class UserEditComponent extends EditComponent implements OnInit {
 				(error) => { 
 					this.dialogService.createDialogMessage("Erro ao salvar") 
 				},
-			)*/
+			)
 		}
 
 	}
@@ -109,8 +96,6 @@ export class UserEditComponent extends EditComponent implements OnInit {
 		return this.usuario.id > 0 ? "Editar usuário" : "Novo usuário";
 	}
 
-
-	public citiesFound: City[]
 
 	searchCities() {
 
@@ -126,29 +111,15 @@ export class UserEditComponent extends EditComponent implements OnInit {
             }
 		)
 */
-		return this.clientService.getCitiesByName({name: this.autoCompleteFormConfig.component.currentValueStr.toString()}).map((result) => result.result)
-	}
-
-	onCityAutoCompleteChanged() {
-
-		if (!this.usuario.citiesAllowed) {
-			this.usuario.citiesAllowed = []
-		}
-
-		if (this.usuario.citySearch) {
-			this.usuario.citiesAllowed.push(this.usuario.citySearch)
-			this.usuario.citySearch = null
-			this.autoCompleteFormConfig.component.currentValueStr = ""
-		}
-		
 	}
 
 
 	@ViewChild('citiesTemplateRef') 
 	public citiesTemplate: TemplateRef<any>;
 
-	public autoCompleteFormConfig = new AutoCompleteFormConfig<User, City>(0, new Property("citySearch"), [], this.citiesFound, new Property("name"), this.searchCities.bind(this), new Property("id"), "Cidades permitidas", this.onCityAutoCompleteChanged.bind(this))
-	
+	passwordConfig = new InputFormConfig<User>(160, new Property("password"), [], true, "Nova Senha")
+	newPasswordConfig = new InputFormConfig<User>(0, new Property("newPassword"), [], true, "Repita a Nova Senha")
+
 	public formConfigs: FormConfigRow<User>[] = [
 		{
 			formConfigs: [
@@ -157,8 +128,8 @@ export class UserEditComponent extends EditComponent implements OnInit {
 			]
 		}, {
 			formConfigs: [
-				new InputFormConfig(160, new Property("newPassword"), [new RequiredValidator()], true, "Nova Senha"),
-				new InputFormConfig(0, new Property("newPasswordRepeated"), [new RequiredValidator()], true, "Repita a Nova Senha"),
+				this.passwordConfig,
+				this.newPasswordConfig,
 			]
 		}, {
 			formConfigs: [
@@ -168,7 +139,6 @@ export class UserEditComponent extends EditComponent implements OnInit {
 		}, {
 			formConfigs: [
 				new CustomFormConfig(200, [], () => this.citiesTemplate),
-				this.autoCompleteFormConfig
 			]
 		}
 	]
@@ -184,15 +154,38 @@ export class UserEditComponent extends EditComponent implements OnInit {
 	}
 	
 	ngOnInit() {
-		this.myOptions = [
-            { id: 1, name: 'Option 1' },
-            { id: 2, name: 'Option 2' },
-        ];
 	}
 
-    onCityChange() {
-        console.log(this.optionsModel);
-    }
+	_citiesStrSelected: string[]
+	_citiesStr: string[]
+	allCities: Object = {}
+	
+    set citiesStrSelected(itens: string[])  {
+		this._citiesStrSelected = itens
+		this.usuario.citiesAllowed = itens.map(item => this.allCities[item])
+	}
+	
+    get citiesStrSelected(): string[] {
+		return this._citiesStrSelected
+	}
 
+    set citiesStr(itens: string[])  {
+		this._citiesStr = itens
+	}
+	
+    get citiesStr(): string[] {
+		return this._citiesStr;
+	}
+
+	searchCitiesByName(event) {
+		this.clientService.getCitiesByName({name: event.query})
+		.subscribe(result => {
+			//this.citiesFormConfig.component.setItens(result.result.items)
+			result.result.forEach(item => this.allCities[item.name.toString()] = item)
+			this.citiesStr = result.result.map(cat => cat.name.toString())
+		}, error => {
+			
+		})
+	}
 }
 

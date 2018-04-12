@@ -26,6 +26,10 @@
 					CLIENTES
 				</div>
 
+				<div *ngIf="isAdmin" style="display:flex; align-items: center;" class="hover-dark full-height padding-med"  [routerLink]="['/usuario']">
+					USUÁRIOS
+				</div>
+
 				<span class="fill-space"></span>
 
 				<div class="align-right full-height">

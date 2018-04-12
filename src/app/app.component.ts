@@ -3,6 +3,7 @@ import {MenuItem, Config} from './commom/config';
 import {PERMISSIONS} from './commom/permissions';
 import {UserService} from './user/user.service';
 import { Title } from '@angular/platform-browser';
+import { AuthGuard } from './guard.auth';
 
 @Component({
   selector: 'app-root',
@@ -14,6 +15,10 @@ export class AppComponent {
 
   constructor(private userService: UserService, private titleService: Title) {
       this.titleService.setTitle(Config.appName)
+  }
+
+  get isAdmin(): boolean {
+    return AuthGuard.isAdmin()
   }
 
   headerText: string = Config.appName.toUpperCase()

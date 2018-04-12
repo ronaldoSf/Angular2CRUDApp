@@ -61,7 +61,7 @@ export class AutoCompleteFormComponent implements FormComponent, OnInit {
   
   public currentValueStrChanged() {
       this.currentValue = this.formConfig.itens.find((item) => { return item[this.formConfig.descItemProperty.name] == this.currentValueStr })
-      Util.setDeepValue(this.modelObject, this.currentValue, this.formConfig.modelProperty.name)
+      Util.setDeepValue(this.modelObject, this.currentValueStr, this.formConfig.modelProperty.name)
 
       if (this.formConfig.onModelChanged) {
           this.formConfig.onModelChanged();
@@ -74,12 +74,16 @@ export class AutoCompleteFormComponent implements FormComponent, OnInit {
     this.formConfig.component = this
 
       this.formControl = this.formConfig.createFormControl();
-      this.currentValue = Util.getDeepValue(this.modelObject, this.formConfig.modelProperty.name)
-      this.currentValueStr = this.currentValue[this.formConfig.descItemProperty.name]
-      this.itensStr = this.formConfig.itens.map<string>((item) => { 
-        let retorno = item[this.formConfig.descItemProperty.name] 
-        return retorno
-      })
+      //this.currentValue = Util.getDeepValue(this.modelObject, this.formConfig.modelProperty.name)
+      this.currentValueStr = Util.getDeepValue(this.modelObject, this.formConfig.modelProperty.name)
+      this.makeItensStr()
+  }
+
+  makeItensStr() {
+    this.itensStr = this.formConfig.itens.map<string>((item) => { 
+      let retorno = item[this.formConfig.descItemProperty.name] 
+      return retorno
+    })
   }
 
 }

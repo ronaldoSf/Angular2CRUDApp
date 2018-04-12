@@ -9,6 +9,8 @@ export class Client {
     cityId: number = null;
     ufSigla: string = null;
 
+    categories: Category[];
+
     description: string = null;
     importanceOrder: number = 5;
 
@@ -58,11 +60,17 @@ export class User {
     newPassword?: String = null;
 
     //Just for ui
-    newPasswordRepeated?: String = null;
-    citySearch: City = null;
+    //newPasswordRepeated?: String = null;
+    //citySearch: City = null;
+
+    hash: string;
 
     role: String
     citiesAllowed: City[]
+
+    get citiesStr() {
+        return this.citiesAllowed == null ? "" : this.citiesAllowed.map(item => item.name).join(", ")
+    }
     
     /*companyId: Number = null;
     companyName:String = null;

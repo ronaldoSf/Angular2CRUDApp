@@ -1,17 +1,18 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { AutoCompleteModule } from 'primeng/primeng';
-import { AutoCompleteFormComponent } from './auto-complete-form.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AutoCompleteModule } from 'primeng/primeng';
+import { MultiSelectFormComponent } from './multiselect-form.component';
+import { AutocompleteFormModule } from '../autocomplete.form/autocomplete.form.module';
 
 @NgModule({
   imports: [
     CommonModule, FormsModule, ReactiveFormsModule, 
-    AutoCompleteModule,
+    AutocompleteFormModule,
   ],
-  declarations: [AutoCompleteFormComponent],
-  entryComponents: [AutoCompleteFormComponent],
-  exports: [AutoCompleteFormComponent]
+  declarations: [MultiSelectFormComponent],
+  entryComponents: [MultiSelectFormComponent],
+  exports: [MultiSelectFormComponent]
 })
-export class AutocompleteFormModule { }
+export class MultiSelectFormModule { }

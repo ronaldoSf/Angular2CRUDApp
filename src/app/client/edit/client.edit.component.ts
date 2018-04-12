@@ -20,6 +20,7 @@ import { CustomFormConfig } from '../../commom/custom.form/custom-form.component
 import { ViewChild } from '@angular/core';
 import { FileHolder, ImageUploadComponent } from 'angular2-image-upload/lib/image-upload/image-upload.component';
 import { DataBase, Config } from '../../commom/config';
+import { MultiSelectFormConfig } from '../../commom/multi-select.form/multiselect-form.component';
 
 @Component({
 	selector: 'app-edit.client',
@@ -39,6 +40,9 @@ export class ClientEditComponent extends EditComponent implements OnInit {
 
 		if (data.entity) {
 			this.client = data.entity;
+
+			this.client.categories.forEach(item => this.allCategories[item.name.toString()] = item)
+			this.categoriesStrSelected = this.client.categories.map(cat => cat.name.toString())
 		}
 
 		this.mergeDefaultInfs();
@@ -46,7 +50,8 @@ export class ClientEditComponent extends EditComponent implements OnInit {
 
 	mergeDefaultInfs() {
 		let defaultInfs = [
-			{label: "Telefone", type: "PHONE", icon: "phone", value: ""},
+			{label: "Telefone 1", type: "PHONE", icon: "phone", value: ""},
+			{label: "Telefone 2", type: "PHONE_SEC", icon: "phone", value: ""},
 			{label: "Facebook", type: "FACEBOOK", icon: "face", value: ""},
 			{label: "Website" , type: "WEBSITE", icon: "web", value: ""},
 			{label: "Endereço", type: "ADDRESS", icon: "place", value: ""},
@@ -75,12 +80,15 @@ export class ClientEditComponent extends EditComponent implements OnInit {
 
 	@ViewChild('clientInfsTemplateRef') 
 	public clientInfsTemplate: TemplateRef<any>;
+
+	@ViewChild('categoriesSelectorTemplateRef') 
+	public categoriesSelectorTemplate: TemplateRef<any>;
 	
 	static dialogConfig: DialogConfig = {height: "auto", width: "600px"}
 
     public client: Client = new Client()
     
-    public categories: Category[] = []
+    //public categories: Category[] = []
 
 	public empresas: Company[] = [new Company(1, "Umaa"), new Company(2, "Duaaas"), new Company(3, "Treees"), new Company(4, "Quaaatro")]
 	public perfis: Profile[] = [new Profile(1, "Umaa"), new Profile(2, "Duaaas"), new Profile(3, "Treees"), new Profile(4, "Quaaatro")]
@@ -134,7 +142,7 @@ export class ClientEditComponent extends EditComponent implements OnInit {
     }
     
     updateCategories() {
-        this.categoryService.findByFilter({name: ""})
+        /*this.categoryService.findByFilter({name: ""})
         .subscribe((result) => {
             if (result.status == "OK") {
                 this.comboCategoriesConfig.itens = result.result.items;
@@ -142,7 +150,7 @@ export class ClientEditComponent extends EditComponent implements OnInit {
             }
         }, (error) => {
             alert("Não foi possível carregar categorias")
-        })
+        })*/
     }
     
     updateStates() {
@@ -174,16 +182,49 @@ export class ClientEditComponent extends EditComponent implements OnInit {
     }
 
     makeFormConfig() {
-
+		
     }
 
     get currentBase(): DataBase {
         return Config.currentBase;
-    }
+	}
 
-    public comboCategoriesConfig = new ComboboxFormConfig<Client, Category>(200, new Property("categoryId"), [new RequiredValidator()], [], new Property("id"), new Property("name"), true, "Categoria...");
+	_categoriesStrSelected: string[]
+	_categoriesStr: string[]
+	allCategories: Object = {}
+	
+    set categoriesStrSelected(itens: string[])  {
+		this._categoriesStrSelected = itens
+		this.client.categories = itens.map(item => this.allCategories[item])
+	}
+	
+    get categoriesStrSelected(): string[] {
+		return this._categoriesStrSelected
+	}
+
+    set categoriesStr(itens: string[])  {
+		this._categoriesStr = itens
+	}
+	
+    get categoriesStr(): string[] {
+		return this._categoriesStr;
+	}
+
+	searchCategoriesByName(event) {
+		this.categoryService.findByFilter({name: event.query})
+		.subscribe(result => {
+			//this.categoriesFormConfig.component.setItens(result.result.items)
+			result.result.items.forEach(item => this.allCategories[item.name.toString()] = item)
+			this.categoriesStr = result.result.items.map(cat => cat.name.toString())
+		}, error => {
+			
+		})
+	}
+
+    //public comboCategoriesConfig = new ComboboxFormConfig<Client, Category>(200, new Property("categoryId"), [new RequiredValidator()], [], new Property("id"), new Property("name"), true, "Categoria...");
     public comboStatesConfig = new ComboboxFormConfig<Client, State>(0, new Property("ufSigla"), [new RequiredValidator()], [], new Property("sigla"), new Property("name"), true, "Estado...", this.updateCities.bind(this));
     public comboCitiesConfig = new ComboboxFormConfig<Client, City>(200, new Property("cityId"), [new RequiredValidator()], [], new Property("id"), new Property("name"), true, "Cidade...");
+    //public categoriesFormConfig = new MultiSelectFormConfig<Client, Category>(200, new Property("categories"), [new RequiredValidator()], [], new Property("name"), this.searchCategoriesByName.bind(this), new Property("id"), "Categorias...");
     
 
 	public formConfigs: FormConfigRow<Client>[] = [
@@ -194,7 +235,11 @@ export class ClientEditComponent extends EditComponent implements OnInit {
 			]
 		}, {
 			formConfigs: [
-				this.comboCategoriesConfig,
+				new CustomFormConfig(0, [], () => this.categoriesSelectorTemplate)
+				//new InputFormConfig(0, new Property("newPassword"), [new RequiredValidator()], true, "Nova Senha")
+			]
+		}, {
+			formConfigs: [
 				this.comboStatesConfig,
 				this.comboCitiesConfig,
 				//new InputFormConfig(0, new Property("newPassword"), [new RequiredValidator()], true, "Nova Senha")
@@ -216,7 +261,7 @@ export class ClientEditComponent extends EditComponent implements OnInit {
 				//new ComboboxFormConfig<Client, Company>(0, new Property("companyId"), [new RequiredValidator()], this.empresas, new Property("id"), new Property("name"), true, "Empresa..."),
 				//new ComboboxFormConfig<Client, Profile>(0, new Property("profileId"), [], this.perfis, new Property("id"), new Property("name"), true, "Perfil..."),
 			]
-		}
+		},
 	]
 
 	getPerfisByName(valueStr: String): Observable<Client> {

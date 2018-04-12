@@ -1,5 +1,5 @@
 import { Client, State, City } from './../commom/models';
-import { GenericRemoveRequest, GenericRemoveResponse, GenericFindByIdRequest, GenericFindByIdResponse } from './../commom/util';
+import { GenericRemoveRequest, GenericRemoveResponse, GenericFindByIdRequest, GenericFindByIdResponse, Util } from './../commom/util';
 import { Injectable } from '@angular/core';
 import {HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HttpClient } from '@angular/common/http';
 import { Observable }    from 'rxjs/Observable';
@@ -50,7 +50,7 @@ export class ClientService {
     }
 
     public getCitiesByState(request: CitiesByStateRequest): Observable<GenericListResponse<City>> {
-        const options = { params: request as {} };
+        const options = { params: request as {}, headers: Util.makeLoggedHeaders() };
 
         return this.http.get<GenericListResponse<City>>(this.getApiUrl('/citiesByState'), options);
     }
@@ -65,7 +65,7 @@ export class ClientService {
 
 export class FindByFilterRequest extends GenericDatagridRequest {
     name: string
-    empresa: number
+    //empresa: number
 }
 
 export class CitiesByStateRequest extends GenericDatagridRequest {

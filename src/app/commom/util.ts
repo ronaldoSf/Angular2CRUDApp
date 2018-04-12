@@ -2,6 +2,8 @@ import { Column, GenericDatagridResponse, DatagridComponent } from "./datagrid/d
 import { Observable } from "rxjs/Observable";
 import { DialogComponent } from "./dialog/dialog.service";
 import { FormConfigRow } from "./forms/my.form.component";
+import { User } from "./models";
+import { HttpHeaders } from "@angular/common/http";
 
 
 export class Util {
@@ -9,6 +11,21 @@ export class Util {
     
     static readonly Masks = class {
         public static readonly cpf: string = "000.000.000-00";
+    }
+
+    public static makeLoggedHeaders(): HttpHeaders {
+        var headers = new HttpHeaders();
+
+        var loginDataStr = localStorage.getItem('loginData')
+
+        if (loginDataStr) {
+
+            var loginData: {hash: string, user: User} = JSON.parse(loginDataStr)
+
+            return new HttpHeaders({"id": loginData.user.id.toString(), "hash": loginData.hash})
+        }
+
+        return headers
     }
 
     public static getItensFromObject(obj: object): Array<any> {

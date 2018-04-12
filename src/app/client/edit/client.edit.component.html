@@ -12,6 +12,20 @@
 			
 		<!--{{client | json}}-->
 
+		<ng-template #categoriesSelectorTemplateRef>
+				<p-autoComplete   
+					[placeholder]="'Categorias...'"
+					[(ngModel)]="categoriesStrSelected" 
+					[suggestions]="categoriesStr"
+					[style]="{'width':'100%'}"
+					[inputStyle]="{'width':'494px'}"
+					(completeMethod)="searchCategoriesByName($event)" 
+					[multiple]="true">
+				</p-autoComplete>
+
+
+		</ng-template>
+
 		<ng-template  #imageUploaderTemplateRef>
 			<image-upload 
 				#imageUploadComponent
