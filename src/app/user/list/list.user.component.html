@@ -30,16 +30,7 @@
     <div class="filter-box">
         <div class="flex-h flex-justify-sb">
                 <div class="filter-item-content">
-                    <input  matInput placeholder="Nome" value="" class="form-control">
-                </div>
-                <div class="space-med"></div>
-                <div class="filter-item-content">
-                    <select matInput placeholder="Empresa" value="" class="form-control">
-                            <option>Empresa...</option>
-                            <option>Teste 1</option>
-                            <option>Teste 2</option>
-                            <option>Teste 6</option>
-                    </select>
+                    <input  matInput placeholder="Nome" value="" class="form-control" [(ngModel)]="filterName">
                 </div>
                 <div class="space-med"></div>
 

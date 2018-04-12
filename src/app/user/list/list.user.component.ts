@@ -77,7 +77,7 @@ export class UserListComponent extends ListComponent {
         let limitt = offset + pgSize
         
         var request: Service.FindByFilterRequest = {
-            "nome": this.filterName, 
+            "name": this.filterName, 
             //"empresa": this.filterEmpresa == null ? null : this.filterEmpresa.id.valueOf(),
             "offset": offset,
             "limit": limitt,

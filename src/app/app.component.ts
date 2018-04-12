@@ -4,6 +4,7 @@ import {PERMISSIONS} from './commom/permissions';
 import {UserService} from './user/user.service';
 import { Title } from '@angular/platform-browser';
 import { AuthGuard } from './guard.auth';
+import { User } from './commom/models';
 
 @Component({
   selector: 'app-root',
@@ -26,6 +27,11 @@ export class AppComponent {
 
   ngOnInit() {
     console.log(localStorage.getItem('loginData') != null)
+  }
+
+  get userNameLogged(): string {
+    var loginDataStr = localStorage.getItem('loginData')
+    return loginDataStr == null ? "" : (JSON.parse(loginDataStr) as {user: User}).user.name.toString()
   }
 
   sidenavOpened = true
