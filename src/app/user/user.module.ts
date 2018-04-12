@@ -54,6 +54,8 @@ import { AutocompleteFormModule } from '../commom/autocomplete.form/autocomplete
 import { CalendarFormModule } from '../commom/calendar.form/calendar-form.module';
 import { CurrencyInputFormModule } from '../commom/currency.input.form/currency-input-form.module';
 import { MaskedInputFormModule } from '../commom/masked.input.form/masked-input-form.module';
+import { MultiselectDropdownModule } from 'angular-2-dropdown-multiselect';
+import { CustomFormModule } from '../commom/custom.form/custom-form.module';
 
 const routes: Routes = [
   { path: '', component: UserListComponent },
@@ -61,8 +63,8 @@ const routes: Routes = [
 
 @NgModule({
   imports: [
-    CommonModule, DatagridModule, MatDialogModule, FormsModule, MyFormModule, 
-    AutocompleteFormModule, CalendarFormModule, ComboboxFormModule,  CurrencyInputFormModule, InputFormModule, MaskedInputFormModule,
+    CommonModule, DatagridModule, MatDialogModule, FormsModule, MyFormModule, MultiselectDropdownModule,
+    AutocompleteFormModule, CalendarFormModule, ComboboxFormModule,  CurrencyInputFormModule, InputFormModule, MaskedInputFormModule, CustomFormModule,
     RouterModule.forChild(routes)
   ],
   declarations: [UserListComponent, UserEditComponent],

@@ -55,6 +55,12 @@ export class ClientService {
         return this.http.get<GenericListResponse<City>>(this.getApiUrl('/citiesByState'), options);
     }
 
+    public getCitiesByName(request: CitiesByNameRequest): Observable<GenericListResponse<City>> {
+        const options = { params: request as {} };
+
+        return this.http.get<GenericListResponse<City>>(this.getApiUrl('/citiesByName'), options);
+    }
+
 }
 
 export class FindByFilterRequest extends GenericDatagridRequest {
@@ -64,6 +70,10 @@ export class FindByFilterRequest extends GenericDatagridRequest {
 
 export class CitiesByStateRequest extends GenericDatagridRequest {
     ufSigla: string
+}
+
+export class CitiesByNameRequest extends GenericDatagridRequest {
+    name: string
 }
 
 export class FindByFilterResponse extends GenericDatagridResponse<Client> {

@@ -2,7 +2,7 @@ import { InputFormConfig } from './../../commom/input.form/input.form.component'
 import { RequiredValidator } from './../../commom/validators/required-validator.directive';
 import { Validators } from '@angular/forms';
 import { FormConfigRow, FormConfig, Property } from './../../commom/forms/my.form.component';
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, ViewChild, TemplateRef } from '@angular/core';
 import { DialogComponent, DialogConfig, DialogService } from '../../commom/dialog/dialog.service';
 import { Util, EditComponent } from '../../commom/util';
 import { CalendarFormComponent, CalendarFormConfig } from '../../commom/calendar.form/calendar-form.component';
@@ -13,20 +13,25 @@ import { AutoCompleteFormConfig } from '../../commom/autocomplete.form/auto-comp
 import { Observable } from 'rxjs/Observable';
 import { UserService } from '../user.service';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { User, Company, Profile } from '../../commom/models';
+import { User, Company, Profile, UserRoles, UserRole, City } from '../../commom/models';
+import { IMultiSelectOption } from 'angular-2-dropdown-multiselect';
+import { CustomFormConfig } from '../../commom/custom.form/custom-form.component';
+import { ClientService } from '../../client/client.service';
+import 'rxjs/add/operator/map'
 
 @Component({
 	selector: 'app-edit.user',
 	templateUrl: './edit.user.component.html',
 	styleUrls: ['./edit.user.component.scss'],
-	providers: [ UserService, DialogService ],	
+	providers: [ ClientService, UserService, DialogService ],	
 })
 export class UserEditComponent extends EditComponent implements OnInit {
 
 	constructor(public dialogRef: MatDialogRef<UserEditComponent>,
 		@Inject(MAT_DIALOG_DATA) public data: any,
 		public dialogService: DialogService, 
-		public userService: UserService
+		public userService: UserService, 
+		public clientService: ClientService,
 	) {
 		super();
 
@@ -34,6 +39,9 @@ export class UserEditComponent extends EditComponent implements OnInit {
 			this.usuario = data.entity;
 		}
 	}
+
+	optionsModel: number[];
+    myOptions: IMultiSelectOption[];
 
 	static dialogConfig: DialogConfig = {height: "auto", width: "400px"}
 
@@ -101,6 +109,46 @@ export class UserEditComponent extends EditComponent implements OnInit {
 		return this.usuario.id > 0 ? "Editar usuário" : "Novo usuário";
 	}
 
+
+	public citiesFound: City[]
+
+	searchCities() {
+
+		
+		/*this.clientService.getCitiesByName({name: this.usuario.citySearch.toString()})
+		.map((result) => result.result)
+		.subscribe(
+            result => {
+                this.autoCompleteFormConfig.itens = result.result
+            },
+            error => {
+                //this.showError(error)
+            }
+		)
+*/
+		return this.clientService.getCitiesByName({name: this.autoCompleteFormConfig.component.currentValueStr.toString()}).map((result) => result.result)
+	}
+
+	onCityAutoCompleteChanged() {
+
+		if (!this.usuario.citiesAllowed) {
+			this.usuario.citiesAllowed = []
+		}
+
+		if (this.usuario.citySearch) {
+			this.usuario.citiesAllowed.push(this.usuario.citySearch)
+			this.usuario.citySearch = null
+			this.autoCompleteFormConfig.component.currentValueStr = ""
+		}
+		
+	}
+
+
+	@ViewChild('citiesTemplateRef') 
+	public citiesTemplate: TemplateRef<any>;
+
+	public autoCompleteFormConfig = new AutoCompleteFormConfig<User, City>(0, new Property("citySearch"), [], this.citiesFound, new Property("name"), this.searchCities.bind(this), new Property("id"), "Cidades permitidas", this.onCityAutoCompleteChanged.bind(this))
+	
 	public formConfigs: FormConfigRow<User>[] = [
 		{
 			formConfigs: [
@@ -109,15 +157,23 @@ export class UserEditComponent extends EditComponent implements OnInit {
 			]
 		}, {
 			formConfigs: [
-				new InputFormConfig(0, new Property("newPassword"), [new RequiredValidator()], true, "Nova Senha")
+				new InputFormConfig(160, new Property("newPassword"), [new RequiredValidator()], true, "Nova Senha"),
+				new InputFormConfig(0, new Property("newPasswordRepeated"), [new RequiredValidator()], true, "Repita a Nova Senha"),
 			]
 		}, {
 			formConfigs: [
-				new ComboboxFormConfig<User, Company>(0, new Property("companyId"), [new RequiredValidator()], this.empresas, new Property("id"), new Property("name"), true, "Empresa..."),
-				new ComboboxFormConfig<User, Profile>(0, new Property("profileId"), [], this.perfis, new Property("id"), new Property("name"), true, "Perfil..."),
+				new ComboboxFormConfig<User, UserRole>(0, new Property("role"), [new RequiredValidator()], Util.objToArray(UserRoles), new Property("value"), new Property("desc"), true, "Papel..."),
+				//new ComboboxFormConfig<User, Profile>(0, new Property("profileId"), [], this.perfis, new Property("id"), new Property("name"), true, "Perfil..."),
+			]
+		}, {
+			formConfigs: [
+				new CustomFormConfig(200, [], () => this.citiesTemplate),
+				this.autoCompleteFormConfig
 			]
 		}
 	]
+
+	
 
 	getPerfisByName(valueStr: String): Observable<User> {
 			return Observable.create(observer => {
@@ -128,7 +184,15 @@ export class UserEditComponent extends EditComponent implements OnInit {
 	}
 	
 	ngOnInit() {
+		this.myOptions = [
+            { id: 1, name: 'Option 1' },
+            { id: 2, name: 'Option 2' },
+        ];
 	}
+
+    onCityChange() {
+        console.log(this.optionsModel);
+    }
 
 }
 

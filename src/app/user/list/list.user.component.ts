@@ -38,8 +38,8 @@ export class UserListComponent extends ListComponent {
     public datagridColumns: Column[] = [
         {title: "Nome", modelField: new Property<User>("name").name, sortable: true},
         {title: "Login", modelField: new Property<User>("login").name, sortable: true},
-        {title: "Perfil", modelField: new Property<User>("profileName").name, sortable: false},
-        {title: "Empresa", modelField: new Property<User>("companyName").name, sortable: false},
+        //{title: "Perfil", modelField: new Property<User>("profileName").name, sortable: false},
+        //{title: "Empresa", modelField: new Property<User>("companyName").name, sortable: false},
     ]
 
     

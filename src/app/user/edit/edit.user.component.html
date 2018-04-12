@@ -11,6 +11,22 @@
 
     Model: {{usuario | json}}
 
+    <ng-template #citiesTemplateRef>
+
+      <div class="form-control ui-inputtext">
+        <span *ngFor="let city of usuario.citiesAllowed" style="height: 30px; display: inline-block; background-color: blue; color: white; margin-bottom: 6px; margin-right: 6px; padding: 6px">
+          <div style="height: 30px; display: flex; flex-direction: row; align-items: center; justify-content: center;">
+              <span>{{city.name}} &nbsp;&nbsp;</span>
+              <button type="button" class="close" (click)="removeCity(city)" style="float: none; color: white; opacity: 100;">
+                  <span aria-hidden="true">×</span>
+              </button>
+              <span>&nbsp;&nbsp;</span>
+          </div>
+        </span>
+      </div>
+      
+    </ng-template>
+
     <app-my-form 
       [teste]="'aa'" 
       [formConfigs]="formConfigs"  

@@ -62,11 +62,17 @@ export class AutoCompleteFormComponent implements FormComponent, OnInit {
   public currentValueStrChanged() {
       this.currentValue = this.formConfig.itens.find((item) => { return item[this.formConfig.descItemProperty.name] == this.currentValueStr })
       Util.setDeepValue(this.modelObject, this.currentValue, this.formConfig.modelProperty.name)
+
+      if (this.formConfig.onModelChanged) {
+          this.formConfig.onModelChanged();
+      }
   }
 
   constructor() { }
 
   ngOnInit() {
+    this.formConfig.component = this
+
       this.formControl = this.formConfig.createFormControl();
       this.currentValue = Util.getDeepValue(this.modelObject, this.formConfig.modelProperty.name)
       this.currentValueStr = this.currentValue[this.formConfig.descItemProperty.name]
@@ -90,11 +96,14 @@ export class AutoCompleteFormConfig<TModel, TItemModel> extends FormConfig<TMode
     public descItemProperty: Property<TItemModel>,
     public searchFunction: Function,
     public idItemProperty: Property<TItemModel> = null,
-    public placeHolder: string = ""    
+    public placeHolder: string = "",
+    public onModelChanged: Function = null,
   ) {
     //super(modelProperty, validators, itens, idItemProperty, descItemProperty, modelPropertyIsId)
     super(validators)
   }
+
+  component: AutoCompleteFormComponent;
 
 }
 

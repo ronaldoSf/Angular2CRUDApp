@@ -40,14 +40,31 @@ export class ClientInformation {
     value: string;
 }
 
+
+export class UserRole {
+
+    constructor(public value: String, public desc: String) {
+        
+    }
+}
+
+export const UserRoles = {ADMIN: new UserRole("ADMIN", "Administrador"), USER: new UserRole("USER", "Usuario comum")}
+
 export class User {
     id: Number = null;
     name: String = null;
     login: String = null;
     password: String = null;
     newPassword?: String = null;
+
+    //Just for ui
+    newPasswordRepeated?: String = null;
+    citySearch: City = null;
+
+    role: String
+    citiesAllowed: City[]
     
-    companyId: Number = null;
+    /*companyId: Number = null;
     companyName:String = null;
 
     profileId: Number = null;
@@ -59,7 +76,7 @@ export class User {
 
     get profile(): Profile {
         return new Profile(this.profileId, this.profileName)
-    }
+    }*/
 }
 
 export class Profile {
